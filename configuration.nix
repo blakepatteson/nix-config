@@ -4,7 +4,9 @@
   imports = [
     ./hardware-configuration.nix
     ./boot.nix
-    ./pkgs.nix
-    ./utils.nix
+    ./programs.nix
+    ./etc.nix
+    ./programs_settings.nix
+    ./env.nix
   ];
 }
