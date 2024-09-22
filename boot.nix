@@ -46,9 +46,14 @@
     victor-mono
   ];
 
+  nixpkgs.config.allowUnfree = true;
+  programs.firefox.enable = true;
+
   users.users.blake = {
     isNormalUser = true;
     description = "blake";
     extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "kvm"];
   };
+
+  system.stateVersion = "24.05"; # Did you read the comment?
 }

@@ -16,9 +16,4 @@
       PS1='[\D{%Y-%m-%d}] [\t]:\w\$ '
     '';
   };
-
-  environment.variables = {
-    LESS = "-R -X -F";
-    LESSHISTFILE = "-"; # Disable .lesshst file
-  };
 }
