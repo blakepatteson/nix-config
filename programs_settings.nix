@@ -13,4 +13,15 @@
         "breakpad.reportURL" = "";
     };
   };
+
+  # Source the Neovim config file
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    configure = {
+      customRC = ''
+        source /etc/neovim/init.vim
+      '';
+    };
+  };
 }

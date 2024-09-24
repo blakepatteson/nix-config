@@ -9,7 +9,7 @@
         pkgs.expat
         pkgs.minizip
       ];
-
-        GOTELEMETRY = "off";
+      GOTELEMETRY = "off";
+      EDITOR = "nvim";
   };
 }
