@@ -25,6 +25,9 @@
     cowsay
     asciiquarium
     redshift
+    busybox
+
+    rclone
 
     gcc
     gnumake

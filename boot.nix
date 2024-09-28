@@ -29,6 +29,20 @@
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
+
+  hardware.opengl.enable = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.modesetting.enable = true;
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia.prime = {
+    offload.enable = true;
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+  };
+
+  
   services.printing.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -52,8 +66,9 @@
   users.users.blake = {
     isNormalUser = true;
     description = "blake";
-    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "kvm"];
+    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm"];
   };
+
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }
