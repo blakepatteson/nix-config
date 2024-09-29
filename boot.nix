@@ -29,6 +29,9 @@
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
+  
+  boot.loader.grub.configurationLimit = 10;
+  boot.loader.grub.default = "0";
 
   hardware.opengl.enable = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
