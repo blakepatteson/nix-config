@@ -3,6 +3,8 @@
 {
   environment.systemPackages = with pkgs; [
     vim
+    cargo
+    rustup
     file
     sqlite
     flameshot

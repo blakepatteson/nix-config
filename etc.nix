@@ -71,6 +71,7 @@
       alias ll='ls -alF'
       alias la='ls -A'
       alias l='ls -CF'
+      alias cls='clear && printf "\033[3J"'
 
       # Add any additional custom configurations below this line
       # For example:
