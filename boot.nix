@@ -45,7 +45,6 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  
   services.printing.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -61,17 +60,28 @@
     dina-font
     proggyfonts
     victor-mono
+    (nerdfonts.override { fonts = [ "VictorMono" ]; })
   ];
 
   nixpkgs.config.allowUnfree = true;
   programs.firefox.enable = true;
+
+  nix.settings.auto-optimise-store = true;
+  services.flatpak.enable = true;
+  zramSwap.enable = true;
+  services.openssh.enable = true;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   users.users.blake = {
     isNormalUser = true;
     description = "blake";
     extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm"];
   };
-
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }
