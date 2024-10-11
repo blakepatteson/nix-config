@@ -9,6 +9,7 @@
     sqlite
     flameshot
     docker
+    obs-studio
     lm_sensors
     teams-for-linux
     virt-manager
