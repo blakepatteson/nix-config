@@ -68,15 +68,13 @@
       fi
 
       # some more ls aliases
-      alias ll='ls -alF'
+      alias l='ls -al'
       alias la='ls -A'
-      alias l='ls -CF'
-      alias cls='clear && printf "\033[3J"'
 
-      # Add any additional custom configurations below this line
-      # For example:
-      # export PATH=$PATH:/path/to/custom/scripts
-      # alias myalias='custom command'
+      alias dkill='sudo docker kill $(sudo docker ps -q)'
+      alias dkillrm='sudo docker rm -f $(sudo docker ps -aq)'
+
+      alias cls='clear && printf "\033[3J"'
     '';
     mode = "0644";
   };
