@@ -10,52 +10,64 @@ in
   imports = [
     nixvim.nixosModules.nixvim
   ];
-
   programs.nixvim = {
     enable = true;
-    
-    # Enable clipboard support
-    clipboard.providers.xclip.enable = true;
-    clipboard.register = "unnamedplus";
-
-    # Plugins
-    plugins = {
-      telescope.enable = true;
-      lualine.enable = true;
-      web-devicons.enable = true;
-      # nvim-tree.enable = true;  # File explorer
-      # treesitter.enable = true; # Better syntax highlighting
+    config = {
+      options = {
+        number = true;
+        relativenumber = true;
+        clipboard = "unnamedplus";
+      };
+      globals.mapleader = " ";
+      keymaps = [
+        {
+          mode = "n";
+          key = "<leader>ff";
+          action = "<cmd>Telescope find_files<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>fg";
+          action = "<cmd>Telescope live_grep<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>fb";
+          action = "<cmd>Telescope buffers<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>fh";
+          action = "<cmd>Telescope help_tags<CR>";
+        }
+        {
+          mode = ["n" "v"];
+          key = "<leader>y";
+          action = "\"+y";
+        }
+        {
+          mode = ["n" "v"];
+          key = "<leader>p";
+          action = "\"+p";
+        }
+        {
+          mode = "n";
+          key = "<C-n>";
+          action = ":NvimTreeToggle<CR>";
+        }
+      ];
+      plugins = {
+        telescope.enable = true;
+        lualine.enable = true;
+        nvim-tree.enable = true;
+        treesitter.enable = true;
+        web-devicons.enable = true;
+      };
+      colorschemes.onedark.enable = true;
     };
-
-    # Colorscheme
-    colorschemes.onedark.enable = true;
-
-    # Basic keymaps for Telescope and other functionalities
     extraConfigVim = ''
-      " Telescope keymaps
-      nnoremap <leader>ff <cmd>Telescope find_files<CR>
-      nnoremap <leader>fg <cmd>Telescope live_grep<CR>
-      nnoremap <leader>fb <cmd>Telescope buffers<CR>
-      nnoremap <leader>fh <cmd>Telescope help_tags<CR>
-
-      " Clipboard keymaps
-      nnoremap <leader>y "+y
-      vnoremap <leader>y "+y
-      nnoremap <leader>p "+p
-      vnoremap <leader>p "+p
-
-      " NvimTree keymap
-      nnoremap <C-n> :NvimTreeToggle<CR>
-      " nvim-tree.enable = true;  # File explorer
-      " nvim-tree.enable = true;  # File explorer
-      " nvim-tree.enable = true;  # File explorer
-      " nvim-tree.enable = true;  # File explorer
-
-      " Set clipboard to use system clipboard
-      set clipboard+=unnamedplus
+      set list
+      set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
     '';
-
-    # Global options
-    globals.mapleader = " "; # Set leader key to space
   };
 }

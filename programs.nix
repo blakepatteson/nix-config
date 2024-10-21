@@ -8,6 +8,7 @@
     file
     sqlite
     flameshot
+    python312Packages.pygments
     docker
     obs-studio
     lm_sensors
