@@ -57,7 +57,6 @@
     xclip
     gnused
     fd  
-
     (python3.withPackages(ps: with ps; [
       pip
       pyautogui

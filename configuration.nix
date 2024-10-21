@@ -8,5 +8,6 @@
     ./etc.nix
     ./programs_settings.nix
     ./env.nix
+    ./nixvim.nix
   ];
 }
