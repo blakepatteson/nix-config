@@ -11,8 +11,9 @@ in
     nixvim.nixosModules.nixvim
   ];
   programs.nixvim = {
-    enable = true;
+    # enable = true;
     config = {
+      enable = true;
       options = {
         number = true;
         relativenumber = true;
@@ -64,10 +65,10 @@ in
         web-devicons.enable = true;
       };
       colorschemes.onedark.enable = true;
-    };
-    extraConfigVim = ''
-      set list
-      set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
-    '';
-  };
+      extraConfigVim = ''
+        set list
+        set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
+      '';
+      };
+   };
 }
