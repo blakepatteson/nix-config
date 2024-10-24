@@ -2,8 +2,6 @@
 let
   nixvim = import (builtins.fetchGit {
     url = "https://github.com/nix-community/nixvim";
-    # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-    # ref = "nixos-23.11";
   });
 in
 {
@@ -11,10 +9,9 @@ in
     nixvim.nixosModules.nixvim
   ];
   programs.nixvim = {
-    # enable = true;
     config = {
       enable = true;
-      options = {
+      opts= {
         number = true;
         relativenumber = true;
         clipboard = "unnamedplus";
@@ -60,11 +57,11 @@ in
       plugins = {
         telescope.enable = true;
         lualine.enable = true;
-        nvim-tree.enable = true;
-        treesitter.enable = true;
+        # nvim-tree.enable = true;
+        # treesitter.enable = true;
         web-devicons.enable = true;
       };
-      colorschemes.onedark.enable = true;
+      # colorschemes.onedark.enable = true;
       extraConfigVim = ''
         set list
         set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨

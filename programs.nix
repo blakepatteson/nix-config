@@ -7,6 +7,7 @@
     rustup
     file
     sqlite
+    gh
     flameshot
     python312Packages.pygments
     docker
