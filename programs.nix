@@ -9,6 +9,7 @@
     sqlite
     gh
     flameshot
+    pkgs.remmina
     python312Packages.pygments
     docker
     obs-studio

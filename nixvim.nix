@@ -11,7 +11,7 @@ in
   programs.nixvim = {
     config = {
       enable = true;
-      opts= {
+      opts = {
         number = true;
         relativenumber = true;
         clipboard = "unnamedplus";
@@ -20,12 +20,17 @@ in
       keymaps = [
         {
           mode = "n";
-          key = "<leader>ff";
+          key = "<C-p>";
           action = "<cmd>Telescope find_files<CR>";
         }
+	{
+	  mode = "n";
+	  key = "<C-h>";
+	  action = ":%s//g<Left><Left>";  # This opens find/replace command with cursor ready
+	}
         {
           mode = "n";
-          key = "<leader>fg";
+          key = "<C-f>";
           action = "<cmd>Telescope live_grep<CR>";
         }
         {
@@ -50,22 +55,32 @@ in
         }
         {
           mode = "n";
-          key = "<C-n>";
-          action = ":NvimTreeToggle<CR>";
+          key = "-";
+          action = "<CMD>Oil<CR>";
         }
       ];
       plugins = {
         telescope.enable = true;
         lualine.enable = true;
-        # nvim-tree.enable = true;
-        # treesitter.enable = true;
         web-devicons.enable = true;
+        oil = {
+          enable = true;
+          settings = {
+            view_options = {
+              show_hidden = true;
+            };
+            float = {
+              padding = 2;
+              max_width = 100;
+              max_height = 20;
+            };
+          };
+        };
       };
-      # colorschemes.onedark.enable = true;
       extraConfigVim = ''
         set list
         set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
       '';
-      };
-   };
+    };
+  };
 }

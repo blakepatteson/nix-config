@@ -1,8 +1,13 @@
 { config, pkgs, ... }:
 
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+    };
+    efi.canTouchEfiVariables = true;
+  };
   boot.kernelParams = [ "intel_iommu=on" "snd_hda_intel.dmic_detect=0" ];
   hardware.enableAllFirmware = true;
 
@@ -32,9 +37,6 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
   
-  boot.loader.grub.configurationLimit = 10;
-  boot.loader.grub.default = "0";
-
   hardware.opengl.enable = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.nvidia.modesetting.enable = true;
