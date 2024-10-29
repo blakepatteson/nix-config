@@ -15,13 +15,16 @@ in
         number = true;
         relativenumber = true;
         clipboard = "unnamedplus";
+        swapfile = false;    # No more swap files
+        backup = false;      # No backup files
+        writebackup = false; # No backup files during write
       };
       globals = {
         mapleader = " ";
         VM_mouse_mappings = 1;  # Enable mouse support for vim-visual-multi
         VM_maps = {
-          "Find Under" = "<C-d>";        # Replace Ctrl-N with Ctrl-D
-          "Find Subword Under" = "<C-d>"; # Replace Ctrl-N with Ctrl-D
+          "Find Under" = "<C-m>";
+          "Find Subword Under" = "<C-m>";
         };
       };
       keymaps = [
@@ -64,6 +67,38 @@ in
           mode = "n";
           key = "-";
           action = "<CMD>Oil<CR>";
+        }
+         {
+          mode = ["n" "v"];
+          key = "H";
+          action = "^";
+        }
+        {
+          mode = ["n" "v"];
+          key = "L";
+          action = "$";  # Map L to end of line (easier than $)
+        }
+        # Brace navigation
+        {
+          mode = "n";
+          key = "<leader>j";
+          action = "}";  # Jump to next paragraph/block
+        }
+        {
+          mode = "n";
+          key = "<leader>k";
+          action = "{";  # Jump to previous paragraph/block
+        }
+        # Add bracket navigation
+        {
+          mode = "n";
+          key = "<leader>n";
+          action = "]m";  # Next method/function
+        }
+        {
+          mode = "n";
+          key = "<leader>p";
+          action = "[m";  # Previous method/function
         }
         # {
         #   mode = "n";
