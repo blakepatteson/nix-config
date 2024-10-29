@@ -14,6 +14,8 @@
     docker
     obs-studio
     lm_sensors
+    bat
+    mlocate
     teams-for-linux
     virt-manager
     virt-viewer

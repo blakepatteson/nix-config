@@ -16,18 +16,25 @@ in
         relativenumber = true;
         clipboard = "unnamedplus";
       };
-      globals.mapleader = " ";
+      globals = {
+        mapleader = " ";
+        VM_mouse_mappings = 1;  # Enable mouse support for vim-visual-multi
+        VM_maps = {
+          "Find Under" = "<C-d>";        # Replace Ctrl-N with Ctrl-D
+          "Find Subword Under" = "<C-d>"; # Replace Ctrl-N with Ctrl-D
+        };
+      };
       keymaps = [
         {
           mode = "n";
           key = "<C-p>";
           action = "<cmd>Telescope find_files<CR>";
         }
-	{
-	  mode = "n";
-	  key = "<C-h>";
-	  action = ":%s//g<Left><Left>";  # This opens find/replace command with cursor ready
-	}
+        {
+          mode = "n";
+          key = "<C-h>";
+          action = ":%s//g<Left><Left>";  # This opens find/replace command with cursor ready
+        }
         {
           mode = "n";
           key = "<C-f>";
@@ -58,11 +65,102 @@ in
           key = "-";
           action = "<CMD>Oil<CR>";
         }
+        # {
+        #   mode = "n";
+        #   key = "gd";
+        #   action = "<cmd>lua vim.lsp.buf.definition()<CR>";
+        # }
+        # {
+        #   mode = "n";
+        #   key = "K";
+        #   action = "<cmd>lua vim.lsp.buf.hover()<CR>";
+        # }
+        # {
+        #   mode = "n";
+        #   key = "<leader>rn";
+        #   action = "<cmd>lua vim.lsp.buf.rename()<CR>";
+        # }
+        # {
+        #   mode = "n";
+        #   key = "<leader>ca";
+        #   action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+        # }
       ];
       plugins = {
         telescope.enable = true;
         lualine.enable = true;
         web-devicons.enable = true;
+        
+        # lsp = {
+        #   enable = true;
+        #   servers = {
+        #     nil_ls = {
+        #       enable = true;
+        #       settings.formatting.command = ["alejandra"];
+        #     };
+        #     gopls = {
+        #       enable = true;
+        #       settings = {
+        #         analyses = {
+        #           unusedparams = true;
+        #           shadow = true;
+        #         };
+        #         staticcheck = true;
+        #         gofumpt = true;
+        #       };
+        #     };
+        #   };
+        #   onAttach = ''
+        #     function(client, bufnr)
+        #       vim.api.nvim_create_autocmd('BufWritePre', {
+        #         buffer = bufnr,  -- Changed from buffer to bufnr
+        #         callback = function()
+        #           vim.lsp.buf.format({ async = false })
+        #         end
+        #       })
+        #     end
+        #   '';
+        #   keymaps = {
+        #     diagnostic = {
+        #       enable = true;  # Enable with just basic settings
+        #       prev = "[[";
+        #       next = "]]";
+        #     };
+        #     lspBuf = {
+        #       enable = true;  # Enable with just basic settings
+        #       format = "<leader>f";
+        #       hover = "K";
+        #       rename = "<leader>rn";
+        #       codeAction = "<leader>ca";
+        #       definition = "gd";
+        #       references = "gr";
+        #     };
+        #   };
+        # };
+
+        # treesitter = {
+        #   enable = true;
+        #   settings = {
+        #     ensure_installed = ["go" "nix"];
+        #   };
+        # };
+
+        # cmp = {
+        #   enable = true;
+        #   settings = {
+        #     sources = [
+        #       {name = "nvim_lsp";}
+        #       {name = "path";}
+        #       {name = "buffer";}
+        #     ];
+        #     mapping = {
+        #       "<CR>" = "cmp.mapping.confirm({ select = true })";
+        #       "<Tab>" = "cmp.mapping.select_next_item()";
+        #       "<S-Tab>" = "cmp.mapping.select_prev_item()";
+        #     };
+        #   };
+        # };
+
         oil = {
           enable = true;
           settings = {
@@ -77,6 +175,9 @@ in
           };
         };
       };
+      extraPlugins = with pkgs.vimPlugins; [
+        vim-visual-multi
+      ];
       extraConfigVim = ''
         set list
         set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨

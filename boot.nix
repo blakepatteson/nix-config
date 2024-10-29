@@ -43,6 +43,13 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  services.locate = {
+    enable = true;
+    package = pkgs.mlocate;
+    interval = "hourly"; # how often to update the database
+    localuser = null;    # run updatedb as root
+  };
+
   hardware.nvidia.prime = {
     offload.enable = true;
     intelBusId = "PCI:0:2:0";
