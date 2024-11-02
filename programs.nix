@@ -7,6 +7,7 @@
     rustup
     file
     sqlite
+    gnumeric
     gh
     flameshot
     pkgs.remmina
