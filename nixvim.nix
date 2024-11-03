@@ -11,14 +11,21 @@ in
   programs.nixvim = {
     config = {
       enable = true;
-      
       opts = {
         number = true;
         relativenumber = true;
         clipboard = "unnamedplus";
         swapfile = false;    
         backup = false;      
-        writebackup = false; 
+        writebackup = false;
+        colorcolumn = ["80" "90"];  
+
+        expandtab = true;      # Use spaces instead of tabs
+        shiftwidth = 2;        # Number of spaces for each indentation level
+        tabstop = 2;          # Number of spaces a tab counts for
+        softtabstop = 2;      # Number of spaces a tab counts for while editing
+        autoindent = true;    # Copy indent from current line when starting a new line
+        smartindent = true;   # Smart autoindenting when starting a new line
       };
 
       globals = {
@@ -60,6 +67,11 @@ in
           mode = "n";
           key = "<leader>ca";
           action = "vim.lsp.buf.code_action";
+        }
+        {
+          mode = "n";
+          key = "<leader>fc";  # This means Space+fc for "find commands"
+          action = "<cmd>Telescope commands<CR>";
         }
         {
           mode = "n";
@@ -131,6 +143,21 @@ in
           key = "<leader>n";
           action = "]m";
         }
+	      {
+          mode = "n";
+          key = "<F12>";
+          action = "<cmd>lua vim.lsp.buf.definition()<CR>";
+        }
+        {
+          mode = "n";
+          key = "gd";
+          action = "<cmd>lua vim.lsp.buf.definition()<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>li";
+          action = "<cmd>LspInfo<CR>";
+        }
       ];
 
       autoCmd = [
@@ -156,6 +183,17 @@ in
                     end
                   end
                 end
+              end
+            '';
+          };
+        }
+        {
+          event = ["BufWritePre"];
+          pattern = ["*.c" "*.h"];
+          callback = {
+            __raw = ''
+              function()
+                vim.lsp.buf.format()
               end
             '';
           };
@@ -200,10 +238,22 @@ in
                 };
               };
             };
-          };
+            clangd = {
+              enable = true;
+              settings = {
+                fallbackFlags = ["-std=c11"];
+                style = {
+                  BasedOnStyle = "LLVM";
+                  IndentWidth = 2;
+                  TabWidth = 2;
+                  UseTab = false;
+                  ColumnLimit = 80;
+                };
+              };
+            };
+         };
         };
 
-        # Uncomment if you want to use treesitter
         # treesitter = {
         #   enable = true;
         #   settings = {
@@ -211,7 +261,6 @@ in
         #   };
         # };
 
-        # Uncomment if you want to use cmp
         # cmp = {
         #   enable = true;
         #   settings = {
@@ -220,11 +269,11 @@ in
         #       {name = "path";}
         #       {name = "buffer";}
         #     ];
-        #     # mapping = {
-        #     #   "<CR>" = "cmp.mapping.confirm()";
-        #     #   "<Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end)";
-        #     #   "<S-Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end)";
-        #     # };
+        #     mapping = {
+        #       "<CR>" = "cmp.mapping.confirm()";
+        #       "<Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() else fallback() end end)";
+        #       "<S-Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() else fallback() end end)";
+        #     };
         #   };
         # };
 
@@ -250,7 +299,18 @@ in
       extraConfigVim = ''
         set list
         set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
-      '';
+
+        " Make the ruler lines visible with custom color
+        highlight ColorColumn ctermbg=236 guibg=#2d2d2d
+
+        " Show when LSP is active
+        function! LspStatus() abort
+          if luaeval('#vim.lsp.get_active_clients() > 0')
+            return luaeval("require('lsp-status').status()")
+          endif
+          return
+        endfunction
+        '';
     };
   };
 }

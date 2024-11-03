@@ -11,6 +11,7 @@
     gh
     flameshot
     pkgs.remmina
+    clang-tools
     python312Packages.pygments
     docker
     obs-studio
