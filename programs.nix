@@ -9,6 +9,7 @@
     sqlite
     gnumeric
     gh
+    graphviz
     flameshot
     pkgs.remmina
     clang-tools
@@ -68,6 +69,7 @@
       pip
       pyautogui
       tkinter
+      graphviz
     ]))
   ];
 
