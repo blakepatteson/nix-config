@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   environment.etc."xdg/kitty/kitty.conf".text = ''
     font_family Victor Mono

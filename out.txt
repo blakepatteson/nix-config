@@ -1,0 +1,694 @@
+{ config, pkgs, ... }:
+{
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+    };
+    efi.canTouchEfiVariables = true;
+  };
+  boot.kernelParams = [ "intel_iommu=on" "snd_hda_intel.dmic_detect=0" ];
+  hardware.enableAllFirmware = true;
+  networking.hostName = "nixos"; # Define your hostname.
+  networking.networkmanager.enable = true;
+  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.qemu.package = pkgs.qemu_kvm;
+  virtualisation.docker.enable = true;
+  time.timeZone = "America/New_York";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
+  services.xserver.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.desktopManager.cinnamon.enable = true;
+
+  # Power management settings
+  services.xserver.displayManager.gdm.autoSuspend = false;
+  powerManagement = {
+    enable = false;
+    powertop.enable = false;
+  };
+  services.displayManager.defaultSession = "cinnamon";
+  
+  # Cinnamon power management settings
+  services.xserver.desktopManager.cinnamon.extraGSettingsOverrides = ''
+    [org.cinnamon.desktop.session]
+    idle-delay=uint32 0
+
+    [org.cinnamon.settings-daemon.plugins.power]
+    sleep-display-ac=0
+    sleep-inactive-ac-timeout=0
+    idle-dim-time=0
+    sleep-inactive-battery-timeout=0
+
+    [org.cinnamon.desktop.screensaver]
+    lock-enabled=false
+  '';
+
+  hardware.opengl.enable = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.modesetting.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  services.locate = {
+    enable = true;
+    package = pkgs.mlocate;
+    interval = "hourly"; # how often to update the database
+    localuser = null; # run updatedb as root
+  };
+  hardware.nvidia.prime = {
+    offload.enable = true;
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+  };
+  services.printing.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+    victor-mono
+    (nerdfonts.override { fonts = [ "VictorMono" ]; })
+  ];
+  nixpkgs.config.allowUnfree = true;
+  programs.firefox.enable = true;
+  nix.settings.auto-optimise-store = true;
+  services.flatpak.enable = true;
+  zramSwap.enable = true;
+  services.openssh.enable = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+  users.users.blake = {
+    isNormalUser = true;
+    description = "blake";
+    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm" ];
+  };
+  system.stateVersion = "24.05"; # Did you read the comment?
+}{ pkgs, ... }:
+{
+  environment.etc."xdg/kitty/kitty.conf".text = ''
+    font_family Victor Mono
+    font_size 20.0
+    scrollback_pager ${pkgs.neovim}/bin/nvim -c "set nonumber nolist showtabline=0 foldcolumn=0" -c "autocmd TermOpen * normal G" -c "silent write! /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer - " -c "set clipboard=unnamedplus" -c "vmap y ygv<Esc>" -c "nnoremap y yy" -c "nnoremap Y y$" -c "let @+=@\"" -c "set clipboard=unnamedplus"
+    scrollback_lines 10000
+    allow_remote_control yes
+    map ctrl+shift+m show_scrollback
+    map ctrl+v paste_from_clipboard
+    map ctrl+n new_os_window
+    map ctrl+w close_window
+    map ctrl+t new_tab
+    map ctrl+q close_tab
+    
+    map ctrl+l clear_terminal scroll active
+    map ctrl+equal change_font_size all +2.0
+    map ctrl+minus change_font_size all -2.0
+    map ctrl+backspace change_font_size all 0
+
+    # New scrolling mappings
+    map ctrl+u scroll_page_up
+    map ctrl+d scroll_page_down
+
+    # Vi mode specific mappings
+    map ctrl+shift+j scroll_line_down
+    map ctrl+shift+k scroll_line_up
+    map ctrl+shift+h scroll_to_prompt -1
+    map ctrl+shift+l scroll_to_prompt 1
+    map ctrl+shift+g scroll_to_prompt 0
+    map ctrl+shift+G scroll_to_prompt -1
+  '';
+
+  environment.etc.bashrc = {
+    text = ''
+      # ~/.bashrc: executed by bash(1) for non-login shells.
+
+      # If not running interactively, don't do anything
+      [ -z "$PS1" ] && return
+
+      # don't put duplicate lines in the history.
+      HISTCONTROL=ignoredups:ignorespace
+
+      # append to the history file, don't overwrite it
+      shopt -s histappend
+
+      # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+      HISTSIZE=1000
+      HISTFILESIZE=2000
+
+      # check the window size after each command and, if necessary,
+      # update the values of LINES and COLUMNS.
+      shopt -s checkwinsize
+
+      # make less more friendly for non-text input files, see lesspipe(1)
+      [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+      # set a fancy prompt with date and time
+      PS1='\[\033[01;31m\][\D{%Y-%m-%d}]\[\033[00m\] \[\033[01;32m\][\t]\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+      # enable color support of ls and also add handy aliases
+      if [ -x /usr/bin/dircolors ]; then
+          test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+          alias ls='ls --color=auto'
+          alias grep='grep --color=auto'
+          alias fgrep='fgrep --color=auto'
+          alias egrep='egrep --color=auto'
+      fi
+
+      # some more ls aliases
+      alias l='ls -al'
+      alias la='ls -A'
+      alias ccat='pygmentize -g'
+
+      alias dkill='sudo docker kill $(sudo docker ps -q)'
+      alias dkillrm='sudo docker rm -f $(sudo docker ps -aq)'
+
+      alias cls='clear && printf "\033[3J"'
+    '';
+    mode = "0644";
+  };
+
+  # This ensures that the /etc/bashrc file is sourced for interactive non-login shells
+  environment.interactiveShellInit = ''
+    if [ -f /etc/bashrc ]; then
+      . /etc/bashrc
+    fi
+  '';
+}
+{
+  programs.bash = {
+    enableCompletion = true;
+    interactiveShellInit = ''
+      PS1='[\D{%Y-%m-%d}] [\t]:\w\$ '
+    '';
+  };
+
+  programs.chromium = {
+    enable = true;
+    extraOpts = {
+      "crash_reporter.enabled" = false;
+      "breakpad.reportURL" = "";
+    };
+  };
+}
+
+{ ... }:
+
+{
+  imports = [
+    ./hardware-configuration.nix
+    ./boot.nix
+    ./programs.nix
+    ./etc.nix
+    ./programs_settings.nix
+    ./env.nix
+    ./nixvim.nix
+  ];
+}
+# Do not modify this file!  It was generated by ‘nixos-generate-config’
+# and may be overwritten by future invocations.  Please make changes
+# to /etc/nixos/configuration.nix instead.
+{ config, lib, pkgs, modulesPath, ... }:
+
+{
+  imports =
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    {
+      device = "/dev/disk/by-uuid/4e252aee-4541-4626-928d-74ec05535b8f";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    {
+      device = "/dev/disk/by-uuid/6130-F173";
+      fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+    };
+
+  swapDevices = [ ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+}
+# nixvim.nix
+{ ... }:
+
+let
+  nixvim = import (builtins.fetchGit {
+    url = "https://github.com/nix-community/nixvim";
+  });
+in
+{
+  imports = [
+    nixvim.nixosModules.nixvim
+    ./nixvim/autocmd.nix
+    ./nixvim/extras.nix
+    ./nixvim/keybinds.nix
+    ./nixvim/plugins.nix
+  ];
+
+  programs.nixvim = {
+    enable = true;
+
+    opts = {
+      number = true;
+      relativenumber = true;
+      clipboard = "unnamedplus";
+      swapfile = false;
+      backup = false;
+      writebackup = false;
+      colorcolumn = [ "80" "90" ];
+
+      expandtab = true;
+      shiftwidth = 2;
+      tabstop = 2;
+      softtabstop = 2;
+      autoindent = true;
+      smartindent = true;
+    };
+
+    globals = {
+      mapleader = " ";
+      VM_mouse_mappings = 1;
+      VM_maps = {
+        "Find Under" = "<C-m>";
+        "Find Subword Under" = "<C-m>";
+      };
+    };
+  };
+}
+
+{ pkgs, lib, ... }:
+{
+  programs.nixvim.extraPlugins = with pkgs.vimPlugins; [
+    vim-visual-multi
+  ];
+
+  programs.nixvim.extraConfigVim = ''
+    set list
+    set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
+
+    highlight ColorColumn ctermbg=236 guibg=#2d2d2d
+
+    function! LspStatus() abort
+      if luaeval('#vim.lsp.get_active_clients() > 0')
+        return luaeval("require('lsp-status').status()")
+      endif
+      return
+    endfunction
+  '';
+}
+{ ... }:
+{
+  programs.nixvim.keymaps = [
+    # Diagnostic navigation
+    {
+      mode = "n";
+      key = "]d";  # Next diagnostic
+      action = "<cmd>lua vim.diagnostic.goto_next()<CR>";
+    }
+    {
+      mode = "n";
+      key = "[d";  # Previous diagnostic
+      action = "<cmd>lua vim.diagnostic.goto_prev()<CR>";
+    }
+    
+    # LSP core functionality
+    {
+      mode = "n";
+      key = "<F12>";  # Go to definition
+      action = "<cmd>lua vim.lsp.buf.definition()<CR>";
+    }
+    {
+      mode = "n";
+      key = "K";  # Show hover information
+      action = "<cmd>lua vim.lsp.buf.hover()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<F2>";  # Rename symbol
+      action = "<cmd>lua vim.lsp.buf.rename()<CR>";
+    }
+    
+    # Leader-based LSP commands
+    {
+      mode = "n";
+      key = "<leader>ca";  # Code actions
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>gr";  # Show references
+      action = "<cmd>lua vim.lsp.buf.references()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>df";  # Show diagnostic in float
+      action = "<cmd>lua vim.diagnostic.open_float()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>li";  # Show LSP info
+      action = "<cmd>LspInfo<CR>";
+    }
+    
+    # Telescope (Fuzzy Finding)
+    {
+      mode = "n";
+      key = "<C-p>";  # Find files
+      action = "<cmd>Telescope find_files<CR>";
+    }
+    {
+      mode = "n";
+      key = "<C-f>";  # Find in files (grep)
+      action = "<cmd>Telescope live_grep<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>ws";  # Workspace symbols
+      action = "<cmd>Telescope lsp_workspace_symbols<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>ds";  # Document symbols
+      action = "<cmd>Telescope lsp_document_symbols<CR>";
+    }
+    
+    # Diagnostics
+    {
+      mode = "n";
+      key = "<leader>ld";  # List diagnostics
+      action = "<cmd>Telescope diagnostics<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>dw";  # Show diagnostics in location list
+      action = "<cmd>lua vim.diagnostic.setloclist()<CR>";
+    }
+    
+    # File navigation
+    {
+      mode = "n";
+      key = "-";  # File explorer
+      action = "<CMD>Oil<CR>";
+    }
+  ];
+}{ pkgs, lib, ... }:
+{
+  programs.nixvim.plugins = {
+    telescope.enable = true;
+    lualine.enable = true;
+    web-devicons.enable = true;
+
+    lsp = {
+      enable = true;
+      servers = {
+        nil_ls = {
+          enable = true;
+          settings = {
+            formatting = {
+              command = [ "nixpkgs-fmt" ];
+            };
+            nix = {
+              flake = {
+                autoEvalInputs = true;
+              };
+              maxMemoryMB = 2048;
+              diagnostics = {
+                ignored = [ ];
+                excludedFiles = [ ];
+              };
+            };
+          };
+        };
+        gopls = {
+          enable = true;
+          settings = {
+            analyses = {
+              unusedparams = true;
+              shadow = true;
+            };
+            staticcheck = true;
+            gofumpt = true;
+            hints = {
+              assignVariableTypes = true;
+              compositeLiteralFields = true;
+              compositeLiteralTypes = true;
+              constantValues = true;
+              functionTypeParameters = true;
+              parameterNames = true;
+              rangeVariableTypes = true;
+            };
+            importShortcut = "Both";
+            analyses.unusedwrite = true;
+            codelenses = {
+              gc_details = true;
+              generate = true;
+              regenerate_cgo = true;
+              tidy = true;
+              upgrade_dependency = true;
+              vendor = true;
+            };
+          };
+        };
+        clangd = {
+          enable = true;
+          settings = {
+            fallbackFlags = [ "-std=c11" ];
+            style = {
+              BasedOnStyle = "LLVM";
+              IndentWidth = 2;
+              TabWidth = 2;
+              UseTab = false;
+              ColumnLimit = 80;
+            };
+          };
+        };
+      };
+
+      # The workspace diagnostics configuration
+      onAttach = ''
+        vim.diagnostic.config({
+          virtual_text = true,
+          signs = true,
+          underline = true,
+          update_in_insert = false,
+          severity_sort = true,
+        })
+
+        -- Enable workspace diagnostics
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+          vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = true,
+            signs = true,
+            underline = true,
+            update_in_insert = false,
+            severity_sort = true,
+            workspace = true,
+          }
+        )
+      '';
+    };
+
+    oil = {
+      enable = true;
+      settings = {
+        view_options = {
+          show_hidden = true;
+        };
+        float = {
+          padding = 2;
+          max_width = 100;
+          max_height = 20;
+        };
+      };
+    };
+  };
+}
+
+{ ... }:
+{
+  programs.nixvim.autoCmd = [
+    {
+      event = [ "BufWritePre" ];
+      pattern = [ "*.go" ];
+      callback = {
+        __raw = ''
+          function()
+            vim.lsp.buf.format()
+              
+            local params = vim.lsp.util.make_range_params()
+            params.context = {only = {"source.organizeImports"}}
+            local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+            for _, res in pairs(result or {}) do
+              for _, r in pairs(res.result or {}) do
+                if r.edit then
+                  vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+                else
+                  vim.lsp.buf.execute_command(r.command)
+                end
+              end
+            end
+          end
+        '';
+      };
+    }
+    {
+      event = [ "BufWritePre" ];
+      pattern = [ "*.c" "*.h" ];
+      callback = {
+        __raw = ''
+          function()
+            vim.lsp.buf.format()
+          end
+        '';
+      };
+    }
+    {
+      event = [ "BufWritePre" ];
+      pattern = [ "*.nix" ];
+      callback = {
+        __raw = ''
+          function()
+            vim.lsp.buf.format()
+          end
+        '';
+      };
+    }
+  ];
+}
+
+{ config, pkgs, ... }:
+
+{
+  environment.systemPackages = with pkgs; [
+    vim
+    cargo
+    rustup
+    file
+    sqlite
+    gnumeric
+    gh
+    graphviz
+    flameshot
+    nixpkgs-fmt
+    pkgs.remmina
+    clang-tools
+    python312Packages.pygments
+    docker
+    obs-studio
+    lm_sensors
+    bat
+    mlocate
+    teams-for-linux
+    virt-manager
+    virt-viewer
+    spice-gtk
+    OVMF
+    glib
+    libguestfs
+    flyctl
+    syncthing
+    thunderbird
+    obs-studio
+    wine64
+    libreoffice-qt
+    ungoogled-chromium
+    cowsay
+    asciiquarium
+    redshift
+    busybox
+
+    rclone
+
+    gcc
+    gnumake
+    cmake
+    pkg-config
+    expat
+    zlib
+    minizip
+    nodejs
+    go
+    neovim
+    vscodium
+
+    wget
+    neofetch
+    fzf
+    yazi
+    kitty
+    htop
+    git
+    tmux
+    ripgrep
+    flatpak
+    xclip
+    gnused
+    fd
+    (python3.withPackages (ps: with ps; [
+      pip
+      pyautogui
+      tkinter
+      graphviz
+    ]))
+  ];
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    python3 = pkgs.python3.override {
+      packageOverrides = python-self: python-super: {
+        tkinter = python-super.tkinter.overrideAttrs (oldAttrs: {
+          buildInputs = oldAttrs.buildInputs ++ [ pkgs.tk ];
+        });
+      };
+    };
+  };
+}
+{ pkgs, ... }:
+
+{
+  environment.variables = {
+    LESS = "-R -X -F";
+    LESSHISTFILE = "-"; # Disable .lesshst file
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.zlib
+      pkgs.expat
+      pkgs.minizip
+    ];
+    GOTELEMETRY = "off";
+    EDITOR = "nvim";
+  };
+}
