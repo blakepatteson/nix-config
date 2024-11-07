@@ -11,6 +11,7 @@
     gh
     graphviz
     flameshot
+    nixpkgs-fmt
     pkgs.remmina
     clang-tools
     python312Packages.pygments
@@ -51,7 +52,7 @@
     go
     neovim
     vscodium
-    
+
     wget
     neofetch
     fzf
@@ -64,8 +65,8 @@
     flatpak
     xclip
     gnused
-    fd  
-    (python3.withPackages(ps: with ps; [
+    fd
+    (python3.withPackages (ps: with ps; [
       pip
       pyautogui
       tkinter
@@ -73,7 +74,7 @@
     ]))
   ];
 
-   nixpkgs.config.packageOverrides = pkgs: {
+  nixpkgs.config.packageOverrides = pkgs: {
     python3 = pkgs.python3.override {
       packageOverrides = python-self: python-super: {
         tkinter = python-super.tkinter.overrideAttrs (oldAttrs: {

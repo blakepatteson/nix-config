@@ -36,7 +36,7 @@
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
-  
+
   hardware.opengl.enable = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.nvidia.modesetting.enable = true;
@@ -47,7 +47,7 @@
     enable = true;
     package = pkgs.mlocate;
     interval = "hourly"; # how often to update the database
-    localuser = null;    # run updatedb as root
+    localuser = null; # run updatedb as root
   };
 
   hardware.nvidia.prime = {
@@ -91,7 +91,7 @@
   users.users.blake = {
     isNormalUser = true;
     description = "blake";
-    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm"];
+    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm" ];
   };
 
   system.stateVersion = "24.05"; # Did you read the comment?

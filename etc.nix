@@ -31,7 +31,7 @@
     map ctrl+shift+G scroll_to_prompt -1
   '';
 
-   environment.etc.bashrc = {
+  environment.etc.bashrc = {
     text = ''
       # ~/.bashrc: executed by bash(1) for non-login shells.
 

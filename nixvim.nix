@@ -16,15 +16,15 @@ in
 
   programs.nixvim = {
     enable = true;
-    
+
     opts = {
       number = true;
       relativenumber = true;
       clipboard = "unnamedplus";
-      swapfile = false;    
-      backup = false;      
+      swapfile = false;
+      backup = false;
       writebackup = false;
-      colorcolumn = ["80" "90"];  
+      colorcolumn = [ "80" "90" ];
 
       expandtab = true;
       shiftwidth = 2;
@@ -36,7 +36,7 @@ in
 
     globals = {
       mapleader = " ";
-      VM_mouse_mappings = 1;  
+      VM_mouse_mappings = 1;
       VM_maps = {
         "Find Under" = "<C-m>";
         "Find Subword Under" = "<C-m>";
@@ -44,3 +44,4 @@ in
     };
   };
 }
+
