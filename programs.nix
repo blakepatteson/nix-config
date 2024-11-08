@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -12,6 +12,7 @@
     graphviz
     flameshot
     nixpkgs-fmt
+    acpi
     pkgs.remmina
     clang-tools
     python312Packages.pygments
