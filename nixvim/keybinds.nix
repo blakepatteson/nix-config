@@ -55,7 +55,12 @@
     # Telescope (Fuzzy Finding)
     {
       mode = "n";
-      key = "<C-p>"; # Find files
+      key = "<C-p>";
+      action = "<cmd>Telescope find_files<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>ff";
       action = "<cmd>Telescope find_files<CR>";
     }
     {

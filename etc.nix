@@ -75,6 +75,8 @@
       alias dkillrm='sudo docker rm -f $(sudo docker ps -aq)'
 
       alias cls='clear && printf "\033[3J"'
+
+      alias battery='acpi'
     '';
     mode = "0644";
   };

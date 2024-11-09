@@ -38,7 +38,7 @@
     powertop.enable = false;
   };
   services.displayManager.defaultSession = "cinnamon";
-  
+
   # Cinnamon power management settings
   services.xserver.desktopManager.cinnamon.extraGSettingsOverrides = ''
     [org.cinnamon.desktop.session]
@@ -101,5 +101,7 @@
     description = "blake";
     extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm" ];
   };
+  nix.settings.cores = 0;
   system.stateVersion = "24.05"; # Did you read the comment?
 }
+
