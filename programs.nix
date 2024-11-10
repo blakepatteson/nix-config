@@ -67,6 +67,11 @@
     xclip
     gnused
     fd
+    nodePackages.svelte-language-server
+    nodePackages.typescript-language-server
+    nodePackages.typescript
+    # nodePackages."@sveltejs/vite-plugin-svelte" 
+
     (python3.withPackages (ps: with ps; [
       pip
       pyautogui
