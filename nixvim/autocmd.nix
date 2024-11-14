@@ -28,24 +28,12 @@
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.c" "*.h" ];
-      callback = {
-        __raw = ''
-          function()
-            vim.lsp.buf.format()
-          end
-        '';
-      };
+      callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
     }
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.nix" ];
-      callback = {
-        __raw = ''
-          function()
-            vim.lsp.buf.format()
-          end
-        '';
-      };
+      callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
     }
   ];
 }

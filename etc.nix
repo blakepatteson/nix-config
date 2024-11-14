@@ -29,6 +29,9 @@
     map ctrl+shift+l scroll_to_prompt 1
     map ctrl+shift+g scroll_to_prompt 0
     map ctrl+shift+G scroll_to_prompt -1
+
+    # unmappings
+    map ctrl+shift+r no_op
   '';
 
   environment.etc.bashrc = {

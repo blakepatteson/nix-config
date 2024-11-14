@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-    programs.nixvim.plugins = {
+  programs.nixvim.plugins = {
     telescope.enable = true;
     lualine.enable = true;
     web-devicons.enable = true;
@@ -21,7 +21,6 @@
         gopls = {
           enable = true;
           settings = {
-            analyses = { unusedparams = true; shadow = true; };
             staticcheck = true;
             gofumpt = true;
             hints = {
@@ -34,7 +33,7 @@
               rangeVariableTypes = true;
             };
             importShortcut = "Both";
-            analyses.unusedwrite = true;
+            # Add these for refactoring support
             codelenses = {
               gc_details = true;
               generate = true;
@@ -42,6 +41,26 @@
               tidy = true;
               upgrade_dependency = true;
               vendor = true;
+              test = true; # Add this
+              extract = true; # Add this
+            };
+
+            # Add experimental features
+            experimentalWorkspaceModule = true;
+
+            # Add refactoring settings
+            semanticTokens = true;
+
+            # Enable all analyses
+            analyses = {
+              unusedparams = true;
+              shadow = true;
+              fieldalignment = true;
+              nilness = true;
+              unusedwrite = true;
+              useany = true;
+              refactor = true;
+              extractmethod = true; # Add this specifically for extract method/function
             };
           };
         };
@@ -71,8 +90,41 @@
             };
           };
         };
+        rust_analyzer = {
+          enable = true;
+          installCargo = true;
+          installRustc = true;
+          settings = {
+            assist = {
+              importGranularity = "module";
+              importPrefix = "by_self";
+            };
+            cargo = {
+              loadOutDirsFromCheck = true;
+              allFeatures = true;
+            };
+            checkOnSave = true;
+            check = {
+              command = "clippy";
+              extraArgs = [ "--no-deps" ];
+            };
+            completion = {
+              autoimport = {
+                enable = true;
+              };
+            };
+            diagnostics = {
+              enable = true;
+              experimental = {
+                enable = true;
+              };
+            };
+            procMacro = {
+              enable = true;
+            };
+          };
+        };
       };
-
 
       onAttach = ''
         vim.diagnostic.config({
@@ -109,6 +161,37 @@
       settings = {
         view_options = { show_hidden = true; };
         float = { padding = 2; max_width = 100; max_height = 20; };
+      };
+    };
+
+    # Add LuaSnip
+    luasnip = {
+      enable = true;
+    };
+
+    # Update cmp configuration
+    cmp = {
+      enable = true;
+      settings = {
+        snippet = {
+          expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+        };
+        mapping = {
+          "<C-Space>" = "cmp.mapping.complete()";
+          "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+          "<C-f>" = "cmp.mapping.scroll_docs(4)";
+          "<C-n>" = "cmp.mapping.select_next_item()";
+          "<C-p>" = "cmp.mapping.select_prev_item()";
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() elseif require('luasnip').expand_or_jumpable() then require('luasnip').expand_or_jump() else fallback() end end, {'i', 's'})";
+          "<S-Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() elseif require('luasnip').jumpable(-1) then require('luasnip').jump(-1) else fallback() end end, {'i', 's'})";
+        };
+        sources = [
+          { name = "nvim_lsp"; }
+          { name = "luasnip"; } # Add luasnip as a source
+          { name = "path"; }
+          { name = "buffer"; }
+        ];
       };
     };
   };

@@ -30,6 +30,19 @@
       action = "<cmd>lua vim.lsp.buf.rename()<CR>";
     }
 
+    {
+      mode = "v";
+      key = "M-r"; # Code actions
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+    }
+
+    {
+      mode = "v";
+      key = "M-R"; # Code actions
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+    }
+
+
     # Leader-based LSP commands
     {
       mode = "n";
@@ -97,18 +110,6 @@
       key = "-"; # File explorer
       action = "<CMD>Oil<CR>";
     }
-    # Quick save and quit
-    {
-      mode = "n";
-      key = "<leader>w"; # Quick save
-      action = ":w<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>q"; # Quick quit
-      action = ":q<CR>";
-    }
-
     # VSCode-like line moving
     {
       mode = "v";
