@@ -3,7 +3,60 @@
   programs.nixvim.plugins = {
     telescope.enable = true;
     lualine.enable = true;
+    # treesitter.enable = true;
+    luasnip.enable = true;
     web-devicons.enable = true;
+    bufferline = {
+      enable = true;
+      settings = {
+        options = {
+          mode = "buffers";
+          numbers = "none";
+          close_command = "bdelete! %d";
+          right_mouse_command = "bdelete! %d";
+          left_mouse_command = "buffer %d";
+          middle_mouse_command = null;
+          indicator = { icon = "▎"; style = "icon"; };
+          buffer_close_icon = "󰅖";
+          modified_icon = "●";
+          close_icon = "";
+          left_trunc_marker = "";
+          right_trunc_marker = "";
+          show_buffer_icons = true;
+          show_buffer_close_icons = true;
+          show_close_icon = true;
+          show_tab_indicators = true;
+          separator_style = "thin";
+          enforce_regular_tabs = false;
+          always_show_bufferline = true;
+        };
+      };
+    };
+
+    notify.enable = true;
+    which-key.enable = true;
+    gitsigns = {
+      enable = true;
+      settings = {
+        signs = {
+          add = { text = "+"; };
+          change = { text = "*"; };
+          changedelete = { text = "~"; };
+          delete = { text = "_"; };
+          topdelete = { text = "‾"; };
+          untracked = { text = "┆"; };
+        };
+        watch_gitdir = { follow_files = true; };
+        on_attach = ''
+          function(bufnr)
+            local gs = package.loaded.gitsigns
+            -- Navigation
+            vim.keymap.set('n', ']h', gs.next_hunk, {buffer = bufnr})
+            vim.keymap.set('n', '[h', gs.prev_hunk, {buffer = bufnr})
+          end
+        '';
+      };
+    };
     lsp = {
       enable = true;
       servers = {
@@ -151,10 +204,7 @@
     indent-blankline.enable = true;
     nvim-colorizer = {
       enable = true;
-      userDefaultOptions = {
-        css = true;
-        tailwind = true;
-      };
+      userDefaultOptions = { css = true; tailwind = true; };
     };
     oil = {
       enable = true;
@@ -163,18 +213,16 @@
         float = { padding = 2; max_width = 100; max_height = 20; };
       };
     };
-
-    # Add LuaSnip
-    luasnip = {
-      enable = true;
-    };
-
     # Update cmp configuration
     cmp = {
       enable = true;
       settings = {
         snippet = {
-          expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+          expand = ''
+            function(args)
+              require('luasnip').lsp_expand(args.body)
+            end
+          '';
         };
         mapping = {
           "<C-Space>" = "cmp.mapping.complete()";
@@ -183,12 +231,32 @@
           "<C-n>" = "cmp.mapping.select_next_item()";
           "<C-p>" = "cmp.mapping.select_prev_item()";
           "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() elseif require('luasnip').expand_or_jumpable() then require('luasnip').expand_or_jump() else fallback() end end, {'i', 's'})";
-          "<S-Tab>" = "cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() elseif require('luasnip').jumpable(-1) then require('luasnip').jump(-1) else fallback() end end, {'i', 's'})";
+          "<Tab>" = ''
+            cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item()
+              elseif require('luasnip').expand_or_jumpable() then
+                require('luasnip').expand_or_jump()
+              else
+                fallback()
+              end
+            end, {'i', 's'})
+          '';
+          "<S-Tab>" = ''
+            cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item()
+              elseif require('luasnip').jumpable(-1) then
+                require('luasnip').jump(-1)
+              else
+                fallback()
+              end
+            end, {'i', 's'})
+          '';
         };
         sources = [
           { name = "nvim_lsp"; }
-          { name = "luasnip"; } # Add luasnip as a source
+          { name = "luasnip"; }
           { name = "path"; }
           { name = "buffer"; }
         ];
