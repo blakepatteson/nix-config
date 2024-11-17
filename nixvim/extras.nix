@@ -1,8 +1,13 @@
 { pkgs, ... }:
 {
-  programs.nixvim.extraPlugins = with pkgs.vimPlugins; [
-    vim-visual-multi
-  ];
+  programs.nixvim.extraPlugins = with pkgs.vimPlugins; [ vim-visual-multi ];
+  # have to do this for treesitter
+  programs.nixvim.extraConfigLuaPre = ''
+    vim.fs = vim.fs or {}
+    vim.fs.joinpath = vim.fs.joinpath or function(...)
+      return table.concat({...}, '/')
+    end
+  '';
   programs.nixvim.extraConfigVim = ''
     set list
     set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨

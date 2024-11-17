@@ -3,9 +3,17 @@
   programs.nixvim.plugins = {
     telescope.enable = true;
     lualine.enable = true;
-    # treesitter.enable = true;
     luasnip.enable = true;
     web-devicons.enable = true;
+    treesitter = {
+      enable = true;
+      nixvimInjections = true;
+      settings = {
+        ensure_installed = [ "nix" "lua" "vim" "go" ];
+      };
+      grammarPackages = with pkgs.vimPlugins.nvim-treesitter-parsers;
+        [ nix lua vim ];
+    };
     bufferline = {
       enable = true;
       settings = {
@@ -98,13 +106,9 @@
               extract = true; # Add this
             };
 
-            # Add experimental features
             experimentalWorkspaceModule = true;
-
-            # Add refactoring settings
             semanticTokens = true;
 
-            # Enable all analyses
             analyses = {
               unusedparams = true;
               shadow = true;
@@ -133,48 +137,20 @@
         svelte = {
           enable = true;
           package = pkgs.nodePackages.svelte-language-server;
-          settings = {
-            svelte = {
-              plugin = {
-                typescript = {
-                  enable = true;
-                };
-              };
-            };
-          };
+          settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
         rust_analyzer = {
           enable = true;
           installCargo = true;
           installRustc = true;
           settings = {
-            assist = {
-              importGranularity = "module";
-              importPrefix = "by_self";
-            };
-            cargo = {
-              loadOutDirsFromCheck = true;
-              allFeatures = true;
-            };
             checkOnSave = true;
-            check = {
-              command = "clippy";
-              extraArgs = [ "--no-deps" ];
-            };
-            completion = {
-              autoimport = {
-                enable = true;
-              };
-            };
-            diagnostics = {
-              enable = true;
-              experimental = {
-                enable = true;
-              };
-            };
-            procMacro = {
-              enable = true;
-            };
+            assist = { importGranularity = "module"; importPrefix = "by_self"; };
+            cargo = { loadOutDirsFromCheck = true; allFeatures = true; };
+            check = { command = "clippy"; extraArgs = [ "--no-deps" ]; };
+            completion = { autoimport = { enable = true; }; };
+            diagnostics = { enable = true; experimental = { enable = true; }; };
+            procMacro = { enable = true; };
           };
         };
       };
