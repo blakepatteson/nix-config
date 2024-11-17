@@ -35,6 +35,11 @@
       pattern = [ "*.nix" ];
       callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
     }
+    {
+      event = [ "BufWritePre" ];
+      pattern = [ "*.ts" "*.tsx" "*.js" "*.jsx" "*.svelte" "*.json" "*.css" "*.scss" "*.html" ];
+      callback = { __raw = '' function() vim.lsp.buf.format({ async = false }) end ''; };
+    }
   ];
 }
 

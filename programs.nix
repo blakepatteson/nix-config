@@ -30,6 +30,7 @@
     libguestfs
     flyctl
     syncthing
+    lazygit
     thunderbird
     obs-studio
     wine64
@@ -41,6 +42,7 @@
     busybox
 
     rclone
+    nodePackages.prettier
 
     gcc
     gnumake
@@ -72,12 +74,7 @@
     nodePackages.typescript
     # nodePackages."@sveltejs/vite-plugin-svelte" 
 
-    (python3.withPackages (ps: with ps; [
-      pip
-      pyautogui
-      tkinter
-      graphviz
-    ]))
+    (python3.withPackages (ps: with ps; [ pip pyautogui tkinter graphviz ]))
   ];
 
   nixpkgs.config.packageOverrides = pkgs: {

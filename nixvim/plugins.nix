@@ -5,20 +5,47 @@
     lualine.enable = true;
     luasnip.enable = true;
     web-devicons.enable = true;
+    none-ls = {
+      enable = true;
+      sources = {
+        formatting = { prettier = { enable = true; disableTsServerFormatter = true; }; };
+      };
+    };
+    #    rainbow-delimiters = {
+    #      enable = true;
+    #      strategy = {
+    #        html = "local"; # This helps with HTML tag pairs
+    #        svelte = "local";
+    #      };
+    #    };
     treesitter = {
       enable = true;
       nixvimInjections = true;
 
       settings = {
         # Languages to install
-        ensure_installed = [ "nix" "lua" "vim" "go" "rust" "python" "javascript" "typescript" "c" ];
+        ensure_installed = [
+          "html"
+          "svelte"
+          "css"
+          "javascript"
+          "typescript"
+          "nix"
+          "lua"
+          "vim"
+          "go"
+          "rust"
+          "python"
+          "javascript"
+          "typescript"
+          "c"
+        ];
 
-        # Enable syntax highlighting
         highlight = {
           enable = true;
-          additional_vim_regex_highlighting = false; # Disable old regex highlighting
+          additional_vim_regex_highlighting = false;
+          use_languagetree = true;
         };
-
 
         # Incremental selection based on syntax tree
         incremental_selection = {
@@ -36,6 +63,7 @@
 
         indent = { enable = true; };
         fold = { enable = true; };
+        matchup = { enable = true; };
 
         textobjects = {
           move = {
@@ -63,6 +91,12 @@
         markdown
         bash
         c
+        html
+        svelte
+        css
+        javascript
+        typescript
+        tsx
       ];
     };
     bufferline = {

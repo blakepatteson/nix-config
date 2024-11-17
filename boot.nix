@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 {
   boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 10;
-    };
+    systemd-boot = { enable = true; configurationLimit = 10; };
     efi.canTouchEfiVariables = true;
   };
   boot.kernelParams = [ "intel_iommu=on" "snd_hda_intel.dmic_detect=0" ];
@@ -33,10 +30,7 @@
 
   # Power management settings
   services.xserver.displayManager.gdm.autoSuspend = false;
-  powerManagement = {
-    enable = false;
-    powertop.enable = false;
-  };
+  powerManagement = { enable = false; powertop.enable = false; };
   services.displayManager.defaultSession = "cinnamon";
 
   # Cinnamon power management settings
@@ -91,11 +85,7 @@
   services.flatpak.enable = true;
   zramSwap.enable = true;
   services.openssh.enable = true;
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
+  nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 30d"; };
   users.users.blake = {
     isNormalUser = true;
     description = "blake";

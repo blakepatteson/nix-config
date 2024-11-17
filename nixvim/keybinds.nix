@@ -28,6 +28,9 @@
     { mode = "n"; key = "<leader>dw"; action = "<cmd>lua vim.diagnostic.setloclist()<CR>"; }
     { mode = "n"; key = "-"; action = "<CMD>Oil<CR>"; }
 
+    # buffer movement
+    { mode = "n"; key = "<Tab>"; action = "<cmd>bn<CR>"; }
+
     # VSCode-like line moving
     { mode = "v"; key = "<M-j>"; action = ":m '>+1<CR>gv=gv"; }
     { mode = "v"; key = "<M-k>"; action = ":m '<-2<CR>gv=gv"; }
