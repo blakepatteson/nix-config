@@ -8,11 +8,62 @@
     treesitter = {
       enable = true;
       nixvimInjections = true;
+
       settings = {
-        ensure_installed = [ "nix" "lua" "vim" "go" ];
+        # Languages to install
+        ensure_installed = [ "nix" "lua" "vim" "go" "rust" "python" "javascript" "typescript" "c" ];
+
+        # Enable syntax highlighting
+        highlight = {
+          enable = true;
+          additional_vim_regex_highlighting = false; # Disable old regex highlighting
+        };
+
+
+        # Incremental selection based on syntax tree
+        incremental_selection = {
+          enable = true;
+          keymaps = {
+            init_selection = "<C-space>";
+            node_incremental = "<C-space>";
+            node_decremental = "<C-backspace>";
+            scope_incremental = "<C-s>";
+          };
+        };
+
+        # Auto-pairs and rainbow parentheses
+        rainbow = { enable = true; extended_mode = true; max_file_lines = 1000; };
+
+        indent = { enable = true; };
+        fold = { enable = true; };
+
+        textobjects = {
+          move = {
+            enable = true;
+            goto_next_start = { "]f" = "@function.outer"; "]c" = "@class.outer"; };
+            goto_previous_start = { "[f" = "@function.outer"; "[c" = "@class.outer"; };
+          };
+        };
       };
-      grammarPackages = with pkgs.vimPlugins.nvim-treesitter-parsers;
-        [ nix lua vim ];
+
+      # Make sure to include grammar packages for all languages you want to use
+      grammarPackages = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+        nix
+        lua
+        vim
+        go
+        rust
+        python
+        javascript
+        typescript
+        json
+        yaml
+        toml
+        xml
+        markdown
+        bash
+        c
+      ];
     };
     bufferline = {
       enable = true;
