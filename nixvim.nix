@@ -81,6 +81,14 @@ in
       DF = { command = "lua vim.diagnostic.open_float()"; desc = "Show diagnostic float"; };
       DN = { command = "lua vim.diagnostic.goto_next()"; desc = "Next diagnostic"; };
       DP = { command = "lua vim.diagnostic.goto_prev()"; desc = "Previous diagnostic"; };
+
+      CP = {
+        command = ''
+        lua vim.fn.setreg('+', require('oil').get_current_dir()
+        require('oil').get_cursor_entry().name)
+        '';
+        desc = "Copy full path of file under cursor";
+      };
     };
   };
 }

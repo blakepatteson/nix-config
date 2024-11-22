@@ -92,6 +92,7 @@
     extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm" ];
   };
   nix.settings.cores = 0;
-  system.stateVersion = "24.05"; # Did you read the comment?
+  nix.settings.max-jobs = "auto";
+  system.stateVersion = "24.05";
 }
 
