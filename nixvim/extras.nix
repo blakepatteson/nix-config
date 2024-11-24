@@ -8,9 +8,7 @@
       return table.concat({...}, '/')
     end
   '';
-  programs.nixvim.extraConfigLua = ''
-    vim.opt.updatetime = 300
-  '';
+  programs.nixvim.extraConfigLua = '' vim.opt.updatetime = 300 '';
   programs.nixvim.extraConfigVim = ''
     set list
     set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨

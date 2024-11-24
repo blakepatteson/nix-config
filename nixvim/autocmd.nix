@@ -4,8 +4,7 @@
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.go" ];
-      callback = {
-        __raw = ''
+      callback = { __raw = ''
           function()
             vim.lsp.buf.format()
               
@@ -26,18 +25,16 @@
       };
     }
     {
-      event = [ "BufWritePre" ];
-      pattern = [ "*.c" "*.h" ];
+      event = [ "BufWritePre" ]; pattern = [ "*.c" "*.h" ];
+      callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
+    }
+    {
+      event = [ "BufWritePre" ]; pattern = [ "*.nix" ];
       callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
     }
     {
       event = [ "BufWritePre" ];
-      pattern = [ "*.nix" ];
-      callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
-    }
-    {
-      event = [ "BufWritePre" ];
-      pattern = [ "*.ts" "*.tsx" "*.js" "*.jsx" "*.svelte" "*.json" "*.css" "*.scss" "*.html" ];
+      pattern = [ "*.ts" "*.js" "*.svelte" "*.json" "*.css" "*.html" ];
       callback = { __raw = '' function() vim.lsp.buf.format({ async = false }) end ''; };
     }
   ];

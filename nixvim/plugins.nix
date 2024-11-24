@@ -23,7 +23,6 @@
       nixvimInjections = true;
 
       settings = {
-        # Languages to install
         ensure_installed = [
           "html"
           "svelte"
@@ -96,7 +95,6 @@
         css
         javascript
         typescript
-        tsx
       ];
     };
     bufferline = {
@@ -152,17 +150,12 @@
     };
     lsp = {
       enable = true;
-      servers = {
-        nil_ls = {
-          enable = true;
-          settings = {
-            formatting = { command = [ "nixpkgs-fmt" ]; };
-            nix = {
-              flake = { autoEvalInputs = true; };
+      servers = { nil_ls = { enable = true;
+          settings = { formatting = { command = [ "nixpkgs-fmt" ]; };
+            nix = { flake = { autoEvalInputs = true; };
               maxMemoryMB = 2048;
               diagnostics = { ignored = [ ]; excludedFiles = [ ]; };
-            };
-          };
+            }; };
         };
         gopls = {
           enable = true;
@@ -264,8 +257,7 @@
 
     indent-blankline.enable = true;
     nvim-colorizer = {
-      enable = true;
-      userDefaultOptions = { css = true; tailwind = true; };
+      enable = true; userDefaultOptions = { css = true; tailwind = true; };
     };
     oil = {
       enable = true;
@@ -277,9 +269,7 @@
     # Update cmp configuration
     cmp = {
       enable = true;
-      settings = {
-        snippet = {
-          expand = ''
+      settings = { snippet = { expand = ''
             function(args)
               require('luasnip').lsp_expand(args.body)
             end

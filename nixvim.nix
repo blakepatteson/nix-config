@@ -37,10 +37,7 @@ in
     };
     colorschemes.base16 = {
       enable = true;
-      settings = {
-        ts_rainbow = true;
-        lsp_semantic = true;
-      };
+      settings = { ts_rainbow = true; lsp_semantic = true; };
       colorscheme = {
         # Pure black background
         base00 = "#000000"; # Background
