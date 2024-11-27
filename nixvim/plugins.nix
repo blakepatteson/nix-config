@@ -1,7 +1,21 @@
 { pkgs, ... }:
 {
   programs.nixvim.plugins = {
-    telescope.enable = true;
+    telescope = {
+      enable = true;
+      settings = {
+        defaults = {
+          mappings = {
+            i = {
+              "<F4>" = "move_selection_next";
+              "<F16>" = "move_selection_previous";
+              "<Tab>" = "move_selection_next";
+              "<S-Tab>" = "move_selection_previous";
+            };
+          };
+        };
+      };
+    };
     lualine.enable = true;
     luasnip.enable = true;
     web-devicons.enable = true;
@@ -18,6 +32,10 @@
     #        svelte = "local";
     #      };
     #    };
+    comment = {
+      enable = true;
+      settings = { mappings = { basic = true; extra = true; }; };
+    };
     treesitter = {
       enable = true;
       nixvimInjections = true;
@@ -150,12 +168,17 @@
     };
     lsp = {
       enable = true;
-      servers = { nil_ls = { enable = true;
-          settings = { formatting = { command = [ "nixpkgs-fmt" ]; };
-            nix = { flake = { autoEvalInputs = true; };
+      servers = {
+        nil_ls = {
+          enable = true;
+          settings = {
+            formatting = { command = [ "nixpkgs-fmt" ]; };
+            nix = {
+              flake = { autoEvalInputs = true; };
               maxMemoryMB = 2048;
               diagnostics = { ignored = [ ]; excludedFiles = [ ]; };
-            }; };
+            };
+          };
         };
         gopls = {
           enable = true;
@@ -257,19 +280,28 @@
 
     indent-blankline.enable = true;
     nvim-colorizer = {
-      enable = true; userDefaultOptions = { css = true; tailwind = true; };
+      enable = true;
+      userDefaultOptions = { css = true; tailwind = true; };
     };
+
     oil = {
       enable = true;
       settings = {
         view_options = { show_hidden = true; };
         float = { padding = 2; max_width = 100; max_height = 20; };
+        keymaps = {
+          "<C-p>" = false; # Disable the default Ctrl+p binding
+          "<C-S-p>" = "actions.preview"; # Add new Ctrl+Shift+p binding
+        };
       };
     };
+
     # Update cmp configuration
     cmp = {
       enable = true;
-      settings = { snippet = { expand = ''
+      settings = {
+        snippet = {
+          expand = ''
             function(args)
               require('luasnip').lsp_expand(args.body)
             end

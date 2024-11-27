@@ -81,8 +81,8 @@ in
 
       CP = {
         command = ''
-        lua vim.fn.setreg('+', require('oil').get_current_dir()
-        require('oil').get_cursor_entry().name)
+          lua vim.fn.setreg('+', require('oil').get_current_dir()
+          require('oil').get_cursor_entry().name)
         '';
         desc = "Copy full path of file under cursor";
       };
