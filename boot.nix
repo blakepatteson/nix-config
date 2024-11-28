@@ -5,6 +5,12 @@
     efi.canTouchEfiVariables = true;
   };
   boot.kernelParams = [ "intel_iommu=on" "snd_hda_intel.dmic_detect=0" ];
+  boot.tmp.cleanOnBoot = true;
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10; # Prefer RAM over swap
+    "fs.inotify.max_user_watches" = 524288; # For development tools
+  };
+
   hardware.enableAllFirmware = true;
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -85,7 +91,20 @@
   services.flatpak.enable = true;
   zramSwap.enable = true;
   services.openssh.enable = true;
-  nix.gc = { automatic = true; dates = "weekly"; options = "--delete-older-than 30d"; };
+  services.fstrim.enable = true;
+  services.timesyncd.enable = true;
+
+  security.rtkit.enable = true; # Real-time process priority management
+  security.sudo.wheelNeedsPassword = true; # Require password for sudo
+  security.auditd.enable = true; # System audit logging
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+    persistent = true;
+  };
+
   users.users.blake = {
     isNormalUser = true;
     description = "blake";

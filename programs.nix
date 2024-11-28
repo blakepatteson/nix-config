@@ -5,6 +5,7 @@
     vim
     cargo
     rustup
+    delta
     file
     sqlite
     gnumeric

@@ -5,6 +5,17 @@
       enable = true;
       settings = {
         defaults = {
+          vimgrep_arguments = [
+            "rg"
+            "--color=never"
+            "--no-heading"
+            "--with-filename"
+            "--line-number"
+            "--column"
+            "--smart-case"
+            "--multiline" # Enable multiline matching
+            "--pcre2" # Use PCRE2 regex engine for better pattern matching
+          ];
           mappings = {
             i = {
               "<F4>" = "move_selection_next";
