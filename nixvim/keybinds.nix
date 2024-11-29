@@ -4,6 +4,10 @@
     # Diagnostic navigation
     { mode = "n"; key = "]d"; action = "<cmd>lua vim.diagnostic.goto_next()<CR>"; }
     { mode = "n"; key = "[d"; action = "<cmd>lua vim.diagnostic.goto_prev()<CR>"; }
+
+    { mode = "n"; key = "]r"; action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>"; }
+    { mode = "n"; key = "[r"; action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>"; }
+
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; }
     { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
