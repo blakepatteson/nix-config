@@ -19,6 +19,9 @@
     python312Packages.pygments
     docker
     obs-studio
+    bottom
+    xfce.catfish
+    pkgs.onlyoffice-bin
     lm_sensors
     bat
     mlocate
@@ -33,7 +36,6 @@
     syncthing
     lazygit
     thunderbird
-    obs-studio
     wine64
     libreoffice-qt
     ungoogled-chromium
