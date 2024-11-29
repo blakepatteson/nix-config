@@ -80,12 +80,21 @@ in
       DP = { command = "lua vim.diagnostic.goto_prev()"; desc = "Previous diagnostic"; };
 
       CP = {
-        command = ''
-          lua vim.fn.setreg('+', require('oil').get_current_dir()
-          require('oil').get_cursor_entry().name)
+        command = /* lua */ ''
+          lua local oil = require('oil'); 
+              local entry = oil.get_cursor_entry(); 
+              if entry and entry.name then 
+                local path = oil.get_current_dir() .. '/' .. entry.name; 
+                vim.fn.setreg('+', path); 
+                vim.notify('Copied: ' .. path) 
+              else 
+                vim.notify('No file under cursor', vim.log.levels.WARN) 
+              end
         '';
         desc = "Copy full path of file under cursor";
       };
     };
   };
 }
+
+
