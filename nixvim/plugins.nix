@@ -1,6 +1,12 @@
 { pkgs, ... }:
 {
   programs.nixvim.plugins = {
+    lualine.enable = true;
+    luasnip.enable = true;
+    notify.enable = true;
+    which-key.enable = true;
+    web-devicons.enable = true;
+
     telescope = {
       enable = true;
       settings = {
@@ -27,26 +33,18 @@
         };
       };
     };
-    lualine.enable = true;
-    luasnip.enable = true;
-    web-devicons.enable = true;
     none-ls = {
       enable = true;
       sources = {
         formatting = { prettier = { enable = true; disableTsServerFormatter = true; }; };
       };
     };
-    #    rainbow-delimiters = {
-    #      enable = true;
-    #      strategy = {
-    #        html = "local"; # This helps with HTML tag pairs
-    #        svelte = "local";
-    #      };
-    #    };
+
     comment = {
       enable = true;
       settings = { mappings = { basic = true; extra = true; }; };
     };
+
     treesitter = {
       enable = true;
       nixvimInjections = true;
@@ -126,6 +124,7 @@
         typescript
       ];
     };
+
     bufferline = {
       enable = true;
       settings = {
@@ -153,8 +152,6 @@
       };
     };
 
-    notify.enable = true;
-    which-key.enable = true;
     gitsigns = {
       enable = true;
       settings = {
@@ -167,16 +164,18 @@
           untracked = { text = "┆"; };
         };
         watch_gitdir = { follow_files = true; };
-        on_attach = ''
+        on_attach = /* lua */ ''
           function(bufnr)
             local gs = package.loaded.gitsigns
-            -- Navigation
+        
+            -- File-level hunk navigation
             vim.keymap.set('n', ']h', gs.next_hunk, {buffer = bufnr})
             vim.keymap.set('n', '[h', gs.prev_hunk, {buffer = bufnr})
           end
         '';
       };
     };
+
     lsp = {
       enable = true;
       servers = {
@@ -191,6 +190,7 @@
             };
           };
         };
+
         gopls = {
           enable = true;
           settings = {
@@ -233,6 +233,7 @@
             };
           };
         };
+
         clangd = {
           enable = true;
           settings = {
@@ -246,11 +247,13 @@
             };
           };
         };
+
         svelte = {
           enable = true;
           package = pkgs.nodePackages.svelte-language-server;
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
+
         rust_analyzer = {
           enable = true;
           installCargo = true;
@@ -267,7 +270,7 @@
         };
       };
 
-      onAttach = ''
+      onAttach = /* lua */''
         vim.diagnostic.config({
           virtual_text = true,
           signs = true,
@@ -325,7 +328,7 @@
           "<C-n>" = "cmp.mapping.select_next_item()";
           "<C-p>" = "cmp.mapping.select_prev_item()";
           "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<Tab>" = ''
+          "<Tab>" = /* lua */ ''
             cmp.mapping(function(fallback)
               if cmp.visible() then
                 cmp.select_next_item()
@@ -336,7 +339,7 @@
               end
             end, {'i', 's'})
           '';
-          "<S-Tab>" = ''
+          "<S-Tab>" = /* lua */ ''
             cmp.mapping(function(fallback)
               if cmp.visible() then
                 cmp.select_prev_item()

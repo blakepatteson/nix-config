@@ -8,8 +8,35 @@
       return table.concat({...}, '/')
     end
   '';
-  programs.nixvim.extraConfigLua = '' vim.opt.updatetime = 300 '';
-  programs.nixvim.extraConfigVim = ''
+  programs.nixvim.extraConfigLua = ''
+    vim.opt.updatetime = 300
+    
+      -- Workspace-wide git hunks function
+      local function workspace_git_hunks()
+        require('telescope.builtin').git_status({
+          git_command = { "git", "diff", "--unified=1" },
+          attach_mappings = function(_, map)
+            local actions = require('telescope.actions')
+            map('i', '<CR>', function(prompt_bufnr)
+              local selection = require('telescope.actions.state').get_selected_entry()
+              actions.close(prompt_bufnr)
+              if selection then
+                vim.cmd('edit ' .. selection.value)
+                -- Jump to the first change in the file
+                vim.schedule(function()
+                  vim.cmd('normal! ]h')
+                end)
+              end
+            end)
+            return true
+          end
+        })
+      end
+    
+      -- Register the command
+      vim.api.nvim_create_user_command('WorkspaceGitHunks', workspace_git_hunks, {})
+  '';
+  programs.nixvim.extraConfigVim = /* lua */ ''
     set list
     set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
     highlight ColorColumn ctermbg=236 guibg=#2d2d2d
@@ -38,5 +65,4 @@
       })
     EOF
   '';
-
 }

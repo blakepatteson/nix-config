@@ -5,8 +5,17 @@
     { mode = "n"; key = "]d"; action = "<cmd>lua vim.diagnostic.goto_next()<CR>"; }
     { mode = "n"; key = "[d"; action = "<cmd>lua vim.diagnostic.goto_prev()<CR>"; }
 
-    { mode = "n"; key = "]r"; action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>"; }
-    { mode = "n"; key = "[r"; action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>"; }
+    # cycle through lsp references navigation
+    {
+      mode = "n";
+      key = "]r";
+      action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
+    }
+    {
+      mode = "n";
+      key = "[r";
+      action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
+    }
 
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; }
@@ -19,6 +28,10 @@
     { mode = "n"; key = "<leader>gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; }
     { mode = "n"; key = "<leader>df"; action = "<cmd>lua vim.diagnostic.open_float()<CR>"; }
     { mode = "n"; key = "<leader>li"; action = "<cmd>LspInfo<CR>"; }
+    { mode = "n"; key = "<leader>gh"; action = "<cmd>WorkspaceGitHunks<CR>"; }
+
+
+
 
     # Telescope (Fuzzy Finding)
     { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope find_files<CR>"; }
