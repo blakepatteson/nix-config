@@ -155,6 +155,7 @@
     gitsigns = {
       enable = true;
       settings = {
+        watch_gitdir = { follow_files = true; };
         signs = {
           add = { text = "+"; };
           change = { text = "*"; };
@@ -163,16 +164,6 @@
           topdelete = { text = "‾"; };
           untracked = { text = "┆"; };
         };
-        watch_gitdir = { follow_files = true; };
-        on_attach = /* lua */ ''
-          function(bufnr)
-            local gs = package.loaded.gitsigns
-        
-            -- File-level hunk navigation
-            vim.keymap.set('n', ']h', gs.next_hunk, {buffer = bufnr})
-            vim.keymap.set('n', '[h', gs.prev_hunk, {buffer = bufnr})
-          end
-        '';
       };
     };
 

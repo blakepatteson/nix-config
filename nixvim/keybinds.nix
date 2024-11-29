@@ -17,6 +17,12 @@
       action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
     }
 
+    # Git navigation - both file and workspace level
+    { mode = "n"; key = "]h"; action = "<cmd>lua require('gitsigns').next_hunk()<CR>"; }
+    { mode = "n"; key = "[h"; action = "<cmd>lua require('gitsigns').prev_hunk()<CR>"; }
+    { mode = "n"; key = "]H"; action = "<cmd>NextGitFile<CR>"; }
+    { mode = "n"; key = "[H"; action = "<cmd>PrevGitFile<CR>"; }
+
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; }
     { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
