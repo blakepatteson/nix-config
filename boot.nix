@@ -1,5 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
+let
+  minNixVersion = "24.11";
+in
 {
+  assertions = [{
+    assertion = lib.versionAtLeast config.system.nixos.version minNixVersion;
+    message = ''
+      Your NixOS version (${config.system.nixos.version}) is older than the required version (${minNixVersion}).
+      Please run:
+        sudo nix-channel --update
+        sudo nixos-rebuild switch
+    '';
+  }];
   boot.loader = {
     systemd-boot = { enable = true; configurationLimit = 10; };
     efi.canTouchEfiVariables = true;
