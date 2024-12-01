@@ -2,6 +2,8 @@
 
 {
   environment.systemPackages = with pkgs; [
+    obs-studio
+    google-chrome
     vim
     cargo
     rustup
@@ -18,14 +20,12 @@
     clang-tools
     python312Packages.pygments
     docker
-    obs-studio
     bottom
     xfce.catfish
     pkgs.onlyoffice-bin
     lm_sensors
     bat
     mlocate
-    teams-for-linux
     virt-manager
     virt-viewer
     spice-gtk
@@ -38,7 +38,6 @@
     thunderbird
     wine64
     libreoffice-qt
-    ungoogled-chromium
     cowsay
     asciiquarium
     redshift
@@ -75,7 +74,6 @@
     nodePackages.svelte-language-server
     nodePackages.typescript-language-server
     nodePackages.typescript
-    # nodePackages."@sveltejs/vite-plugin-svelte" 
 
     (python3.withPackages (ps: with ps; [ pip pyautogui tkinter graphviz ]))
   ];
