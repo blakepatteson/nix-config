@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     obs-studio
+    spice-vdagent
     google-chrome
     vim
     cargo

@@ -26,9 +26,19 @@ in
   hardware.enableAllFirmware = true;
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
-  virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.qemu.package = pkgs.qemu_kvm;
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      swtpm.enable = true; # Optional: for TPM support
+      ovmf.enable = true; # For UEFI support
+    };
+  };
+
+
   virtualisation.docker.enable = true;
+
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
