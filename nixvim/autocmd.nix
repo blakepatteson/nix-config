@@ -3,6 +3,11 @@
   programs.nixvim.autoCmd = [
     {
       event = [ "BufWritePre" ];
+      pattern = [ "*.xml" ];
+      callback = { __raw = '' function() vim.lsp.buf.format({ async = false }) end ''; };
+    }
+    {
+      event = [ "BufWritePre" ];
       pattern = [ "*.go" ];
       callback = {
         __raw = ''
