@@ -35,9 +35,7 @@
     };
     none-ls = {
       enable = true;
-      sources = {
-        formatting = { prettier = { enable = true; disableTsServerFormatter = true; }; };
-      };
+      sources = { formatting = { prettier = { enable = true; }; }; };
     };
 
     comment = {
@@ -238,6 +236,8 @@
             };
           };
         };
+
+        lemminx = { enable = true; package = pkgs.lemminx; };
 
         svelte = {
           enable = true;
