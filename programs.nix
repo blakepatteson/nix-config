@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     obs-studio
+    ungoogled-chromium
     sqlitebrowser
     lemminx
     google-chrome

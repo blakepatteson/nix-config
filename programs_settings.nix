@@ -1,6 +1,6 @@
 {
   programs.bash = {
-    enableCompletion = true;
+    completion = { enable = true; };
     interactiveShellInit = '' PS1='[\D{%Y-%m-%d}] [\t]:\w\$ ' '';
   };
 

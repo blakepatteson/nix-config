@@ -24,6 +24,7 @@ in
     "fs.inotify.max_user_watches" = 524288; # For development tools
   };
 
+  hardware.pulseaudio.enable = false;
   hardware.enableAllFirmware = true;
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -89,7 +90,7 @@ in
   powerManagement = { enable = false; powertop.enable = false; };
   services.displayManager.defaultSession = "cinnamon";
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   hardware.nvidia.open = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   # hardware.nvidia.modesetting.enable = true;
