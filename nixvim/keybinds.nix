@@ -31,13 +31,11 @@
 
     # Leader-based LSP commands
     { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
+    { mode = "v"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
     { mode = "n"; key = "<leader>gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; }
     { mode = "n"; key = "<leader>df"; action = "<cmd>lua vim.diagnostic.open_float()<CR>"; }
     { mode = "n"; key = "<leader>li"; action = "<cmd>LspInfo<CR>"; }
     { mode = "n"; key = "<leader>gh"; action = "<cmd>WorkspaceGitHunks<CR>"; }
-
-
-
 
     # Telescope (Fuzzy Finding)
     { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope find_files<CR>"; }

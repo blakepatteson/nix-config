@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.nixvim.extraPlugins = with pkgs.vimPlugins; [ vim-visual-multi ];
-  # have to do this for treesitter
+  # have to do this for treesitter TODO: open issue with treesitter nixvim?
   programs.nixvim.extraConfigLuaPre = ''
     vim.fs = vim.fs or {}
     vim.fs.joinpath = vim.fs.joinpath or function(...)

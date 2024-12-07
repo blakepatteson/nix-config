@@ -93,7 +93,7 @@ in
   hardware.graphics.enable = true;
   hardware.nvidia.open = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  # hardware.nvidia.modesetting.enable = true;
+
   services.xserver.videoDrivers = [ "nvidia" ];
   services.locate = {
     enable = true;
@@ -101,11 +101,7 @@ in
     interval = "hourly"; # how often to update the database
     localuser = null; # run updatedb as root
   };
-  # hardware.nvidia.prime = {
-  #   offload.enable = true;
-  #   intelBusId = "PCI:0:2:0";
-  #   nvidiaBusId = "PCI:1:0:0";
-  # };
+
   services.printing.enable = true;
   fonts.packages = with pkgs; [
     noto-fonts
@@ -137,6 +133,46 @@ in
     dates = "weekly";
     options = "--delete-older-than 14d";
     persistent = true;
+  };
+
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      global = {
+        workgroup = "WORKGROUP";
+        "server string" = "Samba Server";
+        "server role" = "standalone server";
+        "map to guest" = "bad user";
+        "client min protocol" = "NT1";
+        "ntlm auth" = "yes";
+        "lanman auth" = "yes";
+        "client lanman auth" = "yes";
+        "encrypt passwords" = "yes";
+        "server min protocol" = "NT1";
+        "local master" = "yes";
+        "domain master" = "no";
+        "preferred master" = "yes";
+        "create mask" = "0755"; # Allows execute permissions
+        "directory mask" = "0755";
+        "map archive" = "yes";
+        "map system" = "yes";
+        "map hidden" = "yes";
+      };
+      development = {
+        path = "/home/blake/dev";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0755"; # Allows execute permissions
+        "directory mask" = "0755";
+        "force user" = "blake";
+        "valid users" = "blake";
+        "inherit permissions" = "yes";
+        "inherit acls" = "yes";
+        "store dos attributes" = "yes";
+      };
+    };
   };
 
   users.users.blake = {

@@ -195,7 +195,7 @@
               rangeVariableTypes = true;
             };
             importShortcut = "Both";
-            # Add these for refactoring support
+
             codelenses = {
               gc_details = true;
               generate = true;
@@ -203,8 +203,8 @@
               tidy = true;
               upgrade_dependency = true;
               vendor = true;
-              test = true; # Add this
-              extract = true; # Add this
+              test = true;
+              extract = true;
             };
 
             experimentalWorkspaceModule = true;
@@ -218,7 +218,7 @@
               unusedwrite = true;
               useany = true;
               refactor = true;
-              extractmethod = true; # Add this specifically for extract method/function
+              extractmethod = true;
             };
           };
         };
@@ -301,7 +301,6 @@
       };
     };
 
-    # Update cmp configuration
     cmp = {
       enable = true;
       settings = {
