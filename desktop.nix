@@ -1,11 +1,11 @@
 { ... }:
 {
+  services.displayManager.defaultSession = "cinnamon";
   services.xserver = {
     enable = true;
     displayManager = {
       lightdm.enable = true;
       gdm.autoSuspend = false;
-      defaultSession = "cinnamon";
     };
     desktopManager.cinnamon = {
       enable = true;
