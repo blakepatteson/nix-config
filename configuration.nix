@@ -3,11 +3,12 @@
 {
   imports = [
     ./hardware-configuration.nix
+
     ./boot.nix
-    ./programs.nix
-    ./etc.nix
-    ./programs_settings.nix
     ./env.nix
+    ./etc.nix
     ./nixvim.nix
+    ./programs.nix
+    ./programs_settings.nix
   ];
 }

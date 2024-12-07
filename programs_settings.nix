@@ -11,24 +11,28 @@
 
   programs.git = {
     enable = true;
-    lfs.enable = true;
     config = {
       init.defaultBranch = "main";
       pull.rebase = true;
-      core = { editor = "nvim"; pager = "delta"; };
-      interactive = { diffFilter = "delta --color-only"; };
-      delta = {
-        enable = true;
-        options = {
-          features = "decorations";
-          navigate = true;
-          light = false;
-          side-by-side = true;
-          line-numbers = true;
-        };
+      core = {
+        editor = "nvim";
+        whitespace = "trailing-space,space-before-tab";
+        autocrlf = "input";
       };
-      merge = { conflictstyle = "diff3"; };
-      diff = { colorMoved = "default"; };
+      merge = { conflictstyle = "diff3"; tool = "nvim"; ff = false; };
+      diff = {
+        colorMoved = "default";
+        algorithm = "histogram";
+        compactionHeuristic = true;
+        mnemonicPrefix = true;
+      };
+      alias = { b = "branch -vva"; };
+      push = {
+        default = "current"; # Only push current branch
+        followTags = true; # Push tags automatically
+      };
+      fetch = { prune = true; pruneTags = true; };
+      help = { autocorrect = -1; };
     };
   };
 }
