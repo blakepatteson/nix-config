@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     obs-studio
     spice-vdagent
+    ungoogled-chromium
     sqlitebrowser
     lemminx
     google-chrome

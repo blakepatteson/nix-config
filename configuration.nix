@@ -1,14 +1,22 @@
 { ... }:
-
 {
   imports = [
     ./hardware-configuration.nix
 
     ./boot.nix
-    ./env.nix
+    ./desktop.nix
     ./etc.nix
+    ./env.nix
+    ./fonts.nix
+    ./hardware.nix
+    ./network.nix
     ./nixvim.nix
     ./programs.nix
     ./programs_settings.nix
+    ./programs.nix
+    ./system.nix
+    ./services.nix
+    ./security.nix
+    ./virtualization.nix
   ];
 }
