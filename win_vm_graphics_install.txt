@@ -1,0 +1,26 @@
+SPICE Guest Tools:
+
+Download "spice-guest-tools" from: https://www.spice-space.org/download.html
+Look for "virt-viewer-x86.msi" - this is correct
+Install it on your Windows VM
+
+VirtIO Drivers:
+
+Download from: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/
+Get "virtio-win.iso"
+In virt-manager:
+
+Add the ISO as a CD drive to your VM
+Boot Windows
+Open the virtual CD drive
+Run "virtio-win-guest-tools.exe"
+
+After installation:
+
+Reboot your VM
+Windows should now support dynamic resolution scaling
+Open Spice viewer preferences to adjust display settings if needed
+
+files should be called : 
+    virtio-win-guest-toools.exe
+    virt-viewer-x86-11.0-1.0.msi
