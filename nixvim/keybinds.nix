@@ -51,6 +51,7 @@
 
     # buffer movement
     { mode = "n"; key = "<Tab>"; action = "<cmd>bn<CR>"; }
+    { mode = "n"; key = "<S-Tab>"; action = "<cmd>bp<CR>"; }
 
     # VSCode-like line moving
     { mode = "v"; key = "<M-j>"; action = ":m '>+1<CR>gv=gv"; }
