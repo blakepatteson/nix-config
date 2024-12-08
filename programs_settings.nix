@@ -1,8 +1,16 @@
+{ lib, ... }:
+let
+  nixosVersion = lib.versions.majorMinor lib.version;
+  isOldVersion = nixosVersion < "23.11";
+in
 {
   programs.bash = {
-    enableCompletion = true;
     interactiveShellInit = '' PS1='[\D{%Y-%m-%d}] [\t]:\w\$ ' '';
-  };
+  } // (if isOldVersion then {
+    enableCompletion = true;
+  } else {
+    completion.enable = true;
+  });
 
   programs.chromium = {
     enable = true;
@@ -13,7 +21,6 @@
     enable = true;
     config = {
       init.defaultBranch = "main";
-      pull.rebase = true;
       core = {
         editor = "nvim";
         whitespace = "trailing-space,space-before-tab";

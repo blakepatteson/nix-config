@@ -98,7 +98,6 @@
         };
       };
 
-      # Make sure to include grammar packages for all languages you want to use
       grammarPackages = with pkgs.vimPlugins.nvim-treesitter-parsers; [
         nix
         lua

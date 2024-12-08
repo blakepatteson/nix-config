@@ -110,7 +110,7 @@
     lua << EOF
       local lspconfig = require('lspconfig')
       
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         cmd = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio" },
         filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "typescript.tsx" },
         root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
