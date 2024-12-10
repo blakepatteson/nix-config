@@ -23,6 +23,10 @@
     { mode = "n"; key = "]H"; action = "<cmd>NextGitFile<CR>"; }
     { mode = "n"; key = "[H"; action = "<cmd>PrevGitFile<CR>"; }
 
+    # Git reset hunks / files
+    { mode = "n"; key = "<leader>rh"; action = "<cmd>Gitsigns reset_hunk<CR>"; }
+    { mode = "n"; key = "<leader>rb"; action = "<cmd>Gitsigns reset_buffer<CR>"; }
+
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; }
     { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }

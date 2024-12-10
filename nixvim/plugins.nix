@@ -283,9 +283,12 @@
     };
 
     indent-blankline.enable = true;
-    nvim-colorizer = {
+    colorizer = {
       enable = true;
-      userDefaultOptions = { css = true; tailwind = true; };
+      settings = {
+        user_default_options = { css = true; tailwind = true; };
+        filetypes = [ "*" ]; # Enable for all filetypes
+      };
     };
 
     oil = {
