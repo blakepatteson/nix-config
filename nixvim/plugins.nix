@@ -58,7 +58,7 @@
           "lua"
           "vim"
           "go"
-          "rust"
+          # "rust"
           "python"
           "javascript"
           "typescript"
@@ -103,7 +103,7 @@
         lua
         vim
         go
-        rust
+        # rust
         python
         javascript
         typescript
@@ -244,20 +244,20 @@
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
 
-        rust_analyzer = {
-          enable = true;
-          installCargo = true;
-          installRustc = true;
-          settings = {
-            checkOnSave = true;
-            assist = { importGranularity = "module"; importPrefix = "by_self"; };
-            cargo = { loadOutDirsFromCheck = true; allFeatures = true; };
-            check = { command = "clippy"; extraArgs = [ "--no-deps" ]; };
-            completion = { autoimport = { enable = true; }; };
-            diagnostics = { enable = true; experimental = { enable = true; }; };
-            procMacro = { enable = true; };
-          };
-        };
+        # rust_analyzer = {
+        #   enable = true;
+        #   installCargo = true;
+        #   installRustc = true;
+        #   settings = {
+        #     checkOnSave = true;
+        #     assist = { importGranularity = "module"; importPrefix = "by_self"; };
+        #     cargo = { loadOutDirsFromCheck = true; allFeatures = true; };
+        #     check = { command = "clippy"; extraArgs = [ "--no-deps" ]; };
+        #     completion = { autoimport = { enable = true; }; };
+        #     diagnostics = { enable = true; experimental = { enable = true; }; };
+        #     procMacro = { enable = true; };
+        #   };
+        # };
       };
 
       onAttach = /* lua */''

@@ -9,8 +9,8 @@
     lemminx
     google-chrome
     vim
-    cargo
-    rustup
+    # cargo
+    # rustup
     file
     sqlite
     gnumeric
