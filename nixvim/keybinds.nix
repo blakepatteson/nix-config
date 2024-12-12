@@ -27,6 +27,9 @@
     { mode = "n"; key = "<leader>rh"; action = "<cmd>Gitsigns reset_hunk<CR>"; }
     { mode = "n"; key = "<leader>rb"; action = "<cmd>Gitsigns reset_buffer<CR>"; }
 
+
+    # desc = "Go to definition";
+    { mode = "n"; key = "<leader>gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; }
     { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
@@ -76,6 +79,7 @@
 
     # Black hole delete (delete without yanking)
     { mode = "n"; key = "<leader>d"; action = "\"_dd"; }
+
   ];
 }
 

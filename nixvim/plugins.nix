@@ -167,14 +167,14 @@
     lsp = {
       enable = true;
       servers = {
+        nixd.enable = true;
         nil_ls = {
           enable = true;
           settings = {
             formatting = { command = [ "nixpkgs-fmt" ]; };
             nix = {
-              flake = { autoEvalInputs = true; };
+              flake = { autoEvalInputs = false; }; # Set to false to avoid crashes
               maxMemoryMB = 2048;
-              diagnostics = { ignored = [ ]; excludedFiles = [ ]; };
             };
           };
         };
@@ -307,7 +307,7 @@
       enable = true;
       settings = {
         snippet = {
-          expand = ''
+          expand = /* lua */ ''
             function(args)
               require('luasnip').lsp_expand(args.body)
             end
