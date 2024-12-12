@@ -1,16 +1,9 @@
-{ lib, ... }:
-let
-  nixosVersion = lib.versions.majorMinor lib.version;
-  isOldVersion = nixosVersion < "23.11";
-in
+{ ... }:
 {
   programs.bash = {
     interactiveShellInit = '' PS1='[\D{%Y-%m-%d}] [\t]:\w\$ ' '';
-  } // (if isOldVersion then {
     enableCompletion = true;
-  } else {
-    completion.enable = true;
-  });
+  };
 
   programs.chromium = {
     enable = true;

@@ -58,7 +58,7 @@
           "lua"
           "vim"
           "go"
-          "rust"
+          # "rust"
           "python"
           "javascript"
           "typescript"
@@ -103,7 +103,7 @@
         lua
         vim
         go
-        rust
+        # rust
         python
         javascript
         typescript
@@ -167,14 +167,14 @@
     lsp = {
       enable = true;
       servers = {
+        nixd.enable = true;
         nil_ls = {
           enable = true;
           settings = {
             formatting = { command = [ "nixpkgs-fmt" ]; };
             nix = {
-              flake = { autoEvalInputs = true; };
+              flake = { autoEvalInputs = false; }; # Set to false to avoid crashes
               maxMemoryMB = 2048;
-              diagnostics = { ignored = [ ]; excludedFiles = [ ]; };
             };
           };
         };
@@ -244,20 +244,20 @@
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
 
-        rust_analyzer = {
-          enable = true;
-          installCargo = true;
-          installRustc = true;
-          settings = {
-            checkOnSave = true;
-            assist = { importGranularity = "module"; importPrefix = "by_self"; };
-            cargo = { loadOutDirsFromCheck = true; allFeatures = true; };
-            check = { command = "clippy"; extraArgs = [ "--no-deps" ]; };
-            completion = { autoimport = { enable = true; }; };
-            diagnostics = { enable = true; experimental = { enable = true; }; };
-            procMacro = { enable = true; };
-          };
-        };
+        # rust_analyzer = {
+        #   enable = true;
+        #   installCargo = true;
+        #   installRustc = true;
+        #   settings = {
+        #     checkOnSave = true;
+        #     assist = { importGranularity = "module"; importPrefix = "by_self"; };
+        #     cargo = { loadOutDirsFromCheck = true; allFeatures = true; };
+        #     check = { command = "clippy"; extraArgs = [ "--no-deps" ]; };
+        #     completion = { autoimport = { enable = true; }; };
+        #     diagnostics = { enable = true; experimental = { enable = true; }; };
+        #     procMacro = { enable = true; };
+        #   };
+        # };
       };
 
       onAttach = /* lua */''
@@ -307,7 +307,7 @@
       enable = true;
       settings = {
         snippet = {
-          expand = ''
+          expand = /* lua */ ''
             function(args)
               require('luasnip').lsp_expand(args.body)
             end

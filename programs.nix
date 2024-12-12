@@ -8,9 +8,11 @@
     sqlitebrowser
     lemminx
     google-chrome
+    nil
+    nixd
     vim
-    cargo
-    rustup
+    # cargo
+    # rustup
     file
     sqlite
     gnumeric
@@ -19,13 +21,13 @@
     flameshot
     nixpkgs-fmt
     acpi
-    pkgs.remmina
+    remmina
     clang-tools
     python312Packages.pygments
     docker
     bottom
     xfce.catfish
-    pkgs.onlyoffice-bin
+    onlyoffice-bin
     lm_sensors
     bat
     mlocate

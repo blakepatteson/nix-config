@@ -52,10 +52,7 @@
      vim.api.nvim_create_user_command('WorkspaceGitHunks', workspace_git_hunks, {})
 
     -- Global state for tracking current position
-    _G.git_nav_state = {
-      files = {},
-      current_index = 0
-    }
+    _G.git_nav_state = { files = {}, current_index = 0 }
 
     local function navigate_git_changes(direction)
        local files = get_git_files_with_changes()
@@ -110,7 +107,7 @@
     lua << EOF
       local lspconfig = require('lspconfig')
       
-      lspconfig.ts_ls.setup({
+      lspconfig.tsserver.setup({
         cmd = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio" },
         filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "typescript.tsx" },
         root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
