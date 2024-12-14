@@ -16,6 +16,10 @@ in
     enable = true;
     package = pkgs.neovim-unwrapped;
     opts = {
+      foldmethod = "expr";
+      foldexpr = "nvim_treesitter#foldexpr()";
+      foldenable = true;
+      foldlevel = 99;
       number = true;
       relativenumber = true;
       clipboard = "unnamedplus";

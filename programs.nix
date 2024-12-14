@@ -11,8 +11,6 @@
     nil
     nixd
     vim
-    # cargo
-    # rustup
     file
     sqlite
     gnumeric

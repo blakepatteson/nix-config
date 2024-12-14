@@ -22,13 +22,11 @@
             "--multiline" # Enable multiline matching
             "--pcre2" # Use PCRE2 regex engine for better pattern matching
           ];
-          mappings = {
-            i = {
-              "<F4>" = "move_selection_next";
-              "<F16>" = "move_selection_previous";
-              "<Tab>" = "move_selection_next";
-              "<S-Tab>" = "move_selection_previous";
-            };
+          mappings.i = {
+            "<F4>" = "move_selection_next";
+            "<F16>" = "move_selection_previous";
+            "<Tab>" = "move_selection_next";
+            "<S-Tab>" = "move_selection_previous";
           };
         };
       };
@@ -58,7 +56,6 @@
           "lua"
           "vim"
           "go"
-          # "rust"
           "python"
           "javascript"
           "typescript"
@@ -103,7 +100,6 @@
         lua
         vim
         go
-        # rust
         python
         javascript
         typescript
@@ -243,21 +239,6 @@
           package = pkgs.nodePackages.svelte-language-server;
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
-
-        # rust_analyzer = {
-        #   enable = true;
-        #   installCargo = true;
-        #   installRustc = true;
-        #   settings = {
-        #     checkOnSave = true;
-        #     assist = { importGranularity = "module"; importPrefix = "by_self"; };
-        #     cargo = { loadOutDirsFromCheck = true; allFeatures = true; };
-        #     check = { command = "clippy"; extraArgs = [ "--no-deps" ]; };
-        #     completion = { autoimport = { enable = true; }; };
-        #     diagnostics = { enable = true; experimental = { enable = true; }; };
-        #     procMacro = { enable = true; };
-        #   };
-        # };
       };
 
       onAttach = /* lua */''
