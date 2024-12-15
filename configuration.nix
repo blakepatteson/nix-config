@@ -12,7 +12,7 @@
     ./network.nix
     ./nixvim.nix
     ./programs.nix
-    ./programs_settings.nix
+    ./programs-settings.nix
     ./programs.nix
     ./system.nix
     ./services.nix

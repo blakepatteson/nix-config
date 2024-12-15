@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     obs-studio
+    pinta
     spice-vdagent
     ungoogled-chromium
     sqlitebrowser
