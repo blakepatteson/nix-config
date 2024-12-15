@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     obs-studio
+    raylib
     spice-vdagent
     ungoogled-chromium
     sqlitebrowser
