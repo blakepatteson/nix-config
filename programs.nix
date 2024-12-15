@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     obs-studio
+    golangci-lint
     pinta
     spice-vdagent
     ungoogled-chromium
@@ -73,6 +74,7 @@
     ripgrep
     flatpak
     xclip
+    xsel
     gnused
     fd
     nodePackages.svelte-language-server
