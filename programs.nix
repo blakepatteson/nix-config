@@ -5,6 +5,7 @@
     obs-studio
     golangci-lint
     pinta
+    raylib
     spice-vdagent
     ungoogled-chromium
     sqlitebrowser
