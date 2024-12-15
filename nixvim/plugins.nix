@@ -33,7 +33,13 @@
     };
     none-ls = {
       enable = true;
-      sources = { formatting = { prettier = { enable = true; }; }; };
+      sources = {
+        formatting = {
+          prettier = { enable = true; };
+          gofmt = { enable = true; };
+        };
+        diagnostics = { golangci_lint = { enable = true; }; };
+      };
     };
 
     comment = {
@@ -177,9 +183,13 @@
 
         gopls = {
           enable = true;
+          filetypes = [ "go" "gomod" "gowork" "gotmpl" ];
           settings = {
             staticcheck = true;
             gofumpt = true;
+            usePlaceholders = true;
+            completeUnimported = true;
+
             hints = {
               assignVariableTypes = true;
               compositeLiteralFields = true;
@@ -189,7 +199,33 @@
               parameterNames = true;
               rangeVariableTypes = true;
             };
-            importShortcut = "Both";
+
+            directoryFilters = [
+              "-.git"
+              "-.vscode"
+              "-.idea"
+              "-node_modules"
+            ];
+
+            diagnostics = {
+              enable = true;
+              annotations = {
+                bounds = true;
+                escape = true;
+                inline = true;
+              };
+            };
+
+            analyses = {
+              unusedparams = true;
+              unusedwrite = true;
+              useany = true;
+              nilness = true;
+              shadow = true;
+              fieldalignment = true;
+              refactor = true;
+              extractmethod = true;
+            };
 
             codelenses = {
               gc_details = true;
@@ -202,19 +238,15 @@
               extract = true;
             };
 
-            experimentalWorkspaceModule = true;
             semanticTokens = true;
+            templateExtensions = [ ];
+            vulncheck = "Imports";
 
-            analyses = {
-              unusedparams = true;
-              shadow = true;
-              fieldalignment = true;
-              nilness = true;
-              unusedwrite = true;
-              useany = true;
-              refactor = true;
-              extractmethod = true;
-            };
+            diagnosticsDelay = "300ms";
+            matcher = "Fuzzy";
+            hoverKind = "FullDocumentation";
+            importShortcut = "Both";
+            experimentalWorkspaceModule = true;
           };
         };
 
@@ -260,6 +292,37 @@
             workspace = true,
           }
         )
+
+        -- Configure diagnostic display
+        vim.diagnostic.config({
+          virtual_text = true,
+          signs = true,
+          underline = true,
+          update_in_insert = false,
+          severity_sort = true,
+          float = {
+            source = "always",  -- Show source in diagnostic popup window
+            border = "rounded"
+          }
+        })
+
+        -- Enhance diagnostic handling for Go files
+        if vim.bo.filetype == "go" then
+          -- Force diagnostic refresh on save
+          vim.api.nvim_create_autocmd("BufWritePost", {
+            pattern = "*.go",
+            callback = function()
+              -- Refresh diagnostics
+              vim.diagnostic.reset()
+              -- Format the buffer
+              vim.lsp.buf.format({ async = false })
+              -- Request diagnostics refresh
+              vim.schedule(function()
+                vim.diagnostic.show()
+              end)
+            end,
+          })
+        end
       '';
     };
 
@@ -334,3 +397,4 @@
     };
   };
 }
+

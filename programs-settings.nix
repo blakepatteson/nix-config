@@ -26,6 +26,8 @@
         compactionHeuristic = true;
         mnemonicPrefix = true;
       };
+      # git config advice.addIgnoredFile
+      # git config pull.rebase false
       alias = { b = "branch -vva"; };
       push = {
         default = "current"; # Only push current branch
