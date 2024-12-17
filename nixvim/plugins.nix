@@ -11,6 +11,22 @@
       enable = true;
       settings = {
         defaults = {
+          file_ignore_patterns = [ "^.git/" "^node_modules/" "^.direnv/" ];
+          layout_strategy = "horizontal";
+          layout_config = {
+            horizontal = {
+              preview_width = 0.55;
+              results_width = 0.45;
+            };
+            width = 0.95;
+            height = 0.85;
+            preview_cutoff = 120;
+          };
+          prompt_prefix = "🔍 ";
+          prompt_title = false;
+          results_title = false;
+          dynamic_preview_title = true;
+          sorting_strategy = "ascending";
           vimgrep_arguments = [
             "rg"
             "--color=never"

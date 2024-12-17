@@ -63,6 +63,10 @@
     { mode = "v"; key = "<M-j>"; action = ":m '>+1<CR>gv=gv"; }
     { mode = "v"; key = "<M-k>"; action = ":m '<-2<CR>gv=gv"; }
 
+    # Indentation in visual mode
+    { mode = "v"; key = "<Tab>"; action = ">gv"; }
+    { mode = "v"; key = "<S-Tab>"; action = "<gv"; }
+
     # Center view when navigating
     { mode = "n"; key = "<C-d>"; action = "<C-d>zz"; }
     { mode = "n"; key = "<C-u>"; action = "<C-u>zz"; }
