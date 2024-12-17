@@ -27,7 +27,6 @@
     { mode = "n"; key = "<leader>rh"; action = "<cmd>Gitsigns reset_hunk<CR>"; }
     { mode = "n"; key = "<leader>rb"; action = "<cmd>Gitsigns reset_buffer<CR>"; }
 
-
     # desc = "Go to definition";
     { mode = "n"; key = "<leader>gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
