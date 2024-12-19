@@ -11,7 +11,7 @@
       enable = true;
       settings = {
         defaults = {
-          file_ignore_patterns = [ "^.git/" "^node_modules/" "^.direnv/" ];
+          file_ignore_patterns = [ "^node_modules/" ];
           layout_strategy = "horizontal";
           layout_config = {
             horizontal = {

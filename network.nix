@@ -1,7 +1,7 @@
 # network.nix
 { lib, ... }:
 let
-  hasModernSamba = lib.versionAtLeast lib.version "23.05";
+  hasModernSamba = lib.versionAtLeast lib.version "24.06";
 in
 {
   networking = {

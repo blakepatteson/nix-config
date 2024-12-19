@@ -1,5 +1,5 @@
 # hardware.nix
-{ lib, config, ... }:
+{ ... }:
 let
   # Use a static configuration file to determine hardware profile
   isPrimeSystem = builtins.pathExists ./hardware-configs/is-prime-system;
