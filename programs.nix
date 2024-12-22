@@ -3,6 +3,11 @@
 {
   environment.systemPackages = with pkgs; [
     obs-studio
+
+    qsynth
+    fluidsynth
+    soundfont-fluid
+
     golangci-lint
     pinta
     raylib
