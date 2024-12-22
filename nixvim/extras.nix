@@ -11,10 +11,11 @@
   programs.nixvim.extraConfigLua = ''
     vim.opt.updatetime = 300
     vim.opt.list = true
+
     vim.opt.listchars = {
       space = "·",
+      tab = "  ",
       eol = "↴",
-      tab = "»\\",
       trail = "·",
       extends = "⟩",
       precedes = "⟨"

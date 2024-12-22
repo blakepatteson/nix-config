@@ -19,7 +19,7 @@
         whitespace = "trailing-space,space-before-tab";
         autocrlf = "input";
       };
-      merge = { conflictstyle = "diff3"; tool = "nvim"; ff = false; };
+      merge = { conflictstyle = "diff3"; tool = "nvim"; };
       diff = {
         colorMoved = "default";
         algorithm = "histogram";
