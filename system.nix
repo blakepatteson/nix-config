@@ -38,7 +38,7 @@
   users.users.blake = {
     isNormalUser = true;
     description = "blake";
-    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "libvirtd" "video" "kvm" "midi" "realtime" "pipewire" ];
   };
 
   nixpkgs.config.allowUnfree = true;

@@ -287,6 +287,28 @@
           package = pkgs.nodePackages.svelte-language-server;
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
+
+        tsserver = {
+          enable = true;
+          package = pkgs.nodePackages.typescript-language-server;
+          filetypes = [ "typescript" "javascript" "javascriptreact" "typescriptreact" ];
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "all";
+                includeInlayPropertyDeclarationTypeHints = true;
+                includeInlayFunctionLikeReturnTypeHints = true;
+              };
+            };
+            javascript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "all";
+                includeInlayPropertyDeclarationTypeHints = true;
+                includeInlayFunctionLikeReturnTypeHints = true;
+              };
+            };
+          };
+        };
       };
 
       onAttach = /* lua */''

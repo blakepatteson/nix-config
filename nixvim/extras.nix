@@ -104,22 +104,5 @@
       endif
       return
     endfunction
-    lua << EOF
-      local lspconfig = require('lspconfig')
-      
-      lspconfig.tsserver.setup({
-        cmd = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio" },
-        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "typescript.tsx" },
-        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
-        single_file_support = true,
-        init_options = {
-          preferences = {
-            includeInlayParameterNameHints = "all",
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-          }
-        }
-      })
-    EOF
   '';
 }
