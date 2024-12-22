@@ -10,6 +10,15 @@
   '';
   programs.nixvim.extraConfigLua = ''
     vim.opt.updatetime = 300
+    vim.opt.list = true
+    vim.opt.listchars = {
+      space = "·",
+      eol = "↴",
+      tab = "»\\",
+      trail = "·",
+      extends = "⟩",
+      precedes = "⟨"
+    }
   
     -- Workspace-wide git navigation functions
     local function get_git_files_with_changes()
@@ -93,16 +102,92 @@
      vim.api.nvim_create_user_command('PrevGitFile', function()
        navigate_git_changes("prev")
      end, {})
+
+      -- Floating Terminal Configuration
+      local float_term = nil
+      local float_term_win = nil
+      local float_term_buf = nil
+
+      local function create_float_term()
+        -- Get dimensions
+        local width = vim.api.nvim_get_option("columns")
+        local height = vim.api.nvim_get_option("lines")
+        
+        -- Calculate floating window size
+        local win_height = math.ceil(height * 0.8)
+        local win_width = math.ceil(width * 0.8)
+        
+        -- Calculate starting position
+        local row = math.ceil((height - win_height) / 2)
+        local col = math.ceil((width - win_width) / 2)
+        
+        -- Create buffer
+        float_term_buf = vim.api.nvim_create_buf(false, true)
+        
+        -- Set window options
+        local win_opts = {
+          relative = "editor",
+          width = win_width,
+          height = win_height,
+          row = row,
+          col = col,
+          style = "minimal",
+          border = "rounded"
+        }
+        
+        -- Create window
+        float_term_win = vim.api.nvim_open_win(float_term_buf, true, win_opts)
+        
+        -- Set terminal buffer options
+        vim.wo[float_term_win].winblend = 0
+        vim.wo[float_term_win].winhl = 'Normal:Normal'
+        
+        -- Create terminal
+        float_term = vim.fn.termopen(vim.o.shell, {
+          on_exit = function()
+            float_term = nil
+            if float_term_win and vim.api.nvim_win_is_valid(float_term_win) then
+              vim.api.nvim_win_close(float_term_win, true)
+              float_term_win = nil
+            end
+            if float_term_buf and vim.api.nvim_buf_is_valid(float_term_buf) then
+              vim.api.nvim_buf_delete(float_term_buf, { force = true })
+              float_term_buf = nil
+            end
+          end
+        })
+        
+        -- Set buffer options
+        vim.bo[float_term_buf].filetype = "terminal"
+        vim.bo[float_term_buf].buflisted = false
+        
+        -- Enter terminal mode automatically
+        vim.cmd('startinsert')
+      end
+
+      local function toggle_float_term()
+        if float_term == nil then
+          create_float_term()
+        else
+          if vim.api.nvim_win_is_valid(float_term_win) then
+            vim.api.nvim_win_close(float_term_win, true)
+            float_term_win = nil
+          end
+          float_term = nil
+        end
+      end
+
+      -- Create command for the floating terminal
+      vim.api.nvim_create_user_command('ToggleTerminal', toggle_float_term, {})
   '';
   programs.nixvim.extraConfigVim = /* lua */ ''
-    set list
-    set listchars=space:·,eol:↴,tab:»\ ,trail:·,extends:⟩,precedes:⟨
     highlight ColorColumn ctermbg=236 guibg=#2d2d2d
     function! LspStatus() abort
-      if luaeval('#vim.lsp.get_active_clients() > 0')
-        return luaeval("require('lsp-status').status()")
-      endif
-      return
+    if luaeval('#vim.lsp.get_active_clients() > 0')
+    return luaeval("require('lsp-status').status()")
+    endif
+    return
     endfunction
   '';
 }
+

@@ -74,7 +74,18 @@
     { mode = "n"; key = "N"; action = "Nzzzv"; }
 
     # Terminal
-    { mode = "n"; key = "<leader>t"; action = ":terminal<CR>"; }
+    {
+      mode = "n";
+      key = "<leader>t";
+      action = ":ToggleTerminal<CR>";
+      options = { silent = true; desc = "Toggle floating terminal"; };
+    }
+    {
+      mode = "t";
+      key = "<Esc>";
+      action = "<C-\\><C-n>";
+      options = { desc = "Exit terminal mode"; };
+    }
 
     # LSP additional
     { mode = "n"; key = "<leader>fd"; action = "<cmd>Telescope lsp_definitions<CR>"; }
