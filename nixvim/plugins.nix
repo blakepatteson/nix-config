@@ -51,7 +51,10 @@
       enable = true;
       sources = {
         formatting = {
-          prettier = { enable = true; };
+          prettier = {
+            enable = true;
+            disableTsServerFormatter = true;
+          };
           gofmt = { enable = true; };
         };
         diagnostics = { golangci_lint = { enable = true; }; };
@@ -288,27 +291,6 @@
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
 
-        tsserver = {
-          enable = true;
-          package = pkgs.nodePackages.typescript-language-server;
-          filetypes = [ "typescript" "javascript" "javascriptreact" "typescriptreact" ];
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all";
-                includeInlayPropertyDeclarationTypeHints = true;
-                includeInlayFunctionLikeReturnTypeHints = true;
-              };
-            };
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all";
-                includeInlayPropertyDeclarationTypeHints = true;
-                includeInlayFunctionLikeReturnTypeHints = true;
-              };
-            };
-          };
-        };
       };
 
       onAttach = /* lua */''

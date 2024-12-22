@@ -180,6 +180,22 @@
 
       -- Create command for the floating terminal
       vim.api.nvim_create_user_command('ToggleTerminal', toggle_float_term, {})
+
+      local lspconfig = require('lspconfig')
+            
+      lspconfig.tsserver.setup({
+        cmd = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio" },
+        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "typescript.tsx" },
+        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+        single_file_support = true,
+        init_options = {
+          preferences = {
+            includeInlayParameterNameHints = "all",
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+          }
+        }
+      })
   '';
   programs.nixvim.extraConfigVim = /* lua */ ''
     highlight ColorColumn ctermbg=236 guibg=#2d2d2d
