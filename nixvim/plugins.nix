@@ -11,7 +11,19 @@
       enable = true;
       settings = {
         defaults = {
-          file_ignore_patterns = [ "^node_modules/" ];
+          file_ignore_patterns = [
+            "^node_modules/"
+            "^.git/"
+            "%.obj$"
+            "%.o$"
+            "%.a$"
+            "%.bin$"
+            "%.dll$"
+            "%.so$"
+            "%.tar.gz$"
+            "%.zip$"
+            "%.iso$"
+          ];
           layout_strategy = "horizontal";
           layout_config = {
             horizontal = {
@@ -26,7 +38,26 @@
           prompt_title = false;
           results_title = false;
           dynamic_preview_title = true;
+          path_display = [ "truncate" ];
+
+          selection_strategy = "reset";
           sorting_strategy = "ascending";
+          scroll_strategy = "cycle";
+          selection_caret = "> ";
+          entry_prefix = "  ";
+
+          cache_picker = {
+            num_pickers = 10;
+            limit_entries = 100000;
+          };
+
+          file_browser = {
+            depth = 1;
+            group_empty = true;
+            hidden = true;
+            respect_gitignore = false;
+          };
+
           vimgrep_arguments = [
             "rg"
             "--color=never"
@@ -35,8 +66,8 @@
             "--line-number"
             "--column"
             "--smart-case"
-            "--multiline" # Enable multiline matching
-            "--pcre2" # Use PCRE2 regex engine for better pattern matching
+            "--multiline"
+            "--pcre2"
           ];
           mappings.i = {
             "<F4>" = "move_selection_next";
@@ -45,15 +76,33 @@
             "<S-Tab>" = "move_selection_previous";
           };
         };
+
+        find_files = {
+          find_command = [
+            "fd"
+            "--type"
+            "f"
+            "--strip-cwd-prefix"
+            "--hidden"
+            "--follow"
+          ];
+          previewer = false;
+          sort_lastused = true;
+        };
+
+        live_grep = {
+          preview_cutoff = 1;
+          results_title = false;
+          dynamic_preview_title = true;
+          path_display = [ "truncate" ];
+        };
       };
     };
+
     none-ls = {
       enable = true;
       sources = {
-        formatting = {
-          prettier = { enable = true; };
-          gofmt = { enable = true; };
-        };
+        formatting = { prettier = { enable = true; }; gofmt = { enable = true; }; };
         diagnostics = { golangci_lint = { enable = true; }; };
       };
     };
