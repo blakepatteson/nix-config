@@ -9,7 +9,7 @@
     end
   '';
   programs.nixvim.extraConfigLua = ''
-    vim.opt.updatetime = 300
+    vim.opt.updatetime = 1000
     vim.opt.list = true
 
     vim.opt.listchars = {

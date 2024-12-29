@@ -64,25 +64,6 @@ in
       };
     };
     userCommands = {
-      CA = { command = "lua vim.lsp.buf.code_action()"; desc = "Code actions"; };
-      F = { command = "lua vim.lsp.buf.format()"; desc = "Format document"; };
-      RN = { command = "lua vim.lsp.buf.rename()"; desc = "Rename symbol"; };
-      H = { command = "lua vim.lsp.buf.hover()"; desc = "Show hover info"; };
-      D = { command = "lua vim.lsp.buf.definition()"; desc = "Go to definition"; };
-      REF = { command = "lua vim.lsp.buf.references()"; desc = "Find references"; };
-
-      FF = { command = "Telescope find_files"; desc = "Find files"; };
-      FG = { command = "Telescope live_grep"; desc = "Find in files"; };
-      FB = { command = "Telescope buffers"; desc = "Find buffers"; };
-      FH = { command = "Telescope help_tags"; desc = "Search help"; };
-      FS = { command = "Telescope lsp_document_symbols"; desc = "Find symbols"; };
-
-      # Diagnostic commands
-      DL = { command = "Telescope diagnostics"; desc = "List all diagnostics"; };
-      DF = { command = "lua vim.diagnostic.open_float()"; desc = "Show diagnostic float"; };
-      DN = { command = "lua vim.diagnostic.goto_next()"; desc = "Next diagnostic"; };
-      DP = { command = "lua vim.diagnostic.goto_prev()"; desc = "Previous diagnostic"; };
-
       CP = {
         command = /* lua */ ''
           lua local oil = require('oil'); 

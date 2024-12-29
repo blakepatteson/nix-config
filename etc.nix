@@ -8,9 +8,6 @@
     allow_remote_control yes
     map ctrl+shift+m show_scrollback
     map ctrl+v paste_from_clipboard
-    map ctrl+n new_os_window
-    map ctrl+w close_window
-    map ctrl+t new_tab
     map ctrl+q close_tab
     
     map ctrl+l clear_terminal scroll active
