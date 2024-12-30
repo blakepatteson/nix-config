@@ -1,7 +1,10 @@
 { ... }:
 {
   programs.bash = {
-    interactiveShellInit = '' PS1='[\D{%Y-%m-%d}] [\t]:\w\$ ' '';
+    interactiveShellInit = ''
+      PS1='[\D{%Y-%m-%d}] [\t]:\w\$ '
+      eval "$(direnv hook bash)"
+    '';
     enableCompletion = true;
   };
 
@@ -9,6 +12,8 @@
     enable = true;
     extraOpts = { "crash_reporter.enabled" = false; "breakpad.reportURL" = ""; };
   };
+
+  programs.direnv.enable = true;
 
   programs.git = {
     enable = true;

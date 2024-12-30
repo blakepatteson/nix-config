@@ -3,9 +3,13 @@
   programs.nixvim.plugins = {
     lualine.enable = true;
     luasnip.enable = true;
-    notify.enable = true;
     which-key.enable = true;
     web-devicons.enable = true;
+
+    notify = {
+      enable = true;
+      backgroundColour = "#000000";
+    };
 
     telescope = {
       enable = true;

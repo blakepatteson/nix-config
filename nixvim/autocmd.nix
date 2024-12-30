@@ -6,6 +6,7 @@
       pattern = [ "*.xml" ];
       callback = { __raw = '' function() vim.lsp.buf.format({ async = false }) end ''; };
     }
+
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.go" ];
@@ -28,20 +29,39 @@
         end
       '';
     }
+
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.c" "*.h" ];
       callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
     }
+
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.nix" ];
       callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
     }
+
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.ts" "*.js" "*.svelte" "*.json" "*.css" "*.html" ];
       callback = { __raw = '' function() vim.lsp.buf.format({ async = false }) end ''; };
+    }
+
+    {
+      event = [ "ColorScheme" "VimEnter" ];
+      pattern = [ "*" ];
+      callback = {
+        __raw = ''
+          function()
+            vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#606060', nocombine = true })
+            vim.api.nvim_set_hl(0, 'NonText',    { fg = '#606060', nocombine = true })
+            vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#606060', nocombine = true })
+            vim.api.nvim_set_hl(0, 'Comment', { fg = '#aaaaaa', nocombine = true })
+            vim.api.nvim_set_hl(0, 'Normal', { fg = '#ffffff', nocombine = true })
+          end
+        '';
+      };
     }
   ];
 }

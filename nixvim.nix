@@ -34,16 +34,17 @@ in
       autoindent = true;
       smartindent = true;
     };
+
     globals = {
       mapleader = " ";
       VM_mouse_mappings = 1;
       VM_maps = { "Find Under" = "<C-m>"; "Find Subword Under" = "<C-m>"; };
     };
+
     colorschemes.base16 = {
       enable = true;
       settings = { ts_rainbow = true; lsp_semantic = true; };
       colorscheme = {
-        # Pure black background
         base00 = "#000000"; # Background
         base01 = "#1c1c1c"; # Lighter background (status bars)
         base02 = "#4d4d4d"; # Selection background
@@ -52,6 +53,7 @@ in
         base05 = "#d0d0d0"; # Default foreground
         base06 = "#e0e0e0"; # Light foreground
         base07 = "#f5f5f5"; # Light background
+
         # Vibrant colors for syntax
         base08 = "#ff5555"; # Red -       Variables
         base09 = "#ff9955"; # Orange -    Integers, Boolean
@@ -63,23 +65,6 @@ in
         base0F = "#ff5555"; # Red (alt) - Deprecated
       };
     };
-    userCommands = {
-      CP = {
-        command = /* lua */ ''
-          lua local oil = require('oil'); 
-              local entry = oil.get_cursor_entry(); 
-              if entry and entry.name then 
-                local path = oil.get_current_dir() .. '/' .. entry.name; 
-                vim.fn.setreg('+', path); 
-                vim.notify('Copied: ' .. path) 
-              else 
-                vim.notify('No file under cursor', vim.log.levels.WARN) 
-              end
-        '';
-        desc = "Copy full path of file under cursor";
-      };
-    };
   };
 }
-
 

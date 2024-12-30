@@ -4,6 +4,8 @@
   environment.systemPackages = with pkgs; [
     obs-studio
 
+    direnv
+
     qsynth
     fluidsynth
     soundfont-fluid
