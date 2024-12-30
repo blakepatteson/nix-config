@@ -51,17 +51,15 @@
     {
       event = [ "ColorScheme" "VimEnter" ];
       pattern = [ "*" ];
-      callback = {
-        __raw = ''
-          function()
-            vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#606060', nocombine = true })
-            vim.api.nvim_set_hl(0, 'NonText',    { fg = '#606060', nocombine = true })
-            vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#606060', nocombine = true })
-            vim.api.nvim_set_hl(0, 'Comment', { fg = '#aaaaaa', nocombine = true })
-            vim.api.nvim_set_hl(0, 'Normal', { fg = '#ffffff', nocombine = true })
-          end
-        '';
-      };
+      callback.__raw = /*lua*/ ''
+        function()
+          vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#606060', nocombine = true })
+          vim.api.nvim_set_hl(0, 'NonText',    { fg = '#606060', nocombine = true })
+          vim.api.nvim_set_hl(0, 'Comment',    { fg = '#aaaaaa', nocombine = true })
+          vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#ffffff', nocombine = true })
+          vim.api.nvim_set_hl(0, 'Normal',     { fg = '#ffffff', nocombine = true })
+        end
+      '';
     }
   ];
 }

@@ -50,9 +50,9 @@ in
         base02 = "#4d4d4d"; # Selection background
         base03 = "#c1c1c1"; # Comments, invisibles
         base04 = "#b0b0b0"; # Dark foreground
-        base05 = "#d0d0d0"; # Default foreground
-        base06 = "#e0e0e0"; # Light foreground
-        base07 = "#f5f5f5"; # Light background
+        base05 = "#ffffff"; # Default foreground
+        base06 = "#ffffff"; # Light foreground
+        base07 = "#ffffff"; # Pure white text
 
         # Vibrant colors for syntax
         base08 = "#ff5555"; # Red -       Variables
