@@ -1,4 +1,5 @@
 { ... }:
+
 {
   programs.nixvim.keymaps = [
     # Diagnostic navigation
@@ -37,6 +38,8 @@
     { mode = "n"; key = "<leader>rn"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
     { mode = "n"; key = "<leader>gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "<leader>fm"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
+    { mode = "n"; key = "<leader>bd"; action = "<cmd>bd<CR>"; }
+    { mode = "n"; key = "<leader>bk"; action = "<cmd>bd!<CR>"; }
     { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; }

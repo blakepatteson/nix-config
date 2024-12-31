@@ -2,89 +2,84 @@
 
 {
   environment.systemPackages = with pkgs; [
-    obs-studio
-
+    OVMF
+    acpi
+    asciiquarium
+    bat
+    bottom
+    busybox
+    clang-tools
+    cmake
+    cowsay
     direnv
-
-    qsynth
+    docker
+    expat
+    fd
+    file
+    flameshot
+    flatpak
     fluidsynth
-    soundfont-fluid
-
+    flyctl
+    fzf
+    gcc
+    gh
+    git
+    glib
+    gnumake
+    gnumeric
+    gnused
+    go
     golangci-lint
-    pinta
-    raylib
-    spice-vdagent
-    ungoogled-chromium
-    sqlitebrowser
-    lemminx
     google-chrome
+    graphviz
+    htop
+    kitty
+    lazygit
+    lemminx
+    libguestfs
+    libreoffice-qt
+    lm_sensors
+    minizip
+    mlocate
+    neofetch
+    neovim
     nil
     nixd
-    vim
-    file
-    sqlite
-    gnumeric
-    gh
-    graphviz
-    flameshot
     nixpkgs-fmt
-    acpi
-    remmina
-    clang-tools
-    python312Packages.pygments
-    docker
-    bottom
-    xfce.catfish
+    nodePackages.prettier
+    nodejs
+    obs-studio
     onlyoffice-bin
-    lm_sensors
-    bat
-    mlocate
+    pinta
+    pkg-config
+    python312Packages.pygments
+    qsynth
+    raylib
+    rclone
+    redshift
+    remmina
+    ripgrep
+    soundfont-fluid
+    spice-gtk
+    spice-vdagent
+    sqlite
+    sqlitebrowser
+    syncthing
+    thunderbird
+    tmux
+    ungoogled-chromium
+    vim
     virt-manager
     virt-viewer
-    spice-gtk
-    OVMF
-    glib
-    libguestfs
-    flyctl
-    syncthing
-    lazygit
-    thunderbird
-    wine64
-    libreoffice-qt
-    cowsay
-    asciiquarium
-    redshift
-    busybox
-
-    rclone
-    nodePackages.prettier
-
-    gcc
-    gnumake
-    cmake
-    pkg-config
-    expat
-    zlib
-    minizip
-    nodejs
-    go
-    neovim
     vscodium
-
     wget
-    neofetch
-    fzf
-    yazi
-    kitty
-    htop
-    git
-    tmux
-    ripgrep
-    flatpak
+    wine64
     xclip
+    xfce.catfish
     xsel
-    gnused
-    fd
+    yazi
+    zlib
+
     nodePackages.svelte-language-server
     nodePackages.typescript-language-server
     nodePackages.typescript

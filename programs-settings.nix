@@ -31,15 +31,14 @@
         compactionHeuristic = true;
         mnemonicPrefix = true;
       };
-      # git config advice.addIgnoredFile
-      # git config pull.rebase false
+
       alias = { b = "branch -vva"; };
-      push = {
-        default = "current"; # Only push current branch
-        followTags = true; # Push tags automatically
-      };
-      fetch = { prune = true; pruneTags = true; };
+      fetch = { prune = true; prunetags = true; };
+      push = { default = "current"; followTags = true; };
       help = { autocorrect = -1; };
+      pull = { ff = "only"; rebase = false; };
+      advice.addIgnoredFile = false;
+      url = { "ssh://git@github.com/".insteadOf = "https://github.com/"; };
     };
   };
 }

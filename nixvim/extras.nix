@@ -8,6 +8,7 @@
       return table.concat({...}, '/')
     end
   '';
+
   programs.nixvim.extraConfigLua = ''
     vim.opt.updatetime = 1000
     vim.opt.list = true
@@ -183,20 +184,27 @@
 
       local lspconfig = require('lspconfig')
             
-      lspconfig.tsserver.setup({
-        cmd = { "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", "--stdio" },
-        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "typescript.tsx" },
-        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+      lspconfig.ts_ls.setup({
+        cmd = { 
+          "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
+          "--stdio" 
+        },
+        filetypes = { "typescript", "javascript" },
+        root_dir = lspconfig.util.root_pattern(
+          "package.json", "tsconfig.json", "jsconfig.json", ".git"),
         single_file_support = true,
         init_options = {
+          hostInfo = "neovim",
           preferences = {
             includeInlayParameterNameHints = "all",
             includeInlayPropertyDeclarationTypeHints = true,
             includeInlayFunctionLikeReturnTypeHints = true,
-          }
+          },
+          capabilities = { renameProvider = true }
         }
-      })
+      });
   '';
+
   programs.nixvim.extraConfigVim = /* lua */ ''
     highlight ColorColumn ctermbg=236 guibg=#2d2d2d
     function! LspStatus() abort
