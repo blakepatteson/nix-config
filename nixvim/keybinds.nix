@@ -52,6 +52,7 @@
     { mode = "n"; key = "<C-f>"; action = "<cmd>Telescope live_grep<CR>"; }
     { mode = "n"; key = "<leader>ws"; action = "<cmd>Telescope lsp_workspace_symbols<CR>"; }
     { mode = "n"; key = "<leader>ds"; action = "<cmd>Telescope lsp_document_symbols<CR>"; }
+    { mode = "n"; key = "<leader>re"; action = "<cmd>Telescope oldfiles<CR>"; }
 
     # Diagnostics
     { mode = "n"; key = "<leader>ld"; action = "<cmd>Telescope diagnostics<CR>"; }

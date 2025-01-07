@@ -17,9 +17,6 @@
   };
   boot.kernelParams = [ "intel_iommu=on" "snd_hda_intel.dmic_detect=0" ];
   boot.tmp.cleanOnBoot = true;
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
-    "fs.inotify.max_user_watches" = 524288;
-  };
+  boot.kernel.sysctl = { "vm.swappiness" = 10; "fs.inotify.max_user_watches" = 524288; };
 }
 
