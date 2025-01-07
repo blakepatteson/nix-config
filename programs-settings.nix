@@ -31,7 +31,6 @@
         compactionHeuristic = true;
         mnemonicPrefix = true;
       };
-
       alias = { b = "branch -vva"; };
       fetch = { prune = true; prunetags = true; };
       push = { default = "current"; followTags = true; };

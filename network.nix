@@ -7,6 +7,10 @@ in
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    firewall = {
+      allowedTCPPorts = [ 631 ]; # CUPS port
+      allowedUDPPorts = [ 631 ]; # CUPS port
+    };
   };
 
   imports = [

@@ -11,6 +11,7 @@
     clang-tools
     cmake
     cowsay
+    cups
     direnv
     docker
     expat
@@ -32,6 +33,7 @@
     golangci-lint
     google-chrome
     graphviz
+    hplip
     htop
     kitty
     lazygit
@@ -79,6 +81,7 @@
     xsel
     yazi
     zlib
+    zoom-us
 
     nodePackages.svelte-language-server
     nodePackages.typescript-language-server

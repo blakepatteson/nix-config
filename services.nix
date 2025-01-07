@@ -7,7 +7,16 @@
       interval = "hourly";
       localuser = null;
     };
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = [ pkgs.hplip ];
+      browsing = true;
+    };
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     flatpak.enable = true;
     openssh.enable = true;
     fstrim.enable = true;

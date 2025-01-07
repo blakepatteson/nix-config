@@ -201,7 +201,7 @@
 
       local lspconfig = require('lspconfig')
             
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         cmd = { 
           "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
           "--stdio" 
