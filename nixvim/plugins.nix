@@ -78,6 +78,9 @@
             "<F16>" = "move_selection_previous";
             "<Tab>" = "move_selection_next";
             "<S-Tab>" = "move_selection_previous";
+            "<C-r>" = {
+              __raw = ''require("telescope.actions").send_selected_to_qflist''; # Temporary mapping to test
+            };
           };
         };
 
@@ -350,55 +353,56 @@
       };
 
       onAttach = /* lua */''
-        vim.diagnostic.config({
+        vim.diagnostic.config
+        ({
           virtual_text = true,
           signs = true,
           underline = true,
           update_in_insert = false,
           severity_sort = true,
-        })
-        -- Enable workspace diagnostics
-        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+          })
+          -- Enable workspace diagnostics
+          vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
           vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = true,
-            signs = true,
-            underline = true,
-            update_in_insert = false,
-            severity_sort = true,
-            workspace = true,
+          virtual_text = true,
+          signs = true,
+          underline = true,
+          update_in_insert = false,
+          severity_sort = true,
+          workspace = true,
           }
-        )
+          )
 
-        -- Configure diagnostic display
-        vim.diagnostic.config({
+          -- Configure diagnostic display
+          vim.diagnostic.config({
           virtual_text = true,
           signs = true,
           underline = true,
           update_in_insert = false,
           severity_sort = true,
           float = {
-            source = "always",  -- Show source in diagnostic popup window
-            border = "rounded"
+          source = "always",  -- Show source in diagnostic popup window
+          border = "rounded"
           }
-        })
+          })
 
-        -- Enhance diagnostic handling for Go files
-        if vim.bo.filetype == "go" then
+          -- Enhance diagnostic handling for Go files
+          if vim.bo.filetype == "go" then
           -- Force diagnostic refresh on save
           vim.api.nvim_create_autocmd("BufWritePost", {
-            pattern = "*.go",
-            callback = function()
-              -- Refresh diagnostics
-              vim.diagnostic.reset()
-              -- Format the buffer
-              vim.lsp.buf.format({ async = false })
-              -- Request diagnostics refresh
-              vim.schedule(function()
-                vim.diagnostic.show()
-              end)
-            end,
+          pattern = "*.go",
+          callback = function()
+          -- Refresh diagnostics
+          vim.diagnostic.reset()
+          -- Format the buffer
+          vim.lsp.buf.format({ async = false })
+          -- Request diagnostics refresh
+          vim.schedule(function()
+          vim.diagnostic.show()
+          end)
+          end,
           })
-        end
+          end
       '';
     };
 
@@ -429,7 +433,7 @@
         snippet = {
           expand = /* lua */ ''
             function(args)
-              require('luasnip').lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
             end
           '';
         };
@@ -442,24 +446,24 @@
           "<CR>" = "cmp.mapping.confirm({ select = true })";
           "<Tab>" = /* lua */ ''
             cmp.mapping(function(fallback)
-              if cmp.visible() then
-                cmp.select_next_item()
-              elseif require('luasnip').expand_or_jumpable() then
-                require('luasnip').expand_or_jump()
-              else
-                fallback()
-              end
+            if cmp.visible() then
+            cmp.select_next_item()
+            elseif require('luasnip').expand_or_jumpable() then
+            require('luasnip').expand_or_jump()
+            else
+            fallback()
+            end
             end, {'i', 's'})
           '';
           "<S-Tab>" = /* lua */ ''
             cmp.mapping(function(fallback)
-              if cmp.visible() then
-                cmp.select_prev_item()
-              elseif require('luasnip').jumpable(-1) then
-                require('luasnip').jump(-1)
-              else
-                fallback()
-              end
+            if cmp.visible() then
+            cmp.select_prev_item()
+            elseif require('luasnip').jumpable(-1) then
+            require('luasnip').jump(-1)
+            else
+            fallback()
+            end
             end, {'i', 's'})
           '';
         };
@@ -473,4 +477,8 @@
     };
   };
 }
+
+
+
+
 
