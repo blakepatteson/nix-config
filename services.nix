@@ -30,6 +30,12 @@
       jack.enable = true;
       wireplumber.enable = true;
     };
+    xrdp = {
+      enable = true;
+      defaultWindowManager = "cinnamon-session-cinnamon";
+      openFirewall = true;
+    };
 
   };
+
 }
