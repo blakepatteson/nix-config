@@ -54,6 +54,7 @@
     onlyoffice-bin
     pinta
     pkg-config
+    pulseaudio
     python312Packages.pygments
     qsynth
     raylib

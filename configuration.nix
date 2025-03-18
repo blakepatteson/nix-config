@@ -13,7 +13,6 @@
     ./nixvim.nix
     ./programs.nix
     ./programs-settings.nix
-    ./programs.nix
     ./system.nix
     ./services.nix
     ./security.nix

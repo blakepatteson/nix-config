@@ -18,14 +18,13 @@
 
   nix = {
     gc = {
-      automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
       persistent = true;
     };
     settings = {
-      cores = 0;
-      max-jobs = "auto";
+      max-jobs = 2;
+      cores = 2;
       auto-optimise-store = true;
       substituters = [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];
       trusted-public-keys = [
@@ -55,6 +54,6 @@
   programs.firefox.enable = true;
   zramSwap.enable = true;
 
-  system.autoUpgrade.enable = true;
+  # system.autoUpgrade.enable = true;
   system.stateVersion = "24.05";
 }

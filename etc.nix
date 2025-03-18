@@ -53,7 +53,7 @@
       shopt -s checkwinsize
 
       # make less more friendly for non-text input files, see lesspipe(1)
-      [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+      # [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
       # set a fancy prompt with date and time
       PS1='\[\033[01;31m\][\D{%Y-%m-%d}]\[\033[00m\] \[\033[01;32m\][\t]\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -71,6 +71,7 @@
       alias l='ls -al'
       alias la='ls -A'
       alias list-issues='gh issue list --limit 100 --search "-label:\"Low Priority\""'
+      alias n='nvim'
 
       alias dkill='sudo docker kill $(sudo docker ps -q)'
       alias dkillrm='sudo docker rm -f $(sudo docker ps -aq)'
