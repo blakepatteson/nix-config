@@ -19,7 +19,7 @@ VirtIO Drivers:
 
 files should be called : 
     virt-viewer-x86-11.0-1.0.msi
-    virtio-win-guest-toools.exe
+    virtio-win-guest-tools.exe
 
 command to display it at `Z:\` : 
     net use Z: \\nixos\development /persistent:yes

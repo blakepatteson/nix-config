@@ -73,7 +73,6 @@
     ungoogled-chromium
     vim
     virt-manager
-    virt-viewer
     vscodium
     wget
     wine64

@@ -201,7 +201,7 @@
 
       local lspconfig = require('lspconfig')
             
-      lspconfig.ts_ls.setup({
+      lspconfig.tsserver.setup({
         cmd = { 
           "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
           "--stdio" 
@@ -220,10 +220,58 @@
           capabilities = { renameProvider = true }
         }
       });
+
+    -- Register the telescope regex toggle action
+    local telescope = require('telescope')
+    local actions = require('telescope.actions')
+    local action_state = require('telescope.actions.state')
+
+    telescope.setup({
+      defaults = {
+        mappings = {
+          i = {
+            ["<C-r>"] = function(prompt_bufnr)
+              local picker = action_state.get_current_picker(prompt_bufnr)
+              local current_args = picker.finder.vimgrep_arguments
+              local has_fixed_strings = false
+              
+              -- Search for --fixed-strings in current args
+              for _, arg in ipairs(current_args) do
+                if arg == "--fixed-strings" then
+                  has_fixed_strings = true
+                  break
+                end
+              end
+              
+              -- Create new args table
+              local new_args = {}
+              for _, arg in ipairs(current_args) do
+                if arg ~= "--fixed-strings" and arg ~= "--pcre2" then
+                  table.insert(new_args, arg)
+                end
+              end
+              
+              if has_fixed_strings then
+                -- Switch to regex mode
+                table.insert(new_args, "--pcre2")
+                vim.notify("Search Mode: Regex")
+              else
+                -- Switch to literal mode
+                table.insert(new_args, "--fixed-strings")
+                vim.notify("Search Mode: Literal")
+              end
+              
+              picker.finder.vimgrep_arguments = new_args
+              actions.reload_results(prompt_bufnr)
+            end
+          }
+        }
+      }
+    })
   '';
 
   programs.nixvim.extraConfigVim = /* lua */ ''
-    highlight ColorColumn ctermbg=236 guibg=#2d2d2d
+      highlight ColorColumn ctermbg = 236 guibg=#2d2d2d
     function! LspStatus() abort
     if luaeval('#vim.lsp.get_active_clients() > 0')
     return luaeval("require('lsp-status').status()")
@@ -232,4 +280,6 @@
     endfunction
   '';
 }
+
+
 
