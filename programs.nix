@@ -1,7 +1,15 @@
 { pkgs, ... }:
 
+let
+  unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
+    config = pkgs.config;
+    system = pkgs.system;
+  };
+in
 {
   environment.systemPackages = with pkgs; [
+    unstable.bolt-launcher
+
     OVMF
     acpi
     asciiquarium
