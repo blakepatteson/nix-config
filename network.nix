@@ -13,6 +13,8 @@ in
     };
   };
 
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   imports = [
     (if hasModernSamba
     then ./samba-configs/samba-modern.nix

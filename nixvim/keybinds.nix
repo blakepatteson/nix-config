@@ -102,8 +102,11 @@
     }
 
     # Black hole delete (delete without yanking)
-    { mode = "n"; key = "<leader>d"; action = "\"_dd"; }
-    { mode = "n"; key = "<leader>dd"; action = "\"_dd"; }
+    { mode = "n"; key = "d"; action = "\"_d"; }
+    { mode = "n"; key = "D"; action = "\"_D"; }
+    { mode = "n"; key = "dd"; action = "\"_dd"; }
+    { mode = "v"; key = "d"; action = "\"_d"; }
+    { mode = "x"; key = "d"; action = "\"_d"; }
 
   ];
 }

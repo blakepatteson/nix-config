@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   time.timeZone = "America/New_York";
   i18n = {
@@ -23,8 +23,8 @@
       persistent = true;
     };
     settings = {
-      max-jobs = 2;
-      cores = 2;
+      max-jobs = 8;
+      cores = 8;
       auto-optimise-store = true;
       substituters = [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];
       trusted-public-keys = [
@@ -49,6 +49,28 @@
       "pipewire"
     ];
   };
+
+  security = {
+    rtkit.enable = true;
+    sudo.wheelNeedsPassword = true;
+    auditd.enable = true;
+  };
+
+  fonts.packages = with pkgs;
+    [
+      noto-fonts
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts.githubRelease
+      dina-font
+      proggyfonts
+      victor-mono
+      (nerdfonts.override {
+        fonts = [ "VictorMono" ];
+      })
+    ];
 
   nixpkgs.config.allowUnfree = true;
   programs.firefox.enable = true;
