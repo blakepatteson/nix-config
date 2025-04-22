@@ -433,7 +433,7 @@
         snippet = {
           expand = /* lua */ ''
             function(args)
-            require('luasnip').lsp_expand(args.body)
+              require('luasnip').lsp_expand(args.body)
             end
           '';
         };
@@ -446,24 +446,24 @@
           "<CR>" = "cmp.mapping.confirm({ select = true })";
           "<Tab>" = /* lua */ ''
             cmp.mapping(function(fallback)
-            if cmp.visible() then
-            cmp.select_next_item()
-            elseif require('luasnip').expand_or_jumpable() then
-            require('luasnip').expand_or_jump()
-            else
-            fallback()
-            end
+              if cmp.visible() then
+                cmp.select_next_item()
+              elseif require('luasnip').expand_or_jumpable() then
+                require('luasnip').expand_or_jump()
+              else
+                fallback()
+              end
             end, {'i', 's'})
           '';
           "<S-Tab>" = /* lua */ ''
             cmp.mapping(function(fallback)
-            if cmp.visible() then
-            cmp.select_prev_item()
-            elseif require('luasnip').jumpable(-1) then
-            require('luasnip').jump(-1)
-            else
-            fallback()
-            end
+              if cmp.visible() then
+                cmp.select_prev_item()
+              elseif require('luasnip').jumpable(-1) then
+                require('luasnip').jump(-1)
+              else
+                fallback()
+              end
             end, {'i', 's'})
           '';
         };
@@ -477,8 +477,4 @@
     };
   };
 }
-
-
-
-
 
