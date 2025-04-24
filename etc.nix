@@ -70,7 +70,7 @@
       # some more ls aliases
       alias l='ls -al'
       alias la='ls -A'
-      alias list-issues='gh issue list --limit 100 --search "-label:\"Low Priority\""'
+      alias list-issues='gh issue list --limit 1000'
       alias n='nvim'
 
       alias dkill='sudo docker kill $(sudo docker ps -q)'

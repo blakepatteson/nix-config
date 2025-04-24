@@ -4,7 +4,15 @@
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.xml" ];
-      callback = { __raw = '' function() vim.lsp.buf.format({ async = false }) end ''; };
+      callback = {
+        __raw = '' 
+            function() 
+              if vim.b.autoformat ~= false then
+                vim.lsp.buf.format({ async = false }) 
+              end
+            end 
+          '';
+      };
     }
 
     {

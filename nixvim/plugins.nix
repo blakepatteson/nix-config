@@ -386,6 +386,24 @@
           }
           })
 
+          -- command to disable formatting 
+          vim.api.nvim_create_user_command('SaveWithoutFormat', function()
+            -- Store the current autoformat status
+            local autoformat_status = vim.b.autoformat
+            
+            -- Temporarily disable autoformatting for this buffer
+            vim.b.autoformat = false
+            
+            -- Save the file
+            vim.cmd('write')
+            
+            -- Restore the original autoformat status
+            vim.b.autoformat = autoformat_status
+            
+            -- Notify user
+            vim.notify('Saved without formatting')
+          end, {})
+
           -- Enhance diagnostic handling for Go files
           if vim.bo.filetype == "go" then
           -- Force diagnostic refresh on save
