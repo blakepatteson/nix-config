@@ -475,6 +475,20 @@
         ];
       };
     };
+
+
+    markdown-preview = {
+      enable = true;
+      settings = {
+        auto_start = 0;
+        browser = "";
+
+        disable_sync_scroll = 0;
+        hide_yaml_meta = 1;
+        disable_filename = 0;
+      };
+    };
+
   };
 }
 

@@ -268,6 +268,20 @@
         }
       }
     })
+
+    vim.opt.cursorline = true    -- Highlight the current line
+    vim.opt.cursorcolumn = true  -- Highlight the current column too
+    vim.opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCursor,r-cr:hor20,o:hor50"
+
+    -- Set up distinct colors for cursor, cursorline and matching brackets
+    vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"}, {
+      pattern = "*",
+      callback = function()
+        vim.api.nvim_set_hl(0, 'Cursor', { fg = '#000000', bg = '#ff0000', bold = true })
+        vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#101010' })
+        vim.api.nvim_set_hl(0, 'MatchParen', { fg = '#000000', bg = '#0000ff', bold = true })
+      end
+    })
   '';
 
   programs.nixvim.extraConfigVim = /* lua */ ''
