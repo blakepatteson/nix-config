@@ -12,6 +12,7 @@ in
     ./nixvim/keybinds.nix
     ./nixvim/plugins.nix
     ./nixvim/rewrap.nix
+    ./nixvim/compile.nix
   ];
   programs.nixvim = {
     enable = true;

@@ -72,8 +72,17 @@
       })
     ];
 
-  nixpkgs.config.allowUnfree = true;
-  programs.firefox.enable = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    firefox.enableWideVine = true;
+  };
+
+  programs.firefox = {
+    enable = true;
+    preferences = {
+      "media.eme.enabled" = true;
+    };
+  };
   zramSwap.enable = true;
 
   # system.autoUpgrade.enable = true;

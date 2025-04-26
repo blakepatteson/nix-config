@@ -1,5 +1,5 @@
 # hardware.nix
-{ ... }:
+{ pkgs, ... }:
 let
   # Use a static configuration file to determine hardware profile
   isPrimeSystem = builtins.pathExists ./hardware-configs/is-prime-system;
@@ -14,8 +14,20 @@ in
   hardware = {
     pulseaudio.enable = false;
     enableAllFirmware = true;
-    opengl.enable = true;
+
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
+
 
   services.xserver.videoDrivers = [ "nvidia" ];
 }

@@ -1,10 +1,13 @@
 { pkgs, ... }:
 
 let
-  unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
-    config = pkgs.config;
-    system = pkgs.system;
-  };
+  unstable = import
+    (fetchTarball
+      "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
+    {
+      config = pkgs.config;
+      system = pkgs.system;
+    };
 in
 {
   environment.systemPackages = with pkgs; [
@@ -24,6 +27,7 @@ in
     docker
     expat
     fd
+    ffmpeg-full
     file
     flameshot
     flatpak
@@ -41,13 +45,24 @@ in
     golangci-lint
     google-chrome
     graphviz
+    gst_all_1.gst-libav
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gstreamer
     hplip
     htop
     kitty
     lazygit
     lemminx
+    libde265
+    libdrm
     libguestfs
     libreoffice-qt
+    libva
+    libvdpau
     lm_sensors
     minizip
     mlocate
@@ -79,11 +94,13 @@ in
     thunderbird
     tmux
     ungoogled-chromium
+    vaapiVdpau
     vim
     virt-manager
     vscodium
     wget
     wine64
+    x265
     xclip
     xfce.catfish
     xsel
