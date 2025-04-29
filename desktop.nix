@@ -4,7 +4,15 @@
   services.xserver = {
     enable = true;
 
-    displayManager.lightdm.enable = true;
+    displayManager.lightdm = {
+      enable = true;
+      autoLogin = {
+        enable = true;
+        user = "blake";
+        timeout = 0;
+      };
+    };
+
     displayManager.gdm.autoSuspend = false;
 
     desktopManager.cinnamon.enable = true;
@@ -62,5 +70,9 @@
       show-decimal-value=true
     '';
   };
-  powerManagement = { enable = false; powertop.enable = false; };
+  powerManagement = {
+    enable = false;
+    powertop.enable = false;
+    cpuFreqGovernor = "performance";
+  };
 }

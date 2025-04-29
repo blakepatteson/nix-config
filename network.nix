@@ -6,14 +6,55 @@ in
 {
   networking = {
     hostName = "nixos";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.powersave = false;
+      # Disable scanning for WiFi networks at boot
+      wifi.scanRandMacAddress = false;
+    };
     firewall = {
       allowedTCPPorts = [ 3389 631 ]; # CUPS port
       allowedUDPPorts = [ 631 ]; # CUPS port
     };
   };
 
-  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd = {
+    extraConfig = ''
+      DefaultTimeoutStartSec=10s
+      DefaultTimeoutStopSec=10s
+    '';
+    services = {
+      NetworkManager-wait-online.enable = false;
+      systemd-udev-settle.enable = false;
+      pmlogger.enable = false;
+
+      samba-nmbd = {
+        wantedBy = lib.mkForce [ ];
+        wants = lib.mkForce [ ];
+      };
+
+      samba-smbd = {
+        wantedBy = lib.mkForce [ ];
+        wants = lib.mkForce [ ];
+      };
+
+      systemd-modules-load = {
+        serviceConfig = {
+          TimeoutStartSec = "2s";
+          LogLevelMax = "warning";
+        };
+      };
+    };
+
+    targets.graphical = {
+      wants = lib.mkForce [
+        "display-manager.service"
+        "systemd-update-utmp-runlevel.service"
+        "multi-user.target"
+      ];
+      requires = lib.mkForce [ ];
+    };
+  };
 
   imports = [
     (if hasModernSamba

@@ -70,8 +70,6 @@
           _G.compile_command.command = _G.compile_command.history[_G.compile_command.history_index]
         end
         
-        -- Show current command
-        vim.notify("Compile Command: " .. _G.compile_command.command, vim.log.levels.INFO)
       end
 
       -- Function to run compile command and capture output in buffer
@@ -152,10 +150,6 @@
             
             -- Set the filetype for syntax highlighting if possible
             vim.api.nvim_buf_set_option(buf, "filetype", "output")
-            
-            -- Notify user
-            vim.notify("Command finished with exit code: " .. exit_code, 
-              exit_code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR)
           end,
           stdout_buffered = false,
           stderr_buffered = false,
@@ -201,26 +195,28 @@
       vim.api.nvim_create_autocmd({"BufEnter", "BufNew"}, {
         pattern = "Output_*",
         callback = function()
+          -- Check if syntax is already set
+          if vim.b.current_syntax then
+            return
+          end
+          
           -- Basic syntax highlighting for command output
           vim.cmd[[
-            if exists("b:current_syntax")
-              finish
-            endif
-            
             syntax match outputHeader /^Running:.*$/
-            syntax match outputTimestamp /^Started at:.*$\\|^Finished at:.*$/
-            syntax match outputSeparator /^-\\+$/
+            syntax match outputTimestamp /^Started at:.*$\|^Finished at:.*$/
+            syntax match outputSeparator /^-\+$/
             syntax match outputSuccess /^Command completed with exit code: 0$/
-            syntax match outputError /^Command completed with exit code: [^0]\\+$/
+            syntax match outputError /^Command completed with exit code: [^0]\+$/
             
             highlight link outputHeader Title
             highlight link outputTimestamp Comment
             highlight link outputSeparator Comment
             highlight link outputSuccess String
             highlight link outputError Error
-            
-            let b:current_syntax = "output"
           ]]
+          
+          -- Set the syntax name
+          vim.b.current_syntax = "output"
         end
       })
       

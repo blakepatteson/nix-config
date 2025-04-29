@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   services = {
     locate = {
@@ -12,6 +12,7 @@
       enable = true;
       drivers = [ pkgs.hplip ];
       browsing = true;
+      startWhenNeeded = true;
     };
 
     avahi = {
@@ -20,7 +21,7 @@
       openFirewall = true;
     };
 
-    flatpak.enable = true;
+    flatpak.enable = lib.mkDefault false;
     openssh.enable = true;
     fstrim.enable = true;
     timesyncd.enable = true;
@@ -33,6 +34,8 @@
       jack.enable = true;
       wireplumber.enable = true;
     };
+
+    picom.enable = false;
 
     xrdp = {
       enable = true;
