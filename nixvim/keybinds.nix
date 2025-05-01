@@ -6,6 +6,15 @@
     { mode = "n"; key = "]d"; action = "<cmd>lua vim.diagnostic.goto_next()<CR>"; }
     { mode = "n"; key = "[d"; action = "<cmd>lua vim.diagnostic.goto_prev()<CR>"; }
 
+    {
+      mode = "n";
+      key = "<leader>vb";
+      action = "<C-v>";
+      options = {
+        desc = "Enter visual block mode";
+      };
+    }
+
     # cycle through lsp references navigation
     {
       mode = "n";

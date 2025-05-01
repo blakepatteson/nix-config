@@ -67,9 +67,7 @@
       dina-font
       proggyfonts
       victor-mono
-      (nerdfonts.override {
-        fonts = [ "VictorMono" ];
-      })
+      (nerdfonts.override { fonts = [ "VictorMono" ]; })
     ];
 
   nixpkgs.config = {

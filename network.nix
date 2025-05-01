@@ -28,16 +28,6 @@ in
       systemd-udev-settle.enable = false;
       pmlogger.enable = false;
 
-      samba-nmbd = {
-        wantedBy = lib.mkForce [ ];
-        wants = lib.mkForce [ ];
-      };
-
-      samba-smbd = {
-        wantedBy = lib.mkForce [ ];
-        wants = lib.mkForce [ ];
-      };
-
       systemd-modules-load = {
         serviceConfig = {
           TimeoutStartSec = "2s";
@@ -65,7 +55,7 @@ in
   services.samba = {
     enable = true;
     openFirewall = true;
-    shares = {
+    settings = {
       development = {
         path = "/home/blake/dev";
         browseable = "yes";

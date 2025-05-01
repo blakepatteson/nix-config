@@ -1,6 +1,14 @@
 { pkgs, lib, ... }:
 {
   services = {
+    syncthing = {
+      enable = true;
+      user = "blake";
+      dataDir = "/home/blake/Sync";
+      configDir = "/home/blake/.config/syncthing";
+      openDefaultPorts = true;
+    };
+
     locate = {
       enable = true;
       package = pkgs.mlocate;

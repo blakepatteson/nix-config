@@ -31,7 +31,8 @@
         if input_command ~= "" then
           _G.compile_command.command = input_command
           -- Add to history if not already at the top
-          if #_G.compile_command.history == 0 or _G.compile_command.history[1] ~= input_command then
+          if #_G.compile_command.history == 0 or _G.compile_command.history[1] ~= 
+            input_command then
             table.insert(_G.compile_command.history, 1, input_command)
             if #_G.compile_command.history > 50 then
               table.remove(_G.compile_command.history)
@@ -60,14 +61,16 @@
           _G.compile_command.history_index = math.min(
               _G.compile_command.history_index + 1, #_G.compile_command.history)
         else
-          _G.compile_command.history_index = math.max(_G.compile_command.history_index - 1, 0)
+          _G.compile_command.history_index = math.max(
+            _G.compile_command.history_index - 1, 0)
         end
         
         -- Update command
         if _G.compile_command.history_index == 0 then
           _G.compile_command.command = _G.compile_command.current_command or ""
         else
-          _G.compile_command.command = _G.compile_command.history[_G.compile_command.history_index]
+          _G.compile_command.command = _G.compile_command.history[
+          _G.compile_command.history_index]
         end
         
       end
