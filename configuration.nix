@@ -8,6 +8,7 @@
     ./etc.nix
     ./env.nix
     ./hardware.nix
+    ./kernel.nix
     ./network.nix
     ./nixvim.nix
     ./programs.nix

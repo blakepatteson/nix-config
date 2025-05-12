@@ -6,26 +6,31 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, ... }: {
+  outputs = { nixpkgs, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./machines/desktop/hardware-configuration.nix
           ./configuration.nix
-          
-          { _module.args.isPrimeSystem = false; }
+          { 
+            _module.args.isPrimeSystem = false; 
+            # Ensure we don't use any out-of-store kernel modules
+            boot.preLVMTempMount.supportedFilesystems = [];
+          }
         ];
       };
-      
+
       "nixos-laptop" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./machines/laptop/hardware-configuration.nix
           ./configuration.nix
-          { 
+          {
             _module.args.isPrimeSystem = true;
-            networking.hostName = "nixos-laptop"; 
+            networking.hostName = "nixos-laptop";
+            # Ensure we don't use any out-of-store kernel modules
+            boot.preLVMTempMount.supportedFilesystems = [];
           }
         ];
       };

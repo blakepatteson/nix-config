@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 {
   assertions = [{
     assertion = lib.versionAtLeast config.system.nixos.version "23.11";

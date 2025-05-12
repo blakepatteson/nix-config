@@ -1,4 +1,18 @@
-#!/bin/bash
 HOSTNAME=$(hostname)
-echo "Building configuration for $HOSTNAME..."
-sudo nix --experimental-features "nix-command flakes" run nixpkgs#nixos-rebuild -- switch --flake .#$HOSTNAME
+
+if [[ "$1" == "-u" || "$1" == "--update" ]]; then
+  echo "Updating flake inputs..."
+  nix flake update
+  shift
+fi
+
+ACTION=${1:-switch}
+echo "Building configuration for $HOSTNAME ($ACTION)..."
+
+# The key flags here: --impure, --override-input, and --option
+sudo nixos-rebuild $ACTION \
+  --impure \
+  --option use-substituters true \
+  --option substitute true \
+  --option require-sigs false \
+  --flake .#$HOSTNAME

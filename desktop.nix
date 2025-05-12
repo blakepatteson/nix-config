@@ -1,20 +1,13 @@
 { ... }:
 {
   services.displayManager.defaultSession = "cinnamon";
+  services.displayManager.autoLogin.user = "blake";
+  services.displayManager.autoLogin.enable = true;
   services.xserver = {
     enable = true;
 
-    displayManager.lightdm = {
-      enable = true;
-      autoLogin = {
-        enable = true;
-        user = "blake";
-        timeout = 0;
-      };
-    };
-
+    displayManager.lightdm = { enable = true; };
     displayManager.gdm.autoSuspend = false;
-
     desktopManager.cinnamon.enable = true;
     # desktopManager.cinnamon.enable = true;
     desktopManager.cinnamon.extraGSettingsOverrides = ''
