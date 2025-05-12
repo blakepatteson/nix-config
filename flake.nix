@@ -6,34 +6,26 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { nixpkgs, ... }: {
+  outputs = { self, nixpkgs, nixos-hardware, ... }: {
     nixosConfigurations = {
-      # Desktop configuration (update hostname to match your desktop)
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit nixpkgs;
-          isPrimeSystem = false; # Desktop likely doesn't need NVIDIA Prime
-        };
         modules = [
+          ./machines/desktop/hardware-configuration.nix
           ./configuration.nix
+          
+          { _module.args.isPrimeSystem = false; }
         ];
       };
-
-      # Laptop configuration (update hostname to match your laptop)
-      laptop = nixpkgs.lib.nixosSystem {
+      
+      "nixos-laptop" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit nixpkgs;
-          isPrimeSystem = true; # Laptop with NVIDIA Prime
-        };
         modules = [
-          # Replace with your specific laptop model if available
-          # nixos-hardware.nixosModules.lenovo-thinkpad-x1
+          ./machines/laptop/hardware-configuration.nix
           ./configuration.nix
-          # Laptop-specific overrides
-          {
-            networking.hostName = "laptop";
+          { 
+            _module.args.isPrimeSystem = true;
+            networking.hostName = "nixos-laptop"; 
           }
         ];
       };
