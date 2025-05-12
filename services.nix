@@ -9,13 +9,6 @@
       openDefaultPorts = true;
     };
 
-    locate = {
-      enable = true;
-      package = pkgs.mlocate;
-      interval = "hourly";
-      localuser = null;
-    };
-
     printing = {
       enable = true;
       drivers = [ pkgs.hplip ];
