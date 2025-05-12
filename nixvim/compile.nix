@@ -2,6 +2,7 @@
 {
   programs.nixvim = {
     extraConfigLua = ''
+      _G.compile_job_id = nil
       -- Compile Command Functionality
       _G.compile_command = {
         command = "",
@@ -153,6 +154,7 @@
             
             -- Set the filetype for syntax highlighting if possible
             vim.api.nvim_buf_set_option(buf, "filetype", "output")
+
           end,
           stdout_buffered = false,
           stderr_buffered = false,
@@ -163,7 +165,9 @@
               {"Error: Failed to start command"})
           return
         end
+        _G.compile_job_id = cmd
       end
+
       
       -- Command to set the compile command
       vim.api.nvim_create_user_command('CompileCommand', function()
@@ -228,6 +232,16 @@
         pattern = "*",
         callback = ensure_nix_shell
       })
+
+      vim.api.nvim_create_user_command('CompileKill', function()
+        if _G.compile_job_id then
+          vim.fn.jobstop(_G.compile_job_id)
+          vim.notify("Compile job killed")
+          _G.compile_job_id = nil
+        else
+          vim.notify("No active compile job to kill", vim.log.levels.WARN)
+        end
+      end, {})
     '';
 
     keymaps = [
@@ -272,6 +286,16 @@
         options = {
           silent = true;
           desc = "Next compile command";
+        };
+      }
+
+      {
+        mode = "n";
+        key = "<leader>mk";
+        action = ":CompileKill<CR>";
+        options = {
+          silent = true;
+          desc = "Kill compile process";
         };
       }
 

@@ -51,7 +51,6 @@
     { mode = "n"; key = "<leader>bk"; action = "<cmd>bd!<CR>"; }
     { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
     { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
-    { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<CR>"; }
     { mode = "n"; key = "<C-n>"; action = "<cmd>enew<CR>"; }
     { mode = "n"; key = "<C-w>"; action = "<cmd>bd<CR>"; }
 
