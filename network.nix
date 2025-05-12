@@ -1,11 +1,18 @@
-# network.nix
 { lib, ... }:
 let
   hasModernSamba = lib.versionAtLeast lib.version "24.06";
+  _ = builtins.trace "NixOS version: ${lib.version}" null;
+  __ = builtins.trace "Has modern Samba: ${toString hasModernSamba}" null;
 in
 {
+  imports = [
+    (if hasModernSamba
+    then ./samba-configs/samba-modern.nix
+    else ./samba-configs/samba-legacy.nix)
+  ];
+
   networking = {
-    hostName = "nixos";
+    hostName = "nixos-laptop";
     networkmanager = {
       enable = true;
       wifi.powersave = false;
@@ -46,29 +53,8 @@ in
     };
   };
 
-  imports = [
-    (if hasModernSamba
-    then ./samba-configs/samba-modern.nix
-    else ./samba-configs/samba-legacy.nix)
-  ];
-
   services.samba = {
     enable = true;
     openFirewall = true;
-    settings = {
-      development = {
-        path = "/home/blake/dev";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "no";
-        "create mask" = "0755";
-        "directory mask" = "0755";
-        "force user" = "blake";
-        "valid users" = "blake";
-        "inherit permissions" = "yes";
-        "inherit acls" = "yes";
-        "store dos attributes" = "yes";
-      };
-    };
   };
 }

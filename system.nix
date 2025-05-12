@@ -23,6 +23,7 @@
       persistent = true;
     };
     settings = {
+      experimental-features = [ "nix-command" "flakes" ];
       max-jobs = 8;
       cores = 8;
       auto-optimise-store = true;

@@ -1,7 +1,7 @@
 # network-configs/samba-modern.nix
 {
   services.samba = {
-    settings = {
+    shares = {
       global = {
         workgroup = "WORKGROUP";
         "server string" = "Samba Server";
