@@ -9,10 +9,8 @@ fi
 ACTION=${1:-switch}
 echo "Building configuration for $HOSTNAME ($ACTION)..."
 
-# The key flags here: --impure, --override-input, and --option
+# Use the system channel
 sudo nixos-rebuild $ACTION \
   --impure \
-  --option use-substituters true \
-  --option substitute true \
-  --option require-sigs false \
+  -I nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos \
   --flake .#$HOSTNAME

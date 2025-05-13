@@ -69,7 +69,7 @@
       proggyfonts
       victor-mono
 
-      nerd-fonts.victor-mono
+      (nerdfonts.override { fonts = [ "VictorMono" ]; })
     ];
 
   nixpkgs.config = {
@@ -86,5 +86,5 @@
   zramSwap.enable = true;
 
   # system.autoUpgrade.enable = true;
-  system.stateVersion = "24.05";
+  # system.stateVersion = "24.05";
 }
