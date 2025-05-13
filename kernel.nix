@@ -1,13 +1,7 @@
-{ pkgs, lib, ... }:
-
+{ config, pkgs, ... }:
 {
-  # Use current running kernel to avoid module issues
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
-
-  # These lines help ensure kernel modules work properly
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
   boot.initrd.includeDefaultModules = true;
-
-  # Force all kernel modules to be bundled with the system
-  # This helps prevent the "not in Nix store" errors
-  boot.modprobeConfig.package = lib.mkForce "";
+  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 ];
 }

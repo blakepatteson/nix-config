@@ -2,7 +2,7 @@
   description = "Blake's NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
@@ -13,11 +13,7 @@
         modules = [
           ./machines/desktop/hardware-configuration.nix
           ./configuration.nix
-          { 
-            _module.args.isPrimeSystem = false; 
-            # Ensure we don't use any out-of-store kernel modules
-            boot.preLVMTempMount.supportedFilesystems = [];
-          }
+          { _module.args.isPrimeSystem = false; }
         ];
       };
 
@@ -29,8 +25,6 @@
           {
             _module.args.isPrimeSystem = true;
             networking.hostName = "nixos-laptop";
-            # Ensure we don't use any out-of-store kernel modules
-            boot.preLVMTempMount.supportedFilesystems = [];
           }
         ];
       };

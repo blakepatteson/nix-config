@@ -1,15 +1,48 @@
 { ... }:
 {
-  services.displayManager.defaultSession = "cinnamon";
-  services.displayManager.autoLogin.user = "blake";
-  services.displayManager.autoLogin.enable = true;
   services.xserver = {
     enable = true;
 
-    displayManager.lightdm = { enable = true; };
-    displayManager.gdm.autoSuspend = false;
+    displayManager = {
+      lightdm = {
+        enable = true;
+        greeters = {
+          gtk.extraConfig = ''
+            background=/etc/nixos/background.png
+            theme-name=Adwaita
+            icon-theme-name=Adwaita
+            cursor-theme-name=Adwaita
+          '';
+        };
+      };
+
+      autoLogin.enable = false;
+      defaultSession = "cinnamon";
+    };
+
+    videoDrivers = [ "nvidia" ];
+
+    config = ''
+      Section "ServerLayout"
+        Identifier "layout"
+        Screen 0 "nvidia"
+        Option "AllowNVIDIAGPUScreens"
+      EndSection
+
+      Section "Device"
+        Identifier "nvidia"
+        Driver "nvidia"
+        Option "AllowEmptyInitialConfiguration" "true"
+        Option "PrimaryGPU" "yes"
+      EndSection
+
+      Section "Screen"
+        Identifier "nvidia"
+        Device "nvidia"
+      EndSection
+    '';
+
     desktopManager.cinnamon.enable = true;
-    # desktopManager.cinnamon.enable = true;
     desktopManager.cinnamon.extraGSettingsOverrides = ''
       [org.cinnamon.desktop.session]
       idle-delay=uint32 0
@@ -63,6 +96,7 @@
       show-decimal-value=true
     '';
   };
+
   powerManagement = {
     enable = false;
     powertop.enable = false;
