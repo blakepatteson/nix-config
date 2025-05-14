@@ -14,27 +14,30 @@ in
     ./nixvim/rewrap.nix
     ./nixvim/compile.nix
   ];
+
   programs.nixvim = {
     enable = true;
     package = pkgs.neovim-unwrapped;
     opts = {
-      foldmethod = "expr";
-      foldexpr = "nvim_treesitter#foldexpr()";
-      foldenable = true;
-      foldlevel = 99;
-      number = true;
-      relativenumber = true;
-      clipboard = "unnamedplus";
-      swapfile = false;
+      autoindent = true;
       backup = false;
-      writebackup = false;
+      clipboard = "unnamedplus";
       colorcolumn = [ "80" "90" ];
       expandtab = true;
+      foldenable = true;
+      foldexpr = "nvim_treesitter#foldexpr()";
+      foldlevel = 99;
+      foldmethod = "expr";
+      ignorecase = true;
+      number = true;
+      relativenumber = true;
       shiftwidth = 2;
-      tabstop = 2;
-      softtabstop = 2;
-      autoindent = true;
+      smartcase = true;
       smartindent = true;
+      softtabstop = 2;
+      swapfile = false;
+      tabstop = 2;
+      writebackup = false;
     };
 
     globals = {

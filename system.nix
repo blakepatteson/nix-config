@@ -77,10 +77,9 @@
 
   programs.firefox = {
     enable = true;
-    preferences = {
-      "media.eme.enabled" = true;
-    };
+    preferences = { "media.eme.enabled" = true; };
   };
+
   zramSwap.enable = true;
 
   # system.autoUpgrade.enable = true;

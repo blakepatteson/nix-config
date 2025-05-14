@@ -72,6 +72,7 @@
             "--smart-case"
             "--multiline"
             "--pcre2"
+            "--fixed-strings"
           ];
           mappings.i = {
             "<F4>" = "move_selection_next";
@@ -79,7 +80,7 @@
             "<Tab>" = "move_selection_next";
             "<S-Tab>" = "move_selection_previous";
             "<C-r>" = {
-              __raw = ''require("telescope.actions").send_selected_to_qflist''; # Temporary mapping to test
+              __raw = ''require("telescope.actions").send_selected_to_qflist'';
             };
           };
         };
