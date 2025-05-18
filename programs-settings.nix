@@ -5,7 +5,7 @@
       PS1='[\D{%Y-%m-%d}] [\t]:\w\$ '
       eval "$(direnv hook bash)"
     '';
-    completion.enable = true;
+    enableCompletion = true;
   };
 
   programs.chromium = {

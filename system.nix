@@ -18,8 +18,8 @@
 
   nix = {
     gc = {
-      dates = "weekly";
-      options = "--delete-older-than 14d";
+      # dates = "weekly";
+      # options = "--delete-older-than 14d";
       persistent = true;
     };
     settings = {

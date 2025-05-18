@@ -12,7 +12,7 @@
 
   boot.plymouth.enable = false;
   boot.loader = {
-    systemd-boot = { enable = true; configurationLimit = 10; };
+    systemd-boot = { enable = true; configurationLimit = 20; };
     efi.canTouchEfiVariables = true;
   };
   boot.kernelParams = [
