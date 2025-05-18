@@ -1,22 +1,19 @@
 { ... }:
 {
-  services.displayManager.defaultSession = "cinnamon";
+  services.displayManager = {
+    defaultSession = "cinnamon";
+    autoLogin = {
+      enable = true;
+      user = "blake";
+    };
+  };
   services.xserver = {
     enable = true;
 
-    displayManager.lightdm = {
-      enable = true;
-      autoLogin = {
-        enable = true;
-        user = "blake";
-        timeout = 0;
-      };
-    };
+    displayManager.lightdm.enable = true;
 
     displayManager.gdm.autoSuspend = false;
-
     desktopManager.cinnamon.enable = true;
-    # desktopManager.cinnamon.enable = true;
     desktopManager.cinnamon.extraGSettingsOverrides = ''
       [org.cinnamon.desktop.session]
       idle-delay=uint32 0
