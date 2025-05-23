@@ -58,18 +58,17 @@
       # set a fancy prompt with date and time
       PS1='\[\033[01;31m\][\D{%Y-%m-%d}]\[\033[00m\] \[\033[01;32m\][\t]\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
-      # enable color support of ls and also add handy aliases
+      # enable color support of ls/eza and also add handy aliases
       if [ -x /usr/bin/dircolors ]; then
           test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-          alias ls='ls --color=auto'
+          alias ls='eza --color=auto'
           alias grep='grep --color=auto'
           alias fgrep='fgrep --color=auto'
           alias egrep='egrep --color=auto'
       fi
 
-      # some more ls aliases
-      alias l='ls -al'
-      alias la='ls -A'
+      alias l='eza -al'
+      alias la='eza -A'
       alias list-issues='gh issue list --limit 1000'
       alias n='nvim'
 

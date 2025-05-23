@@ -23,7 +23,7 @@
         
         -- Prompt for command with existing as default
         local input_command = vim.fn.input({
-          prompt = "Compile Command: ",
+          prompt = "Compile > ",
           default = _G.compile_command.command,
           completion = "shellcmd"
         })
@@ -76,6 +76,17 @@
         
       end
 
+      _G.clear_compile_command = function()
+        _G.compile_command.command = ""
+        _G.compile_command.history_index = 0
+        vim.notify("Compile command cleared", vim.log.levels.INFO)
+      end
+
+      -- Add this user command after the other user commands
+      vim.api.nvim_create_user_command('CompileClear', function()
+        _G.clear_compile_command()
+      end, {})
+
       -- Function to run compile command and capture output in buffer
       _G.run_compile_command = function()
         -- If no command set, prompt for one
@@ -114,25 +125,38 @@
         local line_count = 4  -- Start after our header
         local cmd = vim.fn.jobstart(_G.compile_command.command, {
           on_stdout = function(_, data)
-            if data and #data > 0 and data[1] ~= "" then
-              vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, data)
-              line_count = line_count + #data
+            if data then
+              -- Filter out the last empty string if present (indicates complete line)
+              if #data > 1 and data[#data] == "" then
+                table.remove(data)
+              end
+              
+              if #data > 0 then
+                vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, data)
+                line_count = line_count + #data
+              end
             end
           end,
           on_stderr = function(_, data)
-            if data and #data > 0 and data[1] ~= "" then
-              -- Add stderr data in red if possible
-              vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, data)
-              
-              -- Highlight stderr lines as errors
-              for i, line in ipairs(data) do
-                if line ~= "" then
-                  vim.api.nvim_buf_add_highlight(buf, -1, "Error",
-                      line_count - #data + i - 1, 0, -1)
-                end
+            if data then
+              -- Filter out the last empty string if present
+              if #data > 1 and data[#data] == "" then
+                table.remove(data)
               end
               
-              line_count = line_count + #data
+              if #data > 0 then
+                vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, data)
+                
+                -- Highlight stderr lines as errors (skip empty lines for highlighting)
+                for i, line in ipairs(data) do
+                  if line ~= "" then
+                    vim.api.nvim_buf_add_highlight(buf, -1, "Error",
+                        line_count - #data + i - 1, 0, -1)
+                  end
+                end
+                
+                line_count = line_count + #data
+              end
             end
           end,
           on_exit = function(_, exit_code)
@@ -168,7 +192,7 @@
         _G.compile_job_id = cmd
       end
 
-      
+     
       -- Command to set the compile command
       vim.api.nvim_create_user_command('CompileCommand', function()
         _G.prompt_compile_command()
@@ -264,6 +288,16 @@
         options = {
           silent = true;
           desc = "Run compile command";
+        };
+      }
+
+      {
+        mode = "n";
+        key = "<leader>md";
+        action = ":CompileClear<CR>";
+        options = {
+          silent = true;
+          desc = "Clear compile command";
         };
       }
 

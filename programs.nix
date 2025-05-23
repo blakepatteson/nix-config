@@ -26,6 +26,7 @@ in
     direnv
     docker
     expat
+    eza
     fd
     ffmpeg-full
     file
