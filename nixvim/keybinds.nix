@@ -115,6 +115,8 @@
     { mode = "n"; key = "dd"; action = "\"_dd"; }
     { mode = "v"; key = "d"; action = "\"_d"; }
     { mode = "x"; key = "d"; action = "\"_d"; }
+    { mode = "v"; key = "p"; action = "\"_dP"; }
+    { mode = "x"; key = "p"; action = "\"_dP"; }
 
   ];
 }
