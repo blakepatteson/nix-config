@@ -18,6 +18,7 @@ in
     asciiquarium
     bat
     bottom
+    btop
     busybox
     clang-tools
     cmake

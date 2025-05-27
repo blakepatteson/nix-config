@@ -404,24 +404,6 @@
             -- Notify user
             vim.notify('Saved without formatting')
           end, {})
-
-          -- Enhance diagnostic handling for Go files
-          if vim.bo.filetype == "go" then
-          -- Force diagnostic refresh on save
-          vim.api.nvim_create_autocmd("BufWritePost", {
-          pattern = "*.go",
-          callback = function()
-          -- Refresh diagnostics
-          vim.diagnostic.reset()
-          -- Format the buffer
-          vim.lsp.buf.format({ async = false })
-          -- Request diagnostics refresh
-          vim.schedule(function()
-          vim.diagnostic.show()
-          end)
-          end,
-          })
-          end
       '';
     };
 
