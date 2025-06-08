@@ -145,6 +145,7 @@
           "javascript"
           "typescript"
           "c"
+          "zig"
         ];
 
         highlight = {
@@ -200,6 +201,7 @@
         css
         javascript
         typescript
+        zig
       ];
     };
 
@@ -349,6 +351,27 @@
           enable = true;
           package = pkgs.nodePackages.svelte-language-server;
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
+        };
+
+        zls = {
+          enable = true;
+          package = pkgs.zls;
+          settings = {
+            enable_snippets = true;
+            enable_ast_check_diagnostics = true;
+            enable_autofix = false;
+            enable_import_embedfile_argument_completions = true;
+            warn_style = true;
+            enable_semantic_tokens = true;
+            enable_inlay_hints = true;
+            inlay_hints_show_builtin = true;
+            inlay_hints_exclude_single_argument = true;
+            inlay_hints_hide_redundant_param_names = true;
+            inlay_hints_hide_redundant_param_names_last_token = true;
+            operator_completions = true;
+            include_at_in_builtins = true;
+            max_detail_length = 1048576;
+          };
         };
 
       };

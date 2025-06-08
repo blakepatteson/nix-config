@@ -200,8 +200,7 @@
       vim.api.nvim_create_user_command('ToggleTerminal', toggle_float_term, {})
 
       local lspconfig = require('lspconfig')
-            
-      lspconfig.ts_ls.setup({
+      lspconfig.tsserver.setup({
         cmd = { 
           "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
           "--stdio" 
