@@ -12,6 +12,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     unstable.bolt-launcher
+    unstable.claude-code
 
     OVMF
     acpi
