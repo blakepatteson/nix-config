@@ -15,6 +15,21 @@
       };
     }
 
+    {
+      mode = "n";
+      key = "<C-z>";
+      action = "<C-v>";
+      options = { desc = "Enter visual block mode (alternative)"; };
+    }
+
+
+    {
+      mode = "v";
+      key = "<C-z>";
+      action = "<C-v>";
+      options = { desc = "Enter visual block mode (alternative)"; };
+    }
+
     # cycle through lsp references navigation
     {
       mode = "n";

@@ -86,7 +86,6 @@ in
     raylib
     rclone
     redshift
-    remmina
     ripgrep
     soundfont-fluid
     spice-gtk
