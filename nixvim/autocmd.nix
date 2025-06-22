@@ -7,7 +7,7 @@
       callback = {
         __raw = '' 
             function() 
-              if vim.b.autoformat ~= false then
+              if vim.b.autoformat ~= false and not vim.b.skip_next_format then
                 vim.lsp.buf.format({ async = false }) 
               end
             end 
@@ -20,7 +20,7 @@
       pattern = [ "*.go" ];
       callback.__raw = ''
            function()
-              if vim.b.autoformat ~= false then
+              if vim.b.autoformat ~= false and not vim.b.skip_next_format then
              -- Format the buffer
              vim.lsp.buf.format({ async = false })
              -- Organize imports
@@ -46,19 +46,19 @@
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.c" "*.h" ];
-      callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
+      callback = { __raw = '' function() if not vim.b.skip_next_format then vim.lsp.buf.format() end end ''; };
     }
 
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.nix" ];
-      callback = { __raw = '' function() vim.lsp.buf.format() end ''; };
+      callback = { __raw = '' function() if not vim.b.skip_next_format then vim.lsp.buf.format() end end ''; };
     }
 
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.ts" "*.js" "*.svelte" "*.json" "*.css" "*.html" ];
-      callback = { __raw = '' function() vim.lsp.buf.format({ async = false }) end ''; };
+      callback = { __raw = '' function() if not vim.b.skip_next_format then vim.lsp.buf.format({ async = false }) end end ''; };
     }
 
     {
