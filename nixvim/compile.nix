@@ -11,6 +11,97 @@
         buffer_counter = 0  -- Counter to ensure unique buffer names
       }
 
+      -- Function to jump to error location from compile output
+      _G.jump_to_error = function()
+        local line = vim.api.nvim_get_current_line()
+        
+        -- Define error patterns for different compilers/tools
+        local patterns = {
+          -- Go compiler errors: "filename.go:line:col: message"
+          go = "([^:]+%.go):(%d+):(%d+):",
+          -- Generic filename:line:col pattern
+          generic = "([^:%s]+):(%d+):(%d+):",
+          -- Simplified filename:line pattern  
+          simple = "([^:%s]+):(%d+):",
+          -- Rust compiler errors
+          rust = "([^:]+%.rs):(%d+):(%d+):",
+          -- C/C++ compiler errors
+          c = "([^:]+%.[ch]p?p?):(%d+):(%d+):",
+          -- Python errors
+          python = 'File "([^"]+)", line (%d+)',
+          -- Nix errors
+          nix = "([^:]+%.nix):(%d+):(%d+):",
+        }
+        
+        local file, line_num, col_num
+        
+        -- Try each pattern until we find a match
+        for name, pattern in pairs(patterns) do
+          file, line_num, col_num = line:match(pattern)
+          if file then
+            break
+          end
+        end
+        
+        -- If no match found, try to extract just filename:line
+        if not file then
+          file, line_num = line:match("([^:%s]+):(%d+)")
+        end
+        
+        if not file or not line_num then
+          vim.notify("No file location found on current line", vim.log.levels.WARN)
+          return
+        end
+        
+        -- Convert to numbers
+        line_num = tonumber(line_num)
+        col_num = tonumber(col_num) or 1
+        
+        -- Check if file exists (try relative to current working directory first)
+        local file_path = file
+        if vim.fn.filereadable(file_path) == 0 then
+          -- Try absolute path
+          if not file:match("^/") then
+            -- Try some common relative paths
+            local cwd = vim.fn.getcwd()
+            local potential_paths = {
+              cwd .. "/" .. file,
+              cwd .. "/src/" .. file,
+              cwd .. "/../" .. file,
+            }
+            
+            for _, path in ipairs(potential_paths) do
+              if vim.fn.filereadable(path) == 1 then
+                file_path = path
+                break
+              end
+            end
+          end
+        end
+        
+        -- Check if file exists
+        if vim.fn.filereadable(file_path) == 0 then
+          vim.notify("File not found: " .. file_path, vim.log.levels.ERROR)
+          return
+        end
+        
+        -- Open the file in a new window/buffer
+        vim.cmd("wincmd p")  -- Go to previous window
+        if vim.fn.bufexists(file_path) == 1 then
+          vim.cmd("buffer " .. vim.fn.bufnr(file_path))
+        else
+          vim.cmd("edit " .. file_path)
+        end
+        
+        -- Jump to the line and column
+        vim.api.nvim_win_set_cursor(0, {line_num, col_num - 1})
+        
+        -- Center the line on screen
+        vim.cmd("normal! zz")
+        
+        -- vim.notify(string.format("Jumped to %s:%d:%d", file, line_num, col_num))
+      end
+
       -- Function to prompt for compile command
       _G.prompt_compile_command = function()
         -- Save the current command if history index is at current command
@@ -175,6 +266,10 @@
                 {noremap = true, silent = true})
             vim.api.nvim_buf_set_keymap(buf, "n", "r", ":lua _G.run_compile_command()<CR>", 
                 {noremap = true, silent = true, desc = "Run command again"})
+            vim.api.nvim_buf_set_keymap(buf, "n", "<CR>", ":lua _G.jump_to_error()<CR>", 
+                {noremap = true, silent = true, desc = "Jump to error location"})
+            vim.api.nvim_buf_set_keymap(buf, "n", "gf", ":lua _G.jump_to_error()<CR>", 
+                {noremap = true, silent = true, desc = "Jump to error location"})
             
             -- Set the filetype for syntax highlighting if possible
             vim.api.nvim_buf_set_option(buf, "filetype", "output")
