@@ -52,6 +52,13 @@
     { mode = "n"; key = "<leader>rh"; action = "<cmd>Gitsigns reset_hunk<CR>"; }
     { mode = "n"; key = "<leader>rb"; action = "<cmd>Gitsigns reset_buffer<CR>"; }
 
+    # Git commands
+    { mode = "n"; key = "<leader>gs"; action = "<cmd>lua _G.run_git_command('git status')<CR>"; }
+    { mode = "n"; key = "<leader>gb"; action = "<cmd>lua _G.run_git_command('git branch -vva')<CR>"; }
+    { mode = "n"; key = "<leader>gD"; action = "<cmd>lua _G.run_git_command('git --no-pager diff', 'vsplit')<CR>"; }
+    { mode = "n"; key = "<leader>gT"; action = "<cmd>lua _G.run_git_command('git --no-pager diff', 'tab')<CR>"; }
+    { mode = "n"; key = "<leader>gc"; action = "<cmd>lua _G.run_git_commit()<CR>"; }
+
     # Leader-based LSP commands
     { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
     { mode = "v"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
@@ -99,6 +106,14 @@
     { mode = "n"; key = "<C-u>"; action = "<C-u>zz"; }
     { mode = "n"; key = "n"; action = "nzzzv"; }
     { mode = "n"; key = "N"; action = "Nzzzv"; }
+
+    # Window navigation (since <C-w> is remapped to close)
+    { mode = "n"; key = "<C-h>"; action = "<C-w>h"; }
+    { mode = "n"; key = "<C-j>"; action = "<C-w>j"; }
+    { mode = "n"; key = "<C-k>"; action = "<C-w>k"; }
+    { mode = "n"; key = "<M-l>"; action = "<C-w>l"; }
+    { mode = "n"; key = "<leader>wo"; action = "<C-w>o"; options = { desc = "Close all other windows"; }; }
+    { mode = "n"; key = "<leader>ww"; action = "<C-w>w"; options = { desc = "Cycle between windows"; }; }
 
     # Terminal
     {

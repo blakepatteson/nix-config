@@ -214,6 +214,7 @@
         
         -- Execute command and capture output
         local line_count = 4  -- Start after our header
+        local start_time = vim.loop.hrtime()  -- Capture high-resolution start time
         local cmd = vim.fn.jobstart(_G.compile_command.command, {
           on_stdout = function(_, data)
             if data then
@@ -251,11 +252,26 @@
             end
           end,
           on_exit = function(_, exit_code)
-            -- Add footer with exit code
+            -- Calculate duration with high precision
+            local end_time = vim.loop.hrtime()
+            local duration_ns = end_time - start_time
+            local duration_seconds = duration_ns / 1e9  -- Convert nanoseconds to seconds
+            
+            local duration_text
+            if duration_seconds >= 60 then
+              local minutes = math.floor(duration_seconds / 60)
+              local seconds = duration_seconds % 60
+              duration_text = string.format("%dm %.2fs", minutes, seconds)
+            else
+              duration_text = string.format("%.2fs", duration_seconds)
+            end
+            
+            -- Add footer with exit code and duration
             vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, {
               "",
               "------------------------------------------------------------",
               "Command completed with exit code: " .. exit_code,
+              "Duration: " .. duration_text,
               "Finished at: " .. os.date("%Y-%m-%d %H:%M:%S")
             })
             
@@ -351,6 +367,160 @@
         pattern = "*",
         callback = ensure_nix_shell
       })
+
+      -- Function to run git commands in terminal buffers with colors
+      _G.run_git_command = function(command, split_type)
+        split_type = split_type or "tab"  -- Default to tab
+        
+        -- Create the appropriate split/tab
+        if split_type == "tab" then
+          vim.cmd("tabnew")
+        elseif split_type == "vsplit" then
+          -- Open vsplit on the right side
+          vim.cmd("rightbelow vnew")
+        else
+          vim.cmd("new")
+        end
+        
+        -- Get the new buffer
+        local buf = vim.api.nvim_get_current_buf()
+        
+        -- Set buffer options
+        vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
+        vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
+        vim.api.nvim_buf_set_option(buf, "swapfile", false)
+        
+        -- Set buffer name
+        local bufname = "Git_" .. string.gsub(command, "[^%w]", "_")
+        vim.api.nvim_buf_set_name(buf, bufname)
+        
+        -- Start terminal with the git command
+        vim.fn.termopen(command, {
+          on_exit = function(_, exit_code)
+            -- Don't auto-close - keep the output visible
+            -- Just switch to normal mode and set up keybindings
+            vim.cmd("stopinsert")
+            
+            -- Set buffer local mappings for easy exit
+            vim.api.nvim_buf_set_keymap(buf, "n", "q", ":bd<CR>", 
+                {noremap = true, silent = true})
+            vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", ":bd<CR>", 
+                {noremap = true, silent = true})
+          end
+        })
+      end
+
+      -- Function to run git commit with proper editor behavior in current session
+      _G.run_git_commit = function()
+        -- Check if we have any changes to commit
+        local status_output = vim.fn.system("git status --porcelain")
+        if vim.v.shell_error ~= 0 then
+          vim.notify("Not in a git repository", vim.log.levels.ERROR)
+          return
+        end
+        
+        -- For commit -a, we don't need to check if there are staged changes,
+        -- just if there are any modified files that can be committed
+        local modified_files = vim.fn.system("git diff --name-only")
+        if modified_files == "" then
+          vim.notify("No changes to commit", vim.log.levels.WARN)
+          return
+        end
+        
+        -- Create new tab for commit message
+        vim.cmd("tabnew")
+        local buf = vim.api.nvim_get_current_buf()
+        
+        -- Set buffer name and options
+        vim.api.nvim_buf_set_name(buf, "COMMIT_EDITMSG")
+        vim.api.nvim_buf_set_option(buf, "filetype", "gitcommit")
+        vim.api.nvim_buf_set_option(buf, "buftype", "acwrite")
+        
+        -- Get git status for the commit template
+        local git_status = vim.fn.system("git status")
+        
+        -- Create commit message template
+        local template_lines = {
+          "",
+          "# Please enter the commit message for your changes. Lines starting",
+          "# with '#' will be ignored, and an empty message aborts the commit.",
+          "#",
+        }
+        
+        -- Add git status to template
+        for line in git_status:gmatch("[^\r\n]+") do
+          table.insert(template_lines, "# " .. line)
+        end
+        
+        -- Set buffer content
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, template_lines)
+        
+        -- Position cursor at the first line for message input
+        vim.api.nvim_win_set_cursor(0, {1, 0})
+        
+        -- Set up autocmd to handle the commit when buffer is written
+        vim.api.nvim_create_autocmd("BufWriteCmd", {
+          buffer = buf,
+          callback = function()
+            local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+            local commit_msg_lines = {}
+            
+            -- Filter out comment lines and collect commit message
+            for _, line in ipairs(lines) do
+              if not line:match("^%s*#") then
+                table.insert(commit_msg_lines, line)
+              end
+            end
+            
+            -- Remove trailing empty lines
+            while #commit_msg_lines > 0 and commit_msg_lines[#commit_msg_lines]:match("^%s*$") do
+              table.remove(commit_msg_lines)
+            end
+            
+            -- Check if message is empty
+            if #commit_msg_lines == 0 or (
+               #commit_msg_lines == 1 and commit_msg_lines[1]:match("^%s*$")) then
+              vim.notify("Empty commit message, aborting commit", vim.log.levels.WARN)
+              return
+            end
+            
+            -- Write message to temporary file
+            local temp_file = vim.fn.tempname()
+            vim.fn.writefile(commit_msg_lines, temp_file)
+            
+            -- Execute git commit
+            local result = vim.fn.system("git commit -a --file=" .. temp_file)
+            
+            if vim.v.shell_error == 0 then
+              vim.notify("Commit successful!", vim.log.levels.INFO)
+              -- Close the commit message buffer
+              vim.cmd("bd")
+            else
+              -- Check if the error is just "nothing to commit" (which can happen if files weren't staged)
+              if result:match("nothing to commit") then
+                vim.notify("Nothing to commit (working tree clean)", vim.log.levels.WARN)
+              else
+                vim.notify("Commit failed: " .. result, vim.log.levels.ERROR)
+              end
+            end
+            
+            -- Clean up temp file
+            vim.fn.delete(temp_file)
+          end
+        })
+        
+        -- Also handle buffer closing without saving (abort commit)
+        vim.api.nvim_create_autocmd({"BufUnload", "BufDelete"}, {
+          buffer = buf,
+          once = true,
+          callback = function()
+            -- Only show abort message if we haven't already committed
+            if vim.api.nvim_buf_is_valid(buf) then
+              vim.notify("Commit aborted", vim.log.levels.INFO)
+            end
+          end
+        })
+      end
 
       vim.api.nvim_create_user_command('CompileKill', function()
         if _G.compile_job_id then
