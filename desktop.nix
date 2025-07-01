@@ -199,34 +199,55 @@ cat > /home/blake/.config/waybar/config << 'WAYBAR_EOF'
 "position": "top",
 "height": 30,
 "spacing": 4,
-"modules-left": ["hyprland/workspaces"],
+"modules-left": ["disk", "network"],
 "modules-center": ["clock"],
-"modules-right": ["temperature", "memory", "cpu", "tray"],
+"modules-right": ["pulseaudio", "backlight", "battery", "temperature", "memory", "cpu", "tray"],
     
-"hyprland/workspaces": {
-"disable-scroll": true,
-"all-outputs": true,
-"format": "{name}: {icon}",
-"format-icons": {
-"1": "",
-"2": "",
-"3": "",
-"4": "",
-"5": "",
-"urgent": "",
-"focused": "",
-"default": ""
-}
+"disk": {
+"interval": 30,
+"format": "💾 {used}/{total} ({percentage_used}%)",
+"path": "/",
+"tooltip-format": "{used} used out of {total} ({free} free)"
+},
+
+"network": {
+"format-wifi": "📶 {essid} {signalStrength}%",
+"format-ethernet": "🌐 {ifname}",
+"format-disconnected": "❌ Disconnected",
+"tooltip-format": "{ifname}: {ipaddr}"
+},
+
+"pulseaudio": {
+"format": "🔊 {volume}%",
+"format-muted": "🔇 Muted",
+"on-click": "pavucontrol"
+},
+
+"backlight": {
+"format": "☀️ {percent}%"
+},
+
+"battery": {
+"states": {
+"warning": 30,
+"critical": 15
+},
+"format": "🔋 {capacity}%",
+"format-charging": "⚡ {capacity}%",
+"format-plugged": "🔌 {capacity}%"
 },
     
 "clock": {
-"format": "{:%A, %B %d, %Y at %I:%M %p}",
+"interval": 1,
+"format": "{:%A, %B %d, %Y at %I:%M:%S %p}",
 "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
 },
     
 "cpu": {
-"format": "CPU {usage}%",
-"tooltip": false
+"interval": 1,
+"format": "CPU {usage:2}%",
+"tooltip": true,
+"tooltip-format": "Load: {load}"
 },
     
 "memory": {
@@ -259,8 +280,8 @@ min-height: 0;
 }
 
 window#waybar {
-background-color: rgba(43, 48, 59, 0.8);
-border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+background-color: #000000;
+border-bottom: 3px solid #333333;
 color: #ffffff;
 transition-property: background-color;
 transition-duration: .5s;
