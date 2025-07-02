@@ -1,7 +1,8 @@
 { config, ... }:
 {
   hardware.nvidia = {
-    open = true;
+    open = false;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    modesetting.enable = true;
   };
 }

@@ -39,4 +39,7 @@ in
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
+  
+  # Force disable integrated graphics - NVIDIA only
+  boot.blacklistedKernelModules = [ "i915" ];
 }

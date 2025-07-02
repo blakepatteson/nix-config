@@ -21,8 +21,10 @@
   system.activationScripts.hyprland-config = ''
 mkdir -p /home/blake/.config/hypr
 cat > /home/blake/.config/hypr/hyprland.conf << 'HYPR_EOF'
-# Monitor configuration
-monitor = ,preferred,auto,auto
+# Monitor configuration - force common high resolution
+monitor = ,1920x1080@60,auto,1
+monitor = ,2560x1440@60,auto,1
+monitor = ,3840x2160@60,auto,1
 
 # Input configuration
 input {
@@ -59,10 +61,6 @@ enabled = true
 size = 3
 passes = 1
 }
-drop_shadow = true
-shadow_range = 4
-shadow_render_power = 3
-col.shadow = rgba(1a1a1aee)
 }
 
 # Animations - disabled for instant switching
@@ -87,12 +85,12 @@ $mainMod = SUPER
 bind = $mainMod, Q, exec, kitty
 bind = $mainMod, F, exec, firefox
 bind = $mainMod, C, killactive,
+bind = $mainMod, escape, killactive,
 bind = $mainMod, M, exit,
 bind = $mainMod, E, exec, kitty -e nvim
 bind = $mainMod, V, togglefloating,
 bind = $mainMod, R, exec, wofi --show drun
 bind = $mainMod, P, pseudo,
-bind = $mainMod, J, togglesplit,
 bind = $mainMod, B, exec, pkill -SIGUSR1 waybar
 
 # Windows-style app launcher (fixed focus issue)
@@ -110,7 +108,11 @@ bind = $mainMod, down, fullscreen, 0
 bind = ALT, Tab, cyclenext,
 bind = ALT SHIFT, Tab, cyclenext, prev
 
-# Move focus with mainMod + arrow keys
+# Move focus with vim keys and arrow keys
+bind = $mainMod, h, movefocus, l
+bind = $mainMod, j, movefocus, d
+bind = $mainMod, k, movefocus, u
+bind = $mainMod, l, movefocus, r
 bind = $mainMod, left, movefocus, l
 bind = $mainMod, right, movefocus, r
 
@@ -141,6 +143,18 @@ bind = $mainMod SHIFT, 0, movetoworkspace, 10
 # Scroll through existing workspaces with mainMod + scroll
 bind = $mainMod, mouse_down, workspace, e+1
 bind = $mainMod, mouse_up, workspace, e-1
+
+# Move focus with arrow keys
+bind = $mainMod, left, movefocus, l
+bind = $mainMod, right, movefocus, r  
+bind = $mainMod, up, movefocus, u
+bind = $mainMod, down, movefocus, d
+
+# Move windows with Shift+arrow keys
+bind = $mainMod SHIFT, left, movewindow, l
+bind = $mainMod SHIFT, right, movewindow, r
+bind = $mainMod SHIFT, up, movewindow, u
+bind = $mainMod SHIFT, down, movewindow, d
 
 # Screenshot
 bind = , Print, exec, grim -g "$(slurp)" - | wl-copy
@@ -420,7 +434,7 @@ chown blake:users /home/blake/.config/hypr/scripts/window-switch.sh
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --sessions /usr/share/wayland-sessions --xsessions /usr/share/xsessions --xsession-wrapper '${pkgs.xorg.xinit}/bin/startx' --remember --remember-session";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --sessions /etc/share/wayland-sessions --xsessions /etc/share/xsessions --xsession-wrapper '${pkgs.xorg.xinit}/bin/startx' --remember --remember-session";
         user = "greeter";
       };
     };
@@ -436,7 +450,7 @@ chown blake:users /home/blake/.config/hypr/scripts/window-switch.sh
   '';
 
   # Create working session files - use NixOS sessionPackages approach
-  environment.etc."wayland-sessions/hyprland.desktop".text = ''
+  environment.etc."share/wayland-sessions/hyprland.desktop".text = ''
     [Desktop Entry]
     Name=Hyprland
     Comment=Hyprland compositor
@@ -445,7 +459,7 @@ chown blake:users /home/blake/.config/hypr/scripts/window-switch.sh
     DesktopNames=Hyprland
   '';
 
-  environment.etc."xsessions/cinnamon.desktop".text = ''
+  environment.etc."share/xsessions/cinnamon.desktop".text = ''
     [Desktop Entry]
     Name=Cinnamon
     Comment=Cinnamon Desktop Environment
@@ -475,10 +489,6 @@ chown blake:users /home/blake/.config/hypr/scripts/window-switch.sh
     # Python paths for Cinnamon components (fixes blueman/pygobject errors)
     PYTHONPATH = "${pkgs.python3}/lib/python3.11/site-packages:${pkgs.python3Packages.pygobject3}/lib/python3.11/site-packages";
     GI_TYPELIB_PATH = "${pkgs.gobject-introspection}/lib/girepository-1.0";
-    # Graphics for hybrid setup
-    DRI_PRIME = "1";
-    __NV_PRIME_RENDER_OFFLOAD = "0";
-    __GLX_VENDOR_LIBRARY_NAME = "mesa";
   };
 
   security.pam.services.greetd.enableGnomeKeyring = true;
@@ -499,6 +509,10 @@ chown blake:users /home/blake/.config/hypr/scripts/window-switch.sh
     waybar
     wl-clipboard
     wofi
+    # Wayland display and audio management
+    wdisplays          # GUI display configuration
+    pavucontrol        # Audio control panel
+    pwvucontrol        # PipeWire volume control
   ];
 
   powerManagement = {
