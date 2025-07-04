@@ -18,6 +18,7 @@ in
     asciiquarium
     bat
     bottom
+    brightnessctl
     btop
     busybox
     clang-tools
@@ -26,6 +27,7 @@ in
     cups
     direnv
     docker
+    dunst
     expat
     eza
     fd
@@ -47,6 +49,7 @@ in
     golangci-lint
     google-chrome
     graphviz
+    grim
     gst_all_1.gst-libav
     gst_all_1.gst-plugins-bad
     gst_all_1.gst-plugins-bad
@@ -56,12 +59,16 @@ in
     gst_all_1.gstreamer
     hplip
     htop
+    hyprpaper
+    imagemagick
+    jq
     kitty
     lazygit
     lemminx
     libde265
     libdrm
     libguestfs
+    libnotify
     libreoffice-qt
     libva
     libvdpau
@@ -77,20 +84,25 @@ in
     nodejs
     obs-studio
     onlyoffice-bin
+    pamixer
+    pavucontrol # Audio control panel
     pinta
     pkg-config
     pulseaudio
+    pwvucontrol # PipeWire volume control
     python312Packages.pygments
     qsynth
     raylib
     rclone
     redshift
     ripgrep
+    slurp
     soundfont-fluid
     spice-gtk
     spice-vdagent
     sqlite
     sqlitebrowser
+    swaybg
     syncthing
     thunderbird
     tmux
@@ -98,8 +110,12 @@ in
     vaapiVdpau
     vim
     virt-manager
+    waybar
+    wdisplays # GUI display configuration
     wget
     wine64
+    wl-clipboard
+    wofi
     x265
     xclip
     xfce.catfish

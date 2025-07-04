@@ -38,7 +38,7 @@ in
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-
-  # Force disable integrated graphics - NVIDIA only
-  boot.blacklistedKernelModules = [ "i915" ];
+  
+  # Prevent module loading conflicts during boot
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
 }
