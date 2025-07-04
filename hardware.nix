@@ -12,10 +12,9 @@ in
   ];
 
   hardware = {
-    pulseaudio.enable = false;
     enableAllFirmware = true;
 
-    opengl = {
+    graphics = {
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
@@ -39,7 +38,7 @@ in
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  
+
   # Force disable integrated graphics - NVIDIA only
   boot.blacklistedKernelModules = [ "i915" ];
 }

@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 {
   services = {
+    pulseaudio.enable = false;
     syncthing = {
       enable = true;
       user = "blake";
@@ -13,7 +14,6 @@
       enable = true;
       package = pkgs.mlocate;
       interval = "hourly";
-      localuser = null;
     };
 
     printing = {

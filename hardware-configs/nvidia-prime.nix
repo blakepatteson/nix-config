@@ -1,5 +1,4 @@
-# hardware-configs/nvidia-prime.nix
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   hardware.nvidia = {
     open = true;

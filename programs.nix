@@ -98,7 +98,6 @@ in
     vaapiVdpau
     vim
     virt-manager
-    vscodium
     wget
     wine64
     x265

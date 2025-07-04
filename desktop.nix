@@ -475,7 +475,7 @@ chown blake:users /home/blake/.config/hypr/scripts/window-switch.sh
       export XDG_SESSION_TYPE=x11
   
       # Start Cinnamon the same way as main branch
-      exec ${pkgs.cinnamon.cinnamon-session}/bin/cinnamon-session
+      exec ${pkgs.cinnamon-session}/bin/cinnamon-session
     ''}
     Type=Application
     DesktopNames=X-Cinnamon

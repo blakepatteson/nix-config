@@ -1,2 +1,2 @@
-time sudo nixos-rebuild switch --cores 0
+time sudo nixos-rebuild switch --cores 16
 
