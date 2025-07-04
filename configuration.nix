@@ -3,17 +3,17 @@
   imports = [
     ./hardware-configuration.nix
 
-    ./boot.nix
-    ./desktop.nix
-    ./etc.nix
-    ./env.nix
-    ./hardware.nix
-    ./network.nix
-    ./nixvim.nix
-    ./programs.nix
-    ./programs-settings.nix
-    ./system.nix
-    ./services.nix
-    ./virtualization.nix
+    ./src/boot.nix
+    ./desktop/desktop.nix
+    ./src/etc.nix
+    ./src/env.nix
+    ./src/hardware.nix
+    ./src/network.nix
+    ./src/nixvim.nix
+    ./src/programs.nix
+    ./src/programs-settings.nix
+    ./src/system.nix
+    ./src/services.nix
+    ./src/virtualization.nix
   ];
 }

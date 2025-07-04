@@ -7,12 +7,12 @@ in
 {
   imports = [
     nixvim.nixosModules.nixvim
-    ./nixvim/autocmd.nix
-    ./nixvim/extras.nix
-    ./nixvim/keybinds.nix
-    ./nixvim/plugins.nix
-    ./nixvim/rewrap.nix
-    ./nixvim/compile.nix
+    ../nixvim/autocmd.nix
+    ../nixvim/extras.nix
+    ../nixvim/keybinds.nix
+    ../nixvim/plugins.nix
+    ../nixvim/rewrap.nix
+    ../nixvim/compile.nix
   ];
 
   programs.nixvim = {
