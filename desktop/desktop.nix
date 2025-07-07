@@ -25,7 +25,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --sessions /etc/share/wayland-sessions --xsessions /etc/share/xsessions --xsession-wrapper '${pkgs.xorg.xinit}/bin/startx' --remember --remember-session";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --sessions /etc/wayland-sessions --xsessions /etc/xsessions --xsession-wrapper '${pkgs.xorg.xinit}/bin/startx' --remember --remember-session";
         user = "greeter";
       };
     };
@@ -40,8 +40,8 @@
     cinnamon-session
   '';
 
-  # Create working session files - use NixOS sessionPackages approach
-  environment.etc."share/wayland-sessions/hyprland.desktop".text = ''
+  # Create working session files in /etc locations
+  environment.etc."wayland-sessions/hyprland.desktop".text = ''
     [Desktop Entry]
     Name=Hyprland
     Comment=Hyprland compositor
@@ -50,22 +50,33 @@
     DesktopNames=Hyprland
   '';
 
-  environment.etc."share/xsessions/cinnamon.desktop".text = ''
+  environment.etc."xsessions/cinnamon.desktop".text = ''
     [Desktop Entry]
     Name=Cinnamon
     Comment=Cinnamon Desktop Environment
     Exec=${pkgs.writeShellScript "cinnamon-wrapper" ''
-      # Kill any Hyprland processes that might interfere
-      pkill -f hyprland 2>/dev/null || true
-      pkill -f Hyprland 2>/dev/null || true
-  
-      # Set up clean environment for Cinnamon (like main branch)
+      # Set up environment for Cinnamon
       export DESKTOP_SESSION=cinnamon
       export XDG_CURRENT_DESKTOP=X-Cinnamon
       export XDG_SESSION_DESKTOP=cinnamon
       export XDG_SESSION_TYPE=x11
-  
-      # Start Cinnamon the same way as main branch
+      export XDG_DATA_DIRS="${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:${pkgs.cinnamon-common}/share:$XDG_DATA_DIRS"
+      
+      # Force Intel graphics for Cinnamon on Prime systems
+      export DRI_PRIME=0
+      export __GLX_VENDOR_LIBRARY_NAME=mesa
+      unset __NV_PRIME_RENDER_OFFLOAD
+      unset __VK_LAYER_NV_optimus
+      
+      # Ensure dbus session is available
+      if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+        eval $(${pkgs.dbus}/bin/dbus-launch --sh-syntax --exit-with-session)
+      fi
+      
+      # Start essential services
+      ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &
+      
+      # Start Cinnamon with session manager
       exec ${pkgs.cinnamon-session}/bin/cinnamon-session
     ''}
     Type=Application
@@ -82,7 +93,20 @@
     GI_TYPELIB_PATH = "${pkgs.gobject-introspection}/lib/girepository-1.0";
   };
 
+  # Add essential packages for Cinnamon
+  environment.systemPackages = with pkgs; [
+    gsettings-desktop-schemas
+    cinnamon-common
+    cinnamon-control-center
+    muffin
+  ];
+
   security.pam.services.greetd.enableGnomeKeyring = true;
+  
+  # Additional services for Cinnamon
+  services.dbus.enable = true;
+  services.gvfs.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   powerManagement = {
     enable = false;
