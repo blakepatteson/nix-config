@@ -13,7 +13,6 @@
       enable = true;
       package = pkgs.mlocate;
       interval = "hourly";
-      localuser = null;
     };
 
     printing = {
@@ -33,6 +32,8 @@
     openssh.enable = true;
     fstrim.enable = true;
     timesyncd.enable = true;
+
+    pulseaudio.enable = false;
 
     pipewire = {
       enable = true;

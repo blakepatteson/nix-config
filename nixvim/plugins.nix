@@ -140,12 +140,16 @@
           "nix"
           "lua"
           "vim"
-          "go"
           "python"
-          "javascript"
-          "typescript"
           "c"
           "zig"
+          "go"
+          "json"
+          "yaml"
+          "toml"
+          "xml"
+          "markdown"
+          "bash"
         ];
 
         highlight = {

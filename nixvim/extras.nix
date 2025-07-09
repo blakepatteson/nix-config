@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   programs.nixvim.extraPlugins = with pkgs.vimPlugins; [ vim-visual-multi ];
+
   # have to do this for treesitter TODO: open issue with treesitter nixvim?
   programs.nixvim.extraConfigLuaPre = ''
     vim.fs = vim.fs or {}
@@ -200,7 +201,7 @@
       vim.api.nvim_create_user_command('ToggleTerminal', toggle_float_term, {})
 
       local lspconfig = require('lspconfig')
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         cmd = { 
           "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
           "--stdio" 

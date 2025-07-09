@@ -55,7 +55,7 @@ in
   services.samba = {
     enable = true;
     openFirewall = true;
-    shares = {
+    settings = {
       development = {
         path = "/home/blake/dev";
         browseable = "yes";

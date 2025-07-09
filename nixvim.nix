@@ -1,7 +1,8 @@
 { pkgs, ... }:
 let
-  nixvim = import (builtins.fetchGit {
-    url = "https://github.com/nix-community/nixvim";
+  nixvim = import (builtins.fetchTarball {
+    url = "https://github.com/nix-community/nixvim/archive/nixos-25.05.tar.gz";
+    sha256 = "1qxvgwriad1ihzc2dd878ssnjrqzlbc69nl2cfv40y4nmnp0mfkx";
   });
 in
 {
@@ -17,7 +18,6 @@ in
 
   programs.nixvim = {
     enable = true;
-    package = pkgs.neovim-unwrapped;
     opts = {
       autoindent = true;
       backup = false;

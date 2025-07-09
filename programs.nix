@@ -70,7 +70,6 @@ in
     minizip
     mlocate
     neofetch
-    neovim
     nil
     nixd
     nixpkgs-fmt
@@ -97,7 +96,6 @@ in
     tmux
     ungoogled-chromium
     vaapiVdpau
-    vim
     virt-manager
     vscodium
     wget
