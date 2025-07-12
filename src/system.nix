@@ -69,6 +69,16 @@
       proggyfonts
       victor-mono
       pkgs.nerd-fonts.victor-mono
+
+      dejavu_fonts
+      freefont_ttf
+      gyre-fonts
+      liberation_ttf
+      unifont
+      noto-fonts-cjk-sans
+      source-code-pro
+      source-sans-pro
+      source-serif-pro
     ];
 
   nixpkgs.config = {

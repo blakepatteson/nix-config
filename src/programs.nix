@@ -21,6 +21,7 @@ in
     brightnessctl
     btop
     busybox
+    cifs-utils
     clang-tools
     cmake
     cowsay

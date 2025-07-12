@@ -102,6 +102,19 @@ in
     EOF
         chmod +x /home/blake/.config/hypr/scripts/window-switch.sh
         chown blake:users /home/blake/.config/hypr/scripts/window-switch.sh
+
+        # Create kill-and-fullscreen script
+        cat > /home/blake/.config/hypr/scripts/kill-and-fullscreen.sh << 'EOF'
+    #!/bin/bash
+    # Kill the active window
+    hyprctl dispatch killactive
+    # Small delay to ensure the window is closed
+    sleep 0.1
+    # Make the newly focused window fullscreen
+    hyprctl dispatch fullscreen 1
+    EOF
+        chmod +x /home/blake/.config/hypr/scripts/kill-and-fullscreen.sh
+        chown blake:users /home/blake/.config/hypr/scripts/kill-and-fullscreen.sh
   '';
 }
 
