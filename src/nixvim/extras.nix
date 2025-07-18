@@ -285,7 +285,7 @@
   '';
 
   programs.nixvim.extraConfigVim = /* lua */ ''
-      highlight ColorColumn ctermbg = 236 guibg=#2d2d2d
+    highlight ColorColumn ctermbg = 236 guibg=#2d2d2d
     function! LspStatus() abort
     if luaeval('#vim.lsp.get_active_clients() > 0')
     return luaeval("require('lsp-status').status()")
@@ -296,6 +296,4 @@
     set cedit=\<C-o>
   '';
 }
-
-
 

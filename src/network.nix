@@ -1,8 +1,4 @@
-# network.nix
 { lib, ... }:
-let
-  hasModernSamba = lib.versionAtLeast lib.version "24.06";
-in
 {
   networking = {
     hostName = "nixos";
@@ -46,16 +42,30 @@ in
     };
   };
 
-  imports = [
-    (if hasModernSamba
-    then ./samba-configs/samba-modern.nix
-    else ./samba-configs/samba-legacy.nix)
-  ];
-
   services.samba = {
     enable = true;
     openFirewall = true;
     settings = {
+      global = {
+        workgroup = "WORKGROUP";
+        "server string" = "Samba Server";
+        "server role" = "standalone server";
+        "map to guest" = "bad user";
+        "client min protocol" = "SMB2_02";
+        "server min protocol" = "SMB2_02";
+        "client max protocol" = "SMB3";
+        "server max protocol" = "SMB3";
+        "encrypt passwords" = "yes";
+        "local master" = "yes";
+        "domain master" = "no";
+        "preferred master" = "yes";
+        "create mask" = "0755";
+        "directory mask" = "0755";
+        "map archive" = "yes";
+        "map system" = "yes";
+        "map hidden" = "yes";
+      };
+
       development = {
         path = "/home/blake/dev";
         browseable = "yes";

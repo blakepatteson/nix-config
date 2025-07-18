@@ -1,4 +1,3 @@
-# hardware-configs/nvidia-prime.nix
 { config, ... }:
 {
   hardware.nvidia = {

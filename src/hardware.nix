@@ -1,4 +1,3 @@
-# hardware.nix
 { pkgs, ... }:
 let
   # Use a static configuration file to determine hardware profile

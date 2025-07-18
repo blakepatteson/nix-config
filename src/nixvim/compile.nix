@@ -534,7 +534,6 @@
     '';
 
     keymaps = [
-      # Set compile command
       {
         mode = "n";
         key = "<leader>mc";
@@ -545,7 +544,6 @@
         };
       }
 
-      # Run compile command
       {
         mode = "n";
         key = "<leader>mr";
@@ -566,7 +564,6 @@
         };
       }
 
-      # Previous compile command from history
       {
         mode = "n";
         key = "<leader>mp";
@@ -577,7 +574,6 @@
         };
       }
 
-      # Next compile command from history
       {
         mode = "n";
         key = "<leader>mn";
@@ -595,17 +591,6 @@
         options = {
           silent = true;
           desc = "Kill compile process";
-        };
-      }
-
-      # Enter nix shell
-      {
-        mode = "n";
-        key = "<leader>ms";
-        action = ":NixShell<CR>";
-        options = {
-          silent = true;
-          desc = "Enter nix shell";
         };
       }
     ];

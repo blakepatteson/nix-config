@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 let
   nixvim = import (builtins.fetchTarball {
     url = "https://github.com/nix-community/nixvim/archive/nixos-25.05.tar.gz";

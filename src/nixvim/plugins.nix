@@ -6,10 +6,7 @@
     which-key.enable = true;
     web-devicons.enable = true;
 
-    notify = {
-      enable = true;
-      backgroundColour = "#000000";
-    };
+    notify = { enable = true; settings = { background_colour = "#000000"; }; };
 
     telescope = {
       enable = true;
@@ -50,10 +47,7 @@
           selection_caret = "> ";
           entry_prefix = "  ";
 
-          cache_picker = {
-            num_pickers = 10;
-            limit_entries = 100000;
-          };
+          cache_picker = { num_pickers = 10; limit_entries = 100000; };
 
           file_browser = {
             depth = 1;
@@ -111,10 +105,7 @@
       enable = true;
       sources = {
         formatting = {
-          prettier = {
-            enable = true;
-            disableTsServerFormatter = true;
-          };
+          prettier = { enable = true; disableTsServerFormatter = true; };
           gofmt = { enable = true; };
         };
         diagnostics = { golangci_lint = { enable = true; }; };
@@ -259,10 +250,7 @@
           enable = true;
           settings = {
             formatting = { command = [ "nixpkgs-fmt" ]; };
-            nix = {
-              flake = { autoEvalInputs = false; }; # Set to false to avoid crashes
-              maxMemoryMB = 2048;
-            };
+            nix = { maxMemoryMB = 4096; };
           };
         };
 
@@ -285,12 +273,7 @@
               rangeVariableTypes = true;
             };
 
-            directoryFilters = [
-              "-.git"
-              "-.vscode"
-              "-.idea"
-              "-node_modules"
-            ];
+            directoryFilters = [ "-.git" "-.vscode" "-.idea" "-node_modules" ];
 
             diagnostics = {
               enable = true;
@@ -380,38 +363,36 @@
 
       };
 
-      onAttach = /* lua */''
-        vim.diagnostic.config
-        ({
+      onAttach = /* lua */'' vim.diagnostic.config(
+         {
           virtual_text = true,
           signs = true,
           underline = true,
           update_in_insert = false,
           severity_sort = true,
-          })
+         })
           -- Enable workspace diagnostics
           vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-          vim.lsp.diagnostic.on_publish_diagnostics, {
-          virtual_text = true,
-          signs = true,
-          underline = true,
-          update_in_insert = false,
-          severity_sort = true,
-          workspace = true,
-          }
-          )
+            vim.lsp.diagnostic.on_publish_diagnostics, {
+              virtual_text = true,
+              signs = true,
+              underline = true,
+              update_in_insert = false,
+              severity_sort = true,
+              workspace = true,
+            })
 
           -- Configure diagnostic display
           vim.diagnostic.config({
-          virtual_text = true,
-          signs = true,
-          underline = true,
-          update_in_insert = false,
-          severity_sort = true,
-          float = {
-          source = "always",  -- Show source in diagnostic popup window
-          border = "rounded"
-          }
+            virtual_text = true,
+            signs = true,
+            underline = true,
+            update_in_insert = false,
+            severity_sort = true,
+            float = {
+            source = "always",  -- Show source in diagnostic popup window
+            border = "rounded"
+            }
           })
 
           -- command to disable formatting 

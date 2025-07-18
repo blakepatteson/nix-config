@@ -2,7 +2,6 @@
 
 {
   programs.nixvim.keymaps = [
-    # Diagnostic navigation
     { mode = "n"; key = "]d"; action = "<cmd>lua vim.diagnostic.goto_next()<CR>"; }
     { mode = "n"; key = "[d"; action = "<cmd>lua vim.diagnostic.goto_prev()<CR>"; }
 
@@ -30,7 +29,6 @@
       options = { desc = "Enter visual block mode (alternative)"; };
     }
 
-    # cycle through lsp references navigation
     {
       mode = "n";
       key = "]r";
@@ -42,24 +40,20 @@
       action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
     }
 
-    # Git navigation - both file and workspace level
     { mode = "n"; key = "]h"; action = "<cmd>lua require('gitsigns').next_hunk()<CR>"; }
     { mode = "n"; key = "[h"; action = "<cmd>lua require('gitsigns').prev_hunk()<CR>"; }
     { mode = "n"; key = "]H"; action = "<cmd>NextGitFile<CR>"; }
     { mode = "n"; key = "[H"; action = "<cmd>PrevGitFile<CR>"; }
 
-    # Git reset hunks / files
     { mode = "n"; key = "<leader>rh"; action = "<cmd>Gitsigns reset_hunk<CR>"; }
     { mode = "n"; key = "<leader>rb"; action = "<cmd>Gitsigns reset_buffer<CR>"; }
 
-    # Git commands
     { mode = "n"; key = "<leader>gs"; action = "<cmd>lua _G.run_git_command('git status')<CR>"; }
     { mode = "n"; key = "<leader>gb"; action = "<cmd>lua _G.run_git_command('git branch -vva')<CR>"; }
     { mode = "n"; key = "<leader>gD"; action = "<cmd>lua _G.run_git_command('git --no-pager diff', 'vsplit')<CR>"; }
     { mode = "n"; key = "<leader>gT"; action = "<cmd>lua _G.run_git_command('git --no-pager diff', 'tab')<CR>"; }
     { mode = "n"; key = "<leader>gc"; action = "<cmd>lua _G.run_git_commit()<CR>"; }
 
-    # Leader-based LSP commands
     { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
     { mode = "v"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
     { mode = "n"; key = "<leader>gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; }
@@ -112,21 +106,19 @@
     { mode = "n"; key = "<C-j>"; action = "<C-w>j"; }
     { mode = "n"; key = "<C-k>"; action = "<C-w>k"; }
     { mode = "n"; key = "<M-l>"; action = "<C-w>l"; }
-    { mode = "n"; key = "<leader>wo"; action = "<C-w>o"; options = { desc = "Close all other windows"; }; }
-    { mode = "n"; key = "<leader>ww"; action = "<C-w>w"; options = { desc = "Cycle between windows"; }; }
-
-    # Terminal
     {
       mode = "n";
-      key = "<leader>t";
-      action = ":ToggleTerminal<CR>";
-      options = { silent = true; desc = "Toggle floating terminal"; };
+      key = "<leader>wo";
+      action = "<C-w>o";
+      options = { desc = "Close all other windows"; };
     }
     {
-      mode = "t";
-      key = "<Esc>";
-      action = "<C-\\><C-n>";
-      options = { desc = "Exit terminal mode"; };
+      mode = "n";
+      key = "<leader>ww";
+      action = "<C-w>w";
+      options = {
+        desc = "Cycle between windows";
+      };
     }
 
     # LSP additional
