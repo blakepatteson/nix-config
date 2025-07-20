@@ -1,15 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
-  # Use a static configuration file to determine hardware profile
-  isPrimeSystem = builtins.pathExists ./hardware-configs/is-prime-system;
+  isPrimeSystem = builtins.pathExists ./src/is-prime-system;
 in
 {
-  imports = [
-    (if isPrimeSystem
-    then ./hardware-configs/nvidia-prime.nix
-    else ./hardware-configs/nvidia-base.nix)
-  ];
-
   hardware = {
     enableAllFirmware = true;
 
@@ -21,6 +14,18 @@ in
         vaapiVdpau
         libvdpau-va-gl
       ];
+    };
+
+    nvidia = {
+      open = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      modesetting.enable = true;
+    } // lib.optionalAttrs isPrimeSystem {
+      prime = {
+        sync.enable = true; # Use sync instead of offload for display output
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
     };
 
     bluetooth = {
@@ -36,5 +41,5 @@ in
     };
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "intel" "nvidia" ];
 }
