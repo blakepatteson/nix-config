@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  isPrimeSystem = builtins.pathExists ./src/is-prime-system;
+  isPrimeSystem = builtins.pathExists ./is-prime-system;
 in
 {
   hardware = {
@@ -22,7 +22,8 @@ in
       modesetting.enable = true;
     } // lib.optionalAttrs isPrimeSystem {
       prime = {
-        sync.enable = true; # Use sync instead of offload for display output
+        offload.enable = true;
+        offload.enableOffloadCmd = true;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
       };
@@ -41,5 +42,7 @@ in
     };
   };
 
-  services.xserver.videoDrivers = [ "intel" "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
+  
+  boot.blacklistedKernelModules = [ "nouveau" ];
 }
