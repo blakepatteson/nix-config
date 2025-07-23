@@ -340,12 +340,33 @@
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
 
+        pyright = {
+          enable = true;
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "basic";
+                autoSearchPaths = true;
+                useLibraryCodeForTypes = true;
+                autoImportCompletions = true;
+                diagnosticMode = "workspace";
+              };
+            };
+          };
+        };
+
         zls = {
           enable = true;
           package = pkgs.zls;
+          cmd = [ "${pkgs.zls}/bin/zls" ];
           settings = {
+            zig_exe_path = "${pkgs.zig}/bin/zig";
+            zig_lib_path = "${pkgs.zig}/lib/zig";
             enable_snippets = true;
-            enable_ast_check_diagnostics = true;
+            enable_ast_check_diagnostics = false;
+            enable_build_on_save = true;
+            build_on_save_step = "check";
+            prefer_ast_check_as_child_process = true;
             enable_autofix = false;
             enable_import_embedfile_argument_completions = true;
             warn_style = true;

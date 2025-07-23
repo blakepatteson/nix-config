@@ -216,6 +216,8 @@
             includeInlayParameterNameHints = "all",
             includeInlayPropertyDeclarationTypeHints = true,
             includeInlayFunctionLikeReturnTypeHints = true,
+            noUnusedLocals = true,
+            noUnusedParameters = true,
           },
           capabilities = { renameProvider = true }
         }

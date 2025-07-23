@@ -242,8 +242,11 @@
                 -- Highlight stderr lines as errors (skip empty lines for highlighting)
                 for i, line in ipairs(data) do
                   if line ~= "" then
-                    vim.api.nvim_buf_add_highlight(buf, -1, "Error",
-                        line_count - #data + i - 1, 0, -1)
+                    local line_num = line_count - #data + i - 1
+                    -- Add bounds check to prevent crash
+                    if line_num >= 0 and line_num < vim.api.nvim_buf_line_count(buf) then
+                      vim.api.nvim_buf_add_highlight(buf, -1, "Error", line_num, 0, -1)
+                    end
                   end
                 end
                 

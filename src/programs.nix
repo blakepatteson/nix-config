@@ -105,6 +105,7 @@ in
     xfce.catfish
     xsel
     yazi
+    zig
     zlib
     zoom-us
 
