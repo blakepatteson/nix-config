@@ -308,10 +308,132 @@
       vim.notify("Search history cleared")
     end
 
+    -- Git commit workflow functions
+    local function smart_git_commit()
+      -- Check if we have staged changes
+      local staged_handle = io.popen("git diff --cached --quiet; echo $?")
+      local staged_result = staged_handle:read("*a"):gsub("%s+", "")
+      staged_handle:close()
+      
+      local has_staged = staged_result == "1"
+      
+      -- Check if we have unstaged changes
+      local unstaged_handle = io.popen("git diff --quiet; echo $?")
+      local unstaged_result = unstaged_handle:read("*a"):gsub("%s+", "")
+      unstaged_handle:close()
+      
+      local has_unstaged = unstaged_result == "1"
+      
+      -- Determine which diff to show and which commit command to use
+      local diff_cmd, commit_cmd
+      
+      if has_staged then
+        -- Show staged changes
+        diff_cmd = "git diff --cached"
+        commit_cmd = "git commit"
+      elseif has_unstaged then
+        -- Show unstaged changes, will commit with -a
+        diff_cmd = "git diff"
+        commit_cmd = "git commit -a"
+      else
+        vim.notify("No changes to commit", vim.log.levels.WARN)
+        return
+      end
+      
+      -- Save current buffer if it exists and is modified
+      if vim.bo.modified then
+        vim.cmd('write')
+      end
+      
+      -- Create horizontal split (diff on right, commit on left)
+      vim.cmd('vsplit')
+      
+      -- Move to right split and open diff
+      vim.cmd('wincmd l')
+      vim.cmd('enew')
+      vim.cmd('read !' .. diff_cmd)
+      vim.cmd('0delete') -- Remove extra blank line
+      vim.bo.readonly = true
+      vim.bo.modified = false
+      vim.bo.filetype = 'diff'
+      vim.cmd('file COMMIT_DIFF')
+      
+      -- Move back to left split and start commit
+      vim.cmd('wincmd h')
+      vim.cmd('enew')
+      
+      -- Create the commit message file
+      local commit_file = vim.fn.tempname() .. '_COMMIT_EDITMSG'
+      vim.cmd('edit ' .. commit_file)
+      vim.bo.filetype = 'gitcommit'
+      
+      -- Set up autocommand to actually commit when we save and quit
+      vim.api.nvim_create_autocmd({"BufWritePost"}, {
+        buffer = vim.api.nvim_get_current_buf(),
+        once = true,
+        callback = function()
+          -- Read the commit message
+          local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+          local commit_msg = table.concat(lines, "\n"):gsub("^%s*(.-)%s*$", "%1")
+          
+          if commit_msg == "" or commit_msg:match("^#") then
+            vim.notify("Empty commit message, aborting", vim.log.levels.WARN)
+            return
+          end
+
+          -- Write message to temp file
+          local msg_file = vim.fn.tempname()
+          local file = io.open(msg_file, "w")
+          file:write(commit_msg)
+          file:close()
+          
+          -- Execute commit
+          local cmd = commit_cmd .. ' -F "' .. msg_file .. '"'
+          local handle = io.popen(cmd .. ' 2>&1')
+          local result = handle:read("*a")
+          local success = handle:close()
+          
+          -- Clean up temp file
+          os.remove(msg_file)
+          
+          if success then
+            vim.notify("Commit successful!")
+            -- Close both windows
+            vim.schedule(function()
+              vim.cmd('bd!')
+              if vim.api.nvim_win_is_valid(vim.fn.win_getid(vim.fn.winnr('#'))) then
+                vim.cmd('wincmd l')
+                vim.cmd('bd!')
+              end
+            end)
+          else
+            vim.notify("Commit failed : '" .. result .. "'", vim.log.levels.ERROR)
+          end
+        end
+      })
+      
+      -- Set up template commit message
+      vim.api.nvim_buf_set_lines(0, 0, -1, false, {
+        "",
+        "",
+        "# Please enter the commit message for your changes.",
+        "# Lines starting with '#' will be ignored.",
+        "# An empty message aborts the commit.",
+        "#",
+        "# " .. (has_staged and "changes to commit :" or 
+                "changes to commit (stage all):"),
+      })
+      
+      -- Position cursor at the beginning
+      vim.api.nvim_win_set_cursor(0, {1, 0})
+      vim.cmd('startinsert')
+    end
+
     -- Register global functions
     _G.live_grep_with_last_search = live_grep_with_last_search
     _G.resume_last_telescope = resume_last_picker
     _G.clear_telescope_search = clear_search_history
+    _G.smart_git_commit = smart_git_commit
 
     vim.opt.cursorline = true    -- Highlight the current line
     vim.opt.cursorcolumn = true  -- Highlight the current column too
@@ -331,9 +453,9 @@
   programs.nixvim.extraConfigVim = /* lua */ ''
     highlight ColorColumn ctermbg = 236 guibg=#2d2d2d
     function! LspStatus() abort
-    if luaeval('#vim.lsp.get_active_clients() > 0')
-    return luaeval("require('lsp-status').status()")
-    endif
+      if luaeval('#vim.lsp.get_active_clients() > 0')
+          return luaeval("require('lsp-status').status()")
+      endif
     return
     endfunction
 
