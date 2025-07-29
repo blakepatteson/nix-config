@@ -73,7 +73,10 @@
     # Telescope (Fuzzy Finding)
     { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope find_files<CR>"; }
     { mode = "n"; key = "<leader>ff"; action = "<cmd>Telescope find_files<CR>"; }
-    { mode = "n"; key = "<C-f>"; action = "<cmd>Telescope live_grep<CR>"; }
+    { mode = "n"; key = "<C-f>"; action = "<cmd>lua _G.live_grep_with_last_search()<CR>"; }
+    { mode = "n"; key = "<leader>fg"; action = "<cmd>Telescope live_grep<CR>"; }
+    { mode = "n"; key = "<leader>fr"; action = "<cmd>lua _G.resume_last_telescope()<CR>"; }
+    { mode = "n"; key = "<leader>fc"; action = "<cmd>lua _G.clear_telescope_search()<CR>"; }
     { mode = "n"; key = "<leader>ws"; action = "<cmd>Telescope lsp_workspace_symbols<CR>"; }
     { mode = "n"; key = "<leader>ds"; action = "<cmd>Telescope lsp_document_symbols<CR>"; }
     { mode = "n"; key = "<leader>re"; action = "<cmd>Telescope oldfiles<CR>"; }
