@@ -47,6 +47,7 @@ in
     go
     golangci-lint
     google-chrome
+    gotools
     graphviz
     gst_all_1.gst-libav
     gst_all_1.gst-plugins-bad
@@ -112,6 +113,9 @@ in
     nodePackages.svelte-language-server
     nodePackages.typescript-language-server
     nodePackages.typescript
+    nodePackages.eslint
+    nodePackages.eslint_d
+    nodePackages.vscode-langservers-extracted
 
     (python3.withPackages (ps: with ps; [ pip pyautogui tkinter graphviz ]))
   ];

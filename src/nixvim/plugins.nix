@@ -108,7 +108,9 @@
           prettier = { enable = true; disableTsServerFormatter = true; };
           gofmt = { enable = true; };
         };
-        diagnostics = { golangci_lint = { enable = true; }; };
+        diagnostics = { 
+          golangci_lint = { enable = true; };
+        };
       };
     };
 
@@ -379,6 +381,15 @@
             operator_completions = true;
             include_at_in_builtins = true;
             max_detail_length = 1048576;
+          };
+        };
+
+        eslint = {
+          enable = true;
+          package = pkgs.nodePackages.vscode-langservers-extracted;
+          settings = {
+            format = { enable = true; };
+            packageManager = "npm";
           };
         };
 
