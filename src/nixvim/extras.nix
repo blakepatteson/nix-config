@@ -435,6 +435,8 @@
     _G.clear_telescope_search = clear_search_history
     _G.smart_git_commit = smart_git_commit
 
+    vim.api.nvim_create_user_command('W', 'write', {})
+
     vim.opt.cursorline = true    -- Highlight the current line
     vim.opt.cursorcolumn = true  -- Highlight the current column too
     vim.opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCursor,r-cr:hor20,o:hor50"

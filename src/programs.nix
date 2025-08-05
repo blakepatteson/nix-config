@@ -19,7 +19,6 @@ in
     asciiquarium
     bat
     bottom
-    btop
     busybox
     clang-tools
     cmake
@@ -118,6 +117,7 @@ in
     nodePackages.vscode-langservers-extracted
 
     (python3.withPackages (ps: with ps; [ pip pyautogui tkinter graphviz ]))
+    (btop.override { cudaSupport = true; })
   ];
 
   nixpkgs.config.packageOverrides = pkgs: {
