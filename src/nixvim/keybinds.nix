@@ -83,14 +83,9 @@
     }
     {
       mode = "n";
-      key = "<leader>gC";
-      action = "<cmd>lua _G.run_git_commit()<CR>";
-    }
-
-    {
-      mode = "n";
       key = "<leader>ca";
-      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+      action = "<cmd>lua
+      vim.lsp.buf.code_action()<CR>";
     }
     {
       mode = "v";
@@ -105,10 +100,19 @@
     {
       mode = "n";
       key = "<leader>df";
-      action = "<cmd>lua vim.diagnostic.open_float()<CR>";
+      action = "<cmd>lua
+    vim.diagnostic.open_float()<CR>";
     }
-    { mode = "n"; key = "<leader>li"; action = "<cmd>LspInfo<CR>"; }
-    { mode = "n"; key = "<leader>gh"; action = "<cmd>WorkspaceGitHunks<CR>"; }
+    {
+      mode = "n";
+      key = "<leader>li";
+      action = "<cmd>LspInfo<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>gh";
+      action = "<cmd>WorkspaceGitHunks<CR>";
+    }
     {
       mode = "n";
       key = "<leader>rn";
@@ -122,14 +126,40 @@
     {
       mode = "n";
       key = "<leader>fm";
+      action = "<cmd>lua
+    vim.lsp.buf.definition()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>bd";
+      action = "<cmd>bd<CR>";
+    }
+    {
+      mode = "n";
+      key = "<leader>bk";
+      action = "<cmd>bd!<CR>";
+    }
+    {
+      mode = "n";
+      key = "<F2>";
+      action = "<cmd>lua
+      vim.lsp.buf.rename()<CR>";
+    }
+    {
+      mode = "n";
+      key = "<F12>";
       action = "<cmd>lua vim.lsp.buf.definition()<CR>";
     }
-    { mode = "n"; key = "<leader>bd"; action = "<cmd>bd<CR>"; }
-    { mode = "n"; key = "<leader>bk"; action = "<cmd>bd!<CR>"; }
-    { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
-    { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
-    { mode = "n"; key = "<C-n>"; action = "<cmd>enew<CR>"; }
-    { mode = "n"; key = "<C-w>"; action = "<cmd>bd<CR>"; }
+    {
+      mode = "n";
+      key = "<C-n>";
+      action = "<cmd>enew<CR>";
+    }
+    {
+      mode = "n";
+      key = "<C-w>";
+      action = "<cmd>bd<CR>";
+    }
 
     # Telescope (Fuzzy Finding)
     { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope find_files<CR>"; }
@@ -194,7 +224,7 @@
     { mode = "n"; key = "<C-j>"; action = "<C-w>j"; }
     { mode = "n"; key = "<C-k>"; action = "<C-w>k"; }
     { mode = "n"; key = "<M-l>"; action = "<C-w>l"; }
-    
+
     # Window resizing
     { mode = "n"; key = "<C-Left>"; action = "<C-w><"; }
     { mode = "n"; key = "<C-Right>"; action = "<C-w>>"; }
