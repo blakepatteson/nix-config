@@ -84,8 +84,7 @@
     {
       mode = "n";
       key = "<leader>ca";
-      action = "<cmd>lua
-      vim.lsp.buf.code_action()<CR>";
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
     }
     {
       mode = "v";
@@ -100,8 +99,7 @@
     {
       mode = "n";
       key = "<leader>df";
-      action = "<cmd>lua
-    vim.diagnostic.open_float()<CR>";
+      action = "<cmd>lua vim.diagnostic.open_float()<CR>";
     }
     {
       mode = "n";
@@ -126,8 +124,7 @@
     {
       mode = "n";
       key = "<leader>fm";
-      action = "<cmd>lua
-    vim.lsp.buf.definition()<CR>";
+      action = "<cmd>lua vim.lsp.buf.definition()<CR>";
     }
     {
       mode = "n";
@@ -142,8 +139,7 @@
     {
       mode = "n";
       key = "<F2>";
-      action = "<cmd>lua
-      vim.lsp.buf.rename()<CR>";
+      action = "<cmd>lua vim.lsp.buf.rename()<CR>";
     }
     {
       mode = "n";
@@ -158,7 +154,11 @@
     {
       mode = "n";
       key = "<C-w>";
-      action = "<cmd>bd<CR>";
+      action = "<cmd>lua vim.cmd('bd')<CR>";
+      options = {
+        desc = "Close buffer instantly";
+        nowait = true;
+      };
     }
 
     # Telescope (Fuzzy Finding)
