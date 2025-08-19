@@ -3,15 +3,34 @@
   programs.nixvim.autoCmd = [
     {
       event = [ "BufWritePre" ];
+      pattern = [ "*" ];
+      callback = {
+        __raw = ''
+          function()
+            if not vim.b.skip_next_format then
+              -- Save cursor position
+              local save_cursor = vim.fn.getpos(".")
+              -- Remove trailing whitespace
+              vim.cmd([[%s/\s\+$//e]])
+              -- Restore cursor position
+              vim.fn.setpos(".", save_cursor)
+            end
+          end
+        '';
+      };
+    }
+
+    {
+      event = [ "BufWritePre" ];
       pattern = [ "*.xml" ];
       callback = {
-        __raw = '' 
-            function() 
-              if vim.b.autoformat ~= false and not vim.b.skip_next_format then
-                vim.lsp.buf.format({ async = false }) 
-              end
-            end 
-          '';
+        __raw = ''
+          function()
+            if vim.b.autoformat ~= false and not vim.b.skip_next_format then
+              vim.lsp.buf.format({ async = false })
+            end
+          end
+        '';
       };
     }
 
