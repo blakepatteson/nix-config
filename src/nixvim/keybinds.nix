@@ -58,6 +58,19 @@
 
     {
       mode = "n";
+      key = "<leader>gB";
+      action = "<cmd>Gitsigns blame_line<CR>";
+      options = { desc = "Show git blame for current line"; };
+    }
+    {
+      mode = "n";
+      key = "<leader>gt";
+      action = "<cmd>Gitsigns toggle_current_line_blame<CR>";
+      options = { desc = "Toggle git blame virtual text"; };
+    }
+
+    {
+      mode = "n";
       key = "<leader>gs";
       action = "<cmd>lua _G.run_git_command('git status')<CR>";
     }
