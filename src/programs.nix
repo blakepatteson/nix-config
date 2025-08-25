@@ -37,6 +37,7 @@ in
     flyctl
     fzf
     gcc
+    gemini-cli
     gh
     git
     glib
