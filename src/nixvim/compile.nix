@@ -41,7 +41,7 @@
         _G.compile_command.history = {}
         _G.compile_command.history_set = {}
         for _, cmd in ipairs(data) do
-          if type(cmd) == "string" and 
+          if type(cmd) == "string" and
             cmd ~= "" and
             not _G.compile_command.history_set[cmd] then
               table.insert(_G.compile_command.history, cmd)
@@ -337,7 +337,7 @@
           on_exit = function(_, exit_code)
             local end_time = vim.loop.hrtime()
             local duration_ns = end_time - start_time
-            local duration_seconds = duration_ns / 1e9  
+            local duration_seconds = duration_ns / 1e9
 
             local duration_text
             if duration_seconds >= 60 then

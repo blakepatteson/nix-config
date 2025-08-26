@@ -2,8 +2,7 @@
 
 let
   unstable = import
-    (fetchTarball
-      "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
+    (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
     {
       config = pkgs.config;
       system = pkgs.system;
@@ -87,6 +86,7 @@ in
     rclone
     redshift
     ripgrep
+    rofi
     soundfont-fluid
     spice-gtk
     spice-vdagent
@@ -103,6 +103,7 @@ in
     wine64
     x265
     xclip
+    xdotool
     xfce.catfish
     xsel
     yazi

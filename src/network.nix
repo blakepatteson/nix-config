@@ -5,8 +5,7 @@
     networkmanager = {
       enable = true;
       wifi.powersave = false;
-      # Disable scanning for WiFi networks at boot
-      wifi.scanRandMacAddress = false;
+      wifi.scanRandMacAddress = false; # Disable scanning for WiFi networks at boot
     };
     firewall = {
       allowedTCPPorts = [ 3389 631 ]; # CUPS port

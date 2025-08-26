@@ -9,9 +9,7 @@
       mode = "n";
       key = "<leader>vb";
       action = "<C-v>";
-      options = {
-        desc = "Enter visual block mode";
-      };
+      options = { desc = "Enter visual block mode"; };
     }
 
     {
@@ -168,10 +166,7 @@
       mode = "n";
       key = "<C-w>";
       action = "<cmd>lua vim.cmd('bd')<CR>";
-      options = {
-        desc = "Close buffer instantly";
-        nowait = true;
-      };
+      options = { desc = "Close buffer instantly"; nowait = true; };
     }
 
     # Telescope (Fuzzy Finding)
@@ -253,9 +248,7 @@
       mode = "n";
       key = "<leader>ww";
       action = "<C-w>w";
-      options = {
-        desc = "Cycle between windows";
-      };
+      options = { desc = "Cycle between windows"; };
     }
 
     # LSP additional

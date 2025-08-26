@@ -4,34 +4,26 @@
     {
       event = [ "BufWritePre" ];
       pattern = [ "*" ];
-      callback = {
-        __raw = ''
-          function()
-            if not vim.b.skip_next_format then
-              -- Save cursor position
-              local save_cursor = vim.fn.getpos(".")
-              -- Remove trailing whitespace
-              vim.cmd([[%s/\s\+$//e]])
-              -- Restore cursor position
-              vim.fn.setpos(".", save_cursor)
-            end
-          end
-        '';
-      };
+      callback.__raw = '' function()
+        if not vim.b.skip_next_format then
+          local save_cursor = vim.fn.getpos(".") -- Save cursor position
+          vim.cmd([[%s/\s\+$//e]])               -- Remove trailing whitespace
+          vim.fn.setpos(".", save_cursor)        -- Restore cursor position
+        end
+      end
+      '';
     }
 
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.xml" ];
-      callback = {
-        __raw = ''
-          function()
-            if vim.b.autoformat ~= false and not vim.b.skip_next_format then
-              vim.lsp.buf.format({ async = false })
-            end
+      callback.__raw = ''
+        function()
+          if vim.b.autoformat ~= false and not vim.b.skip_next_format then
+            vim.lsp.buf.format({ async = false })
           end
-        '';
-      };
+        end
+      '';
     }
 
     {
@@ -69,25 +61,30 @@
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.c" "*.h" ];
-      callback = { __raw = '' function() if not vim.b.skip_next_format then vim.lsp.buf.format() end end ''; };
+      callback.__raw = ''
+        function() if not vim.b.skip_next_format then vim.lsp.buf.format() end end '';
     }
 
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.nix" ];
-      callback = { __raw = '' function() if not vim.b.skip_next_format then vim.lsp.buf.format() end end ''; };
+      callback.__raw = ''
+        function() if not vim.b.skip_next_format then vim.lsp.buf.format() end end '';
     }
 
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.ts" "*.js" "*.svelte" "*.json" "*.css" "*.html" ];
-      callback = { __raw = '' function() if not vim.b.skip_next_format then vim.lsp.buf.format({ async = false }) end end ''; };
+      callback.__raw = '' function()
+        if not vim.b.skip_next_format
+          then vim.lsp.buf.format({ async = false })
+        end end '';
     }
 
     {
       event = [ "ColorScheme" "VimEnter" ];
       pattern = [ "*" ];
-      callback.__raw = /*lua*/ ''
+      callback.__raw = ''
         function()
           vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#606060', nocombine = true })
           vim.api.nvim_set_hl(0, 'NonText',    { fg = '#606060', nocombine = true })
