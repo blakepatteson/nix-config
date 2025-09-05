@@ -38,6 +38,7 @@ in
     gcc
     gemini-cli
     gh
+    gimp
     git
     glib
     gnumake
