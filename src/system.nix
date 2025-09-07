@@ -17,11 +17,7 @@
   };
 
   nix = {
-    gc = {
-      dates = "weekly";
-      options = "--delete-older-than 14d";
-      persistent = true;
-    };
+    gc = { dates = "weekly"; options = "--delete-older-than 14d"; persistent = true; };
     settings = {
       max-jobs = 8;
       cores = 8;
@@ -71,20 +67,13 @@
       pkgs.nerd-fonts.victor-mono
     ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    firefox.enableWideVine = true;
-  };
-
-  programs.firefox = {
-    enable = true;
-    preferences = { "media.eme.enabled" = true; };
-  };
-
+  nixpkgs.config = { allowUnfree = true; firefox.enableWideVine = true; };
+  programs.firefox = { enable = true; preferences = { "media.eme.enabled" = true; }; };
   zramSwap.enable = true;
 
   # Fix systemd-modules-load timeout by masking it - modules load anyway
   systemd.services.systemd-modules-load.enable = false;
+
 
   # system.autoUpgrade.enable = true;
   system.stateVersion = "24.11";
