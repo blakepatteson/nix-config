@@ -177,7 +177,13 @@
       key = "<C-f>";
       action = "<cmd>lua _G.live_grep_with_last_search()<CR>";
     }
+    {
+      mode = "n";
+      key = "<C-g>";
+      action = "<cmd>lua _G.live_grep_regex()<CR>";
+    }
     { mode = "n"; key = "<leader>fg"; action = "<cmd>Telescope live_grep<CR>"; }
+    { mode = "n"; key = "<leader>sr"; action = "<cmd>lua _G.live_grep_regex()<CR>"; }
     {
       mode = "n";
       key = "<leader>fr";

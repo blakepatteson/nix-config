@@ -38,77 +38,93 @@
     vim.api.nvim_create_user_command('W', 'write', {})
 
     -- Telescope configuration and search functionality
-    -- Store last search term globally
+    -- Store last search term and mode globally
     _G.last_telescope_search = ""
+    _G.last_telescope_mode = "literal" -- "literal" or "regex"
 
-    -- Register the telescope regex toggle action and search history
-    local telescope = require('telescope')
-    local actions = require('telescope.actions')
-    local action_state = require('telescope.actions.state')
+    -- Custom live_grep functions with regex support
+    local function live_grep_literal()
+      _G.last_telescope_mode = "literal"
+      require('telescope.builtin').live_grep({
+        additional_args = function()
+          return {"--fixed-strings"}
+        end,
+        prompt_title = "Live Grep (LITERAL)"
+      })
+    end
 
-    telescope.setup({
-      defaults = {
-        mappings = {
-          i = {
-            ["<C-j>"] = actions.move_selection_next,
-            ["<C-k>"] = actions.move_selection_previous,
-            ["<C-r>"] = function(prompt_bufnr)
-              local picker = action_state.get_current_picker(prompt_bufnr)
-              local current_args = picker.finder.vimgrep_arguments
-              local has_fixed_strings = false
-              
-              -- Search for --fixed-strings in current args
-              for _, arg in ipairs(current_args) do
-                if arg == "--fixed-strings" then
-                  has_fixed_strings = true
-                  break
-                end
-              end
-              
-              -- Create new args table
-              local new_args = {}
-              for _, arg in ipairs(current_args) do
-                if arg ~= "--fixed-strings" and arg ~= "--pcre2" then
-                  table.insert(new_args, arg)
-                end
-              end
-              
-              if has_fixed_strings then
-                -- Switch to regex mode
-                table.insert(new_args, "--pcre2")
-                vim.notify("Search Mode: Regex")
-              else
-                -- Switch to literal mode
-                table.insert(new_args, "--fixed-strings")
-                vim.notify("Search Mode: Literal")
-              end
-              
-              picker.finder.vimgrep_arguments = new_args
-              actions.reload_results(prompt_bufnr)
-            end,
-            ["<C-s>"] = function(prompt_bufnr)
-              -- Save current search term
-              _G.last_telescope_search = action_state.get_current_line()
-              vim.notify("Search saved: " .. _G.last_telescope_search)
-            end,
-            ["<C-x>"] = function(prompt_bufnr)
-              -- Clear saved search term
-              _G.last_telescope_search = ""
-              vim.notify("Search history cleared")
-            end
-          }
-        }
-      }
+    local function live_grep_regex()
+      _G.last_telescope_mode = "regex"
+      require('telescope.builtin').live_grep({
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--pcre2"
+        },
+        prompt_title = "Live Grep (REGEX)"
+      })
+    end
+
+    -- Set up telescope mappings for search save/restore using autocmds
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "TelescopePrompt",
+      callback = function()
+        local actions = require('telescope.actions')
+        local action_state = require('telescope.actions.state')
+        
+        -- Set buffer-local keymaps for telescope prompt
+        vim.keymap.set('i', '<C-s>', function()
+          local prompt_bufnr = vim.api.nvim_get_current_buf()
+          _G.last_telescope_search = action_state.get_current_line()
+          vim.notify("Search saved: " .. _G.last_telescope_search)
+        end, { buffer = true, silent = true })
+        
+        vim.keymap.set('i', '<C-x>', function()
+          _G.last_telescope_search = ""
+          vim.notify("Search history cleared")
+        end, { buffer = true, silent = true })
+        
+        -- Navigation in insert mode
+        vim.keymap.set('i', '<C-j>', function()
+          actions.move_selection_next(vim.api.nvim_get_current_buf())
+        end, { buffer = true, silent = true })
+        
+        vim.keymap.set('i', '<C-k>', function()
+          actions.move_selection_previous(vim.api.nvim_get_current_buf())
+        end, { buffer = true, silent = true })
+      end,
     })
 
-    -- Custom function to start live_grep with last search term
+    -- Register global functions so you can call them from keymaps
+    _G.live_grep_literal = live_grep_literal
+    _G.live_grep_regex = live_grep_regex
+
+    -- Custom function to start live_grep with last search term and mode
     local function live_grep_with_last_search()
       if _G.last_telescope_search ~= "" then
-        require('telescope.builtin').live_grep({
-          default_text = _G.last_telescope_search
-        })
+        if _G.last_telescope_mode == "regex" then
+          require('telescope.builtin').live_grep({
+            default_text = _G.last_telescope_search,
+            vimgrep_arguments = {
+              "rg", "--color=never", "--no-heading", "--with-filename",
+              "--line-number", "--column", "--smart-case", "--pcre2"
+            },
+            prompt_title = "Live Grep (REGEX)"
+          })
+        else
+          require('telescope.builtin').live_grep({
+            default_text = _G.last_telescope_search,
+            additional_args = function() return {"--fixed-strings"} end,
+            prompt_title = "Live Grep (LITERAL)"
+          })
+        end
       else
-        require('telescope.builtin').live_grep()
+        live_grep_literal()
       end
     end
 
