@@ -17,19 +17,29 @@ dconf write /org/cinnamon/desktop/interface/clock-show-date "true"
 
 # Keyboard shortcuts
 dconf reset -f /org/cinnamon/desktop/keybindings/custom-keybindings/
-dconf write /org/cinnamon/desktop/keybindings/custom-list "['custom0', 'custom1', 'custom2']"
+dconf write /org/cinnamon/desktop/keybindings/custom-list \
+  "['custom0', 'custom1', 'custom2']"
 
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/name "'Screenshot (Flameshot)'"
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/command "'flameshot gui'"
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/binding "['Print']"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/name \
+  "'Screenshot (Flameshot)'"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/command \
+  "'flameshot gui'"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/binding \
+  "['Print']"
 
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/name "'Flameshot Launcher'"
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/command "'flameshot launcher'"
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/binding "['<Control>Print']"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/name \
+  "'Flameshot Launcher'"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/command \
+  "'flameshot launcher'"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/binding \
+  "['<Control>Print']"
 
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/name "'Emoji Picker'"
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/command "'/home/blake/dev/repos/nix-config/scripts/emoji-picker.sh'"
-dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/binding "['<Super>q']"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/name \
+  "'Emoji Picker'"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/command \
+  "'/home/blake/dev/repos/nix-config/scripts/emoji-picker.sh'"
+dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/binding \
+  "['<Super>q']"
 
 # Disable default screenshot shortcuts
 dconf write /org/cinnamon/desktop/keybindings/media-keys/screenshot "@as []"
@@ -40,4 +50,5 @@ dconf write /org/cinnamon/desktop/keybindings/media-keys/window-screenshot "@as 
 dconf write /org/cinnamon/desktop/keybindings/media-keys/window-screenshot-clip "@as []"
 
 # Restart Cinnamon to apply keybindings (equivalent to Ctrl+Alt+Enter)
-dbus-send --session --type=method_call --dest=org.Cinnamon /org/Cinnamon org.Cinnamon.RestartCinnamon boolean:false
+dbus-send --session --type=method_call --dest=org.Cinnamon /org/Cinnamon \
+  org.Cinnamon.RestartCinnamon boolean:false

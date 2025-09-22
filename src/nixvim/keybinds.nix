@@ -30,12 +30,14 @@
     {
       mode = "n";
       key = "]r";
-      action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
+      action =
+        "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
     }
     {
       mode = "n";
       key = "[r";
-      action = "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
+      action =
+        "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
     }
 
     {
@@ -264,7 +266,7 @@
     {
       mode = "n";
       key = "<leader>cp";
-      action = ":lua local oil = require('oil'); local entry = oil.get_cursor_entry(); if entry and entry.name then local dir = oil.get_current_dir(); local path = dir:gsub('/$', '') .. '/' .. entry.name; vim.fn.setreg('+', path); vim.notify('Copied: ' .. path) else vim.notify('No file under cursor', vim.log.levels.WARN) end<CR>";
+      action = "<cmd>lua _G.copy_oil_file_path()<CR>";
     }
 
     # Black hole delete (delete without yanking)

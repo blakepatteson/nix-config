@@ -21,8 +21,8 @@
 
     vim.opt.cursorline = true
     vim.opt.cursorcolumn = true
-    vim.opt.guicursor = 
-      "n-v-c:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCursor,r-cr:hor20,o:hor50"
+    vim.opt.guicursor =
+    "n-v-c:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCursor,r-cr:hor20,o:hor50"
 
     -- Set up distinct colors for cursor, cursorline and matching brackets
     vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"}, {
@@ -30,7 +30,8 @@
       callback = function()
         vim.api.nvim_set_hl(0, 'Cursor', { fg = '#000000', bg = '#ff0000', bold = true })
         vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#101010' })
-        vim.api.nvim_set_hl(0, 'MatchParen', { fg = '#000000', bg = '#0000ff', bold = true })
+        vim.api.nvim_set_hl(0, 'MatchParen',
+            { fg = '#000000', bg = '#0000ff', bold = true })
       end
     })
 
@@ -76,24 +77,24 @@
       callback = function()
         local actions = require('telescope.actions')
         local action_state = require('telescope.actions.state')
-        
+
         -- Set buffer-local keymaps for telescope prompt
         vim.keymap.set('i', '<C-s>', function()
           local prompt_bufnr = vim.api.nvim_get_current_buf()
           _G.last_telescope_search = action_state.get_current_line()
           vim.notify("Search saved: " .. _G.last_telescope_search)
         end, { buffer = true, silent = true })
-        
+
         vim.keymap.set('i', '<C-x>', function()
           _G.last_telescope_search = ""
           vim.notify("Search history cleared")
         end, { buffer = true, silent = true })
-        
+
         -- Navigation in insert mode
         vim.keymap.set('i', '<C-j>', function()
           actions.move_selection_next(vim.api.nvim_get_current_buf())
         end, { buffer = true, silent = true })
-        
+
         vim.keymap.set('i', '<C-k>', function()
           actions.move_selection_previous(vim.api.nvim_get_current_buf())
         end, { buffer = true, silent = true })
@@ -149,10 +150,10 @@
     local function get_git_files_with_changes()
       local handle = io.popen("git diff --name-only")
       if not handle then return {} end
-     
+
       local result = handle:read("*a")
       handle:close()
-     
+
       local files = {}
       for file in result:gmatch("[^\n]+") do
         table.insert(files, file)
@@ -166,7 +167,7 @@
         git_command = { "git", "diff", "--unified=1" },
         attach_mappings = function(_, map)
           local actions = require('telescope.actions')
-          
+
           -- Regular enter - opens current version
           map('i', '<CR>', function(prompt_bufnr)
             local selection = require('telescope.actions.state').get_selected_entry()
@@ -193,7 +194,7 @@
               vim.cmd('file OLD_' .. selection.value)
             end
           end)
-          
+
           return true
         end
       })
@@ -218,7 +219,7 @@
          if direction == "next" then
            _G.git_nav_state.current_index = (_G.git_nav_state.current_index % #files) + 1
          else
-           _G.git_nav_state.current_index = 
+           _G.git_nav_state.current_index =
               (_G.git_nav_state.current_index - 2 + #files) % #files + 1
          end
        else
@@ -252,19 +253,19 @@
       local staged_handle = io.popen("git diff --cached --quiet; echo $?")
       local staged_result = staged_handle:read("*a"):gsub("%s+", "")
       staged_handle:close()
-      
+
       local has_staged = staged_result == "1"
-      
+
       -- Check if we have unstaged changes
       local unstaged_handle = io.popen("git diff --quiet; echo $?")
       local unstaged_result = unstaged_handle:read("*a"):gsub("%s+", "")
       unstaged_handle:close()
-      
+
       local has_unstaged = unstaged_result == "1"
-      
+
       -- Determine which diff to show and which commit command to use
       local diff_cmd, commit_cmd
-      
+
       if has_staged then
         -- Show staged changes
         diff_cmd = "git diff --cached"
@@ -277,15 +278,15 @@
         vim.notify("No changes to commit", vim.log.levels.WARN)
         return
       end
-      
+
       -- Save current buffer if it exists and is modified
       if vim.bo.modified then
         vim.cmd('write')
       end
-      
+
       -- Create horizontal split (diff on right, commit on left)
       vim.cmd('vsplit')
-      
+
       -- Move to right split and open diff
       vim.cmd('wincmd l')
       vim.cmd('enew')
@@ -295,16 +296,16 @@
       vim.bo.modified = false
       vim.bo.filetype = 'diff'
       vim.cmd('file COMMIT_DIFF')
-      
+
       -- Move back to left split and start commit
       vim.cmd('wincmd h')
       vim.cmd('enew')
-      
+
       -- Create the commit message file
       local commit_file = vim.fn.tempname() .. '_COMMIT_EDITMSG'
       vim.cmd('edit ' .. commit_file)
       vim.bo.filetype = 'gitcommit'
-      
+
       -- Set up autocommand to actually commit when we save and quit
       vim.api.nvim_create_autocmd({"BufWritePost"}, {
         buffer = vim.api.nvim_get_current_buf(),
@@ -313,7 +314,7 @@
           -- Read the commit message
           local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
           local commit_msg = table.concat(lines, "\n"):gsub("^%s*(.-)%s*$", "%1")
-          
+
           if commit_msg == "" or commit_msg:match("^#") then
             vim.notify("Empty commit message, aborting", vim.log.levels.WARN)
             return
@@ -324,16 +325,16 @@
           local file = io.open(msg_file, "w")
           file:write(commit_msg)
           file:close()
-          
+
           -- Execute commit
           local cmd = commit_cmd .. ' -F "' .. msg_file .. '"'
           local handle = io.popen(cmd .. ' 2>&1')
           local result = handle:read("*a")
           local success = handle:close()
-          
+
           -- Clean up temp file
           os.remove(msg_file)
-          
+
           if success then
             vim.notify("Commit successful!")
             -- Close both windows
@@ -349,7 +350,7 @@
           end
         end
       })
-      
+
       -- Set up template commit message
       vim.api.nvim_buf_set_lines(0, 0, -1, false, {
         "",
@@ -358,10 +359,10 @@
         "# Lines starting with '#' will be ignored.",
         "# An empty message aborts the commit.",
         "#",
-        "# " .. (has_staged and "changes to commit :" or 
+        "# " .. (has_staged and "changes to commit :" or
                 "changes to commit (stage all):"),
       })
-      
+
       -- Position cursor at the beginning
       vim.api.nvim_win_set_cursor(0, {1, 0})
       vim.cmd('startinsert')
@@ -370,7 +371,7 @@
     -- Function to run git commands in terminal buffers with colors
     _G.run_git_command = function(command, split_type)
       split_type = split_type or "tab"  -- Default to tab
-      
+
       -- Create the appropriate split/tab
       if split_type == "tab" then
         vim.cmd("tabnew")
@@ -380,19 +381,19 @@
       else
         vim.cmd("new")
       end
-      
+
       -- Get the new buffer
       local buf = vim.api.nvim_get_current_buf()
-      
+
       -- Set buffer options
       vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
       vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
       vim.api.nvim_buf_set_option(buf, "swapfile", false)
-      
+
       -- Set buffer name
       local bufname = "Git_" .. string.gsub(command, "[^%w]", "_")
       vim.api.nvim_buf_set_name(buf, bufname)
-      
+
       -- Start terminal with the git command
       vim.fn.termopen(command, {
         on_exit = function(_, _)
@@ -406,15 +407,30 @@
       })
     end
 
+    -- Oil file manager function for copying file paths
+    local function copy_oil_file_path()
+      local oil = require('oil')
+      local entry = oil.get_cursor_entry()
+      if entry and entry.name then
+        local dir = oil.get_current_dir()
+        local path = (dir:sub(-1) == '/' and dir:sub(1, -2) or dir) .. '/' .. entry.name
+        vim.fn.setreg('+', path)
+        vim.notify('Copied: ' .. path)
+      else
+        vim.notify('No file under cursor', vim.log.levels.WARN)
+      end
+    end
+
     -- Register global functions
+    _G.copy_oil_file_path = copy_oil_file_path
     _G.smart_git_commit = smart_git_commit
 
     -- TypeScript LSP setup (keeping this here since it's nix-specific)
     local lspconfig = require('lspconfig')
     lspconfig.ts_ls.setup({
-      cmd = { 
-        "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server", 
-        "--stdio" 
+      cmd = {
+        "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server",
+        "--stdio"
       },
       filetypes = { "typescript", "javascript" },
       root_dir = lspconfig.util.root_pattern(

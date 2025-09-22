@@ -1,12 +1,5 @@
-{ config, lib, ... }:
+{ ... }:
 {
-  assertions = [{
-    assertion = lib.versionAtLeast config.system.nixos.version "23.11";
-    message = ''
-      Your NixOS version (${config.system.nixos.version}) is older than required (23.11).
-    '';
-  }];
-
   boot.plymouth.enable = false;
   boot.loader = {
     systemd-boot = { enable = true; configurationLimit = 10; };

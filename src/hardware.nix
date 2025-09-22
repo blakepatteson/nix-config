@@ -43,6 +43,5 @@ in
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  
   boot.blacklistedKernelModules = [ "nouveau" ];
 }

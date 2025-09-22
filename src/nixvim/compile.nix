@@ -80,17 +80,12 @@
 
       -- Load once on startup
       vim.api.nvim_create_autocmd("VimEnter", {
-        once = true,
-        callback = function()
-          load_history()
-        end,
+        once = true, callback = function() load_history() end,
       })
 
       -- Save on exit just in case
       vim.api.nvim_create_autocmd("VimLeavePre", {
-        callback = function()
-          save_history()
-        end,
+        callback = function() save_history() end,
       })
 
       -- Function to jump to error location from compile output
@@ -362,7 +357,8 @@
               {noremap = true, silent = true})
             vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", ":bd<CR>",
               {noremap = true, silent = true})
-            vim.api.nvim_buf_set_keymap(buf, "n", "r", ":lua _G.run_compile_command()<CR>",
+            vim.api.nvim_buf_set_keymap(buf,
+              "n", "r", ":lua _G.run_compile_command()<CR>",
               {noremap = true, silent = true, desc = "Run command again"})
             vim.api.nvim_buf_set_keymap(buf, "n", "<CR>", ":lua _G.jump_to_error()<CR>",
               {noremap = true, silent = true, desc = "Jump to error location"})
