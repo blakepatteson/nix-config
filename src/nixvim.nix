@@ -1,23 +1,23 @@
-{ pkgs, ... }:
+{ ... }:
 let
-  nixvim = import (builtins.fetchGit {
-    url = "https://github.com/nix-community/nixvim";
+  nixvim = import (builtins.fetchTarball {
+    url = "https://github.com/nix-community/nixvim/archive/nixos-25.05.tar.gz";
+    sha256 = "1qxvgwriad1ihzc2dd878ssnjrqzlbc69nl2cfv40y4nmnp0mfkx";
   });
 in
 {
   imports = [
     nixvim.nixosModules.nixvim
-    ../nixvim/autocmd.nix
-    ../nixvim/extras.nix
-    ../nixvim/keybinds.nix
-    ../nixvim/plugins.nix
-    ../nixvim/rewrap.nix
-    ../nixvim/compile.nix
+    ./nixvim/autocmd.nix
+    ./nixvim/extras.nix
+    ./nixvim/keybinds.nix
+    ./nixvim/plugins.nix
+    ./nixvim/rewrap.nix
+    ./nixvim/compile.nix
   ];
 
   programs.nixvim = {
     enable = true;
-    package = pkgs.neovim-unwrapped;
     opts = {
       autoindent = true;
       backup = false;

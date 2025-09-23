@@ -21,7 +21,7 @@ in
     map ctrl+shift+m show_scrollback
     map ctrl+v paste_from_clipboard
     map ctrl+q close_tab
-    
+
     map ctrl+l clear_terminal scroll active
     map ctrl+equal change_font_size all +2.0
     map ctrl+minus change_font_size all -2.0
@@ -44,6 +44,7 @@ in
   '';
 
   environment.etc.bashrc = {
+    mode = "0644";
     text = ''
       # ~/.bashrc: executed by bash(1) for non-login shells.
 
@@ -91,11 +92,10 @@ in
 
       alias battery='acpi'
     '';
-    mode = "0644";
   };
 
   # This ensures that the /etc/bashrc file is sourced for interactive non-login shells
-  environment.interactiveShellInit = ''
+  environment.interactiveShellInit = /* bash */ ''
     if [ -f /etc/bashrc ]; then
       . /etc/bashrc
     fi

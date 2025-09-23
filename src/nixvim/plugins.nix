@@ -6,10 +6,7 @@
     which-key.enable = true;
     web-devicons.enable = true;
 
-    notify = {
-      enable = true;
-      backgroundColour = "#000000";
-    };
+    notify = { enable = true; settings = { background_colour = "#000000"; }; };
 
     telescope = {
       enable = true;
@@ -50,10 +47,7 @@
           selection_caret = "> ";
           entry_prefix = "  ";
 
-          cache_picker = {
-            num_pickers = 10;
-            limit_entries = 100000;
-          };
+          cache_picker = { num_pickers = 10; limit_entries = 100000; };
 
           file_browser = {
             depth = 1;
@@ -111,13 +105,12 @@
       enable = true;
       sources = {
         formatting = {
-          prettier = {
-            enable = true;
-            disableTsServerFormatter = true;
-          };
+          prettier = { enable = true; disableTsServerFormatter = true; };
           gofmt = { enable = true; };
         };
-        diagnostics = { golangci_lint = { enable = true; }; };
+        diagnostics = {
+          golangci_lint = { enable = true; };
+        };
       };
     };
 
@@ -140,12 +133,16 @@
           "nix"
           "lua"
           "vim"
-          "go"
           "python"
-          "javascript"
-          "typescript"
           "c"
           "zig"
+          "go"
+          "json"
+          "yaml"
+          "toml"
+          "xml"
+          "markdown"
+          "bash"
         ];
 
         highlight = {
@@ -244,6 +241,15 @@
           topdelete = { text = "‾"; };
           untracked = { text = "┆"; };
         };
+        current_line_blame = true;
+        current_line_blame_opts = {
+          virt_text = true;
+          virt_text_pos = "eol";
+          delay = 0;
+          ignore_whitespace = false;
+        };
+        current_line_blame_formatter =
+          "<author>, <author_time:%Y-%m-%d> • <summary> (<abbrev_sha>)";
       };
     };
 
@@ -255,10 +261,7 @@
           enable = true;
           settings = {
             formatting = { command = [ "nixpkgs-fmt" ]; };
-            nix = {
-              flake = { autoEvalInputs = false; }; # Set to false to avoid crashes
-              maxMemoryMB = 2048;
-            };
+            nix = { maxMemoryMB = 4096; };
           };
         };
 
@@ -281,12 +284,7 @@
               rangeVariableTypes = true;
             };
 
-            directoryFilters = [
-              "-.git"
-              "-.vscode"
-              "-.idea"
-              "-node_modules"
-            ];
+            directoryFilters = [ "-.git" "-.vscode" "-.idea" "-node_modules" ];
 
             diagnostics = {
               enable = true;
@@ -353,12 +351,33 @@
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
 
+        pyright = {
+          enable = true;
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "basic";
+                autoSearchPaths = true;
+                useLibraryCodeForTypes = true;
+                autoImportCompletions = true;
+                diagnosticMode = "workspace";
+              };
+            };
+          };
+        };
+
         zls = {
           enable = true;
           package = pkgs.zls;
+          cmd = [ "${pkgs.zls}/bin/zls" ];
           settings = {
+            zig_exe_path = "${pkgs.zig}/bin/zig";
+            zig_lib_path = "${pkgs.zig}/lib/zig";
             enable_snippets = true;
-            enable_ast_check_diagnostics = true;
+            enable_ast_check_diagnostics = false;
+            enable_build_on_save = true;
+            build_on_save_step = "check";
+            prefer_ast_check_as_child_process = true;
             enable_autofix = false;
             enable_import_embedfile_argument_completions = true;
             warn_style = true;
@@ -374,43 +393,50 @@
           };
         };
 
+        eslint = {
+          enable = true;
+          package = pkgs.nodePackages.vscode-langservers-extracted;
+          settings = {
+            format = { enable = true; };
+            packageManager = "npm";
+          };
+        };
+
       };
 
-      onAttach = /* lua */''
-        vim.diagnostic.config
-        ({
+      onAttach = /* lua */'' vim.diagnostic.config(
+         {
           virtual_text = true,
           signs = true,
           underline = true,
           update_in_insert = false,
           severity_sort = true,
-          })
+         })
           -- Enable workspace diagnostics
           vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-          vim.lsp.diagnostic.on_publish_diagnostics, {
-          virtual_text = true,
-          signs = true,
-          underline = true,
-          update_in_insert = false,
-          severity_sort = true,
-          workspace = true,
-          }
-          )
+            vim.lsp.diagnostic.on_publish_diagnostics, {
+              virtual_text = true,
+              signs = true,
+              underline = true,
+              update_in_insert = false,
+              severity_sort = true,
+              workspace = true,
+            })
 
           -- Configure diagnostic display
           vim.diagnostic.config({
-          virtual_text = true,
-          signs = true,
-          underline = true,
-          update_in_insert = false,
-          severity_sort = true,
-          float = {
-          source = "always",  -- Show source in diagnostic popup window
-          border = "rounded"
-          }
+            virtual_text = true,
+            signs = true,
+            underline = true,
+            update_in_insert = false,
+            severity_sort = true,
+            float = {
+            source = "always",  -- Show source in diagnostic popup window
+            border = "rounded"
+            }
           })
 
-          -- command to disable formatting 
+          -- command to disable formatting
           vim.api.nvim_create_user_command('SaveWithoutFormat', function()
             vim.b.skip_next_format = true
             vim.cmd('write')

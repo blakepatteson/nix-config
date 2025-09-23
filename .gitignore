@@ -1,3 +1,4 @@
 hardware-configuration.nix
 is-prime-system
 out.txt
+cat_all_output.txt

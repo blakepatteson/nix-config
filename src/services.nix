@@ -34,6 +34,8 @@
     fstrim.enable = true;
     timesyncd.enable = true;
 
+    pulseaudio.enable = false;
+
     pipewire = {
       enable = true;
       alsa.enable = true;

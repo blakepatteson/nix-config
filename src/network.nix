@@ -5,8 +5,7 @@
     networkmanager = {
       enable = true;
       wifi.powersave = false;
-      # Disable scanning for WiFi networks at boot
-      wifi.scanRandMacAddress = false;
+      wifi.scanRandMacAddress = false; # Disable scanning for WiFi networks at boot
     };
     firewall = {
       allowedTCPPorts = [ 3389 631 ]; # CUPS port
@@ -42,7 +41,6 @@
     };
   };
 
-
   services.samba = {
     enable = true;
     openFirewall = true;
@@ -52,12 +50,11 @@
         "server string" = "Samba Server";
         "server role" = "standalone server";
         "map to guest" = "bad user";
-        "client min protocol" = "NT1";
-        "ntlm auth" = "yes";
-        "lanman auth" = "yes";
-        "client lanman auth" = "yes";
+        "client min protocol" = "SMB2_02";
+        "server min protocol" = "SMB2_02";
+        "client max protocol" = "SMB3";
+        "server max protocol" = "SMB3";
         "encrypt passwords" = "yes";
-        "server min protocol" = "NT1";
         "local master" = "yes";
         "domain master" = "no";
         "preferred master" = "yes";

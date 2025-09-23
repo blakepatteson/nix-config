@@ -14,7 +14,6 @@
 
     docker = {
       enable = true;
-
       enableOnBoot = false;
       daemon.settings = {
         "storage-driver" = "overlay2";

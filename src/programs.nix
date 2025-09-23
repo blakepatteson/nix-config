@@ -2,8 +2,7 @@
 
 let
   unstable = import
-    (fetchTarball
-      "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
+    (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
     {
       config = pkgs.config;
       system = pkgs.system;
@@ -40,7 +39,9 @@ in
     flyctl
     fzf
     gcc
+    gemini-cli
     gh
+    gimp
     git
     glib
     gnumake
@@ -49,6 +50,7 @@ in
     go
     golangci-lint
     google-chrome
+    gotools
     graphviz
     grim
     gst_all_1.gst-libav
@@ -77,7 +79,6 @@ in
     minizip
     mlocate
     neofetch
-    neovim
     nil
     nixd
     nixpkgs-fmt
@@ -97,6 +98,7 @@ in
     rclone
     redshift
     ripgrep
+    rofi
     slurp
     soundfont-fluid
     spice-gtk
@@ -109,7 +111,6 @@ in
     tmux
     ungoogled-chromium
     vaapiVdpau
-    vim
     virt-manager
     waybar
     wdisplays # GUI display configuration
@@ -119,17 +120,23 @@ in
     wofi
     x265
     xclip
+    xdotool
     xfce.catfish
     xsel
     yazi
+    zig
     zlib
     zoom-us
 
     nodePackages.svelte-language-server
     nodePackages.typescript-language-server
     nodePackages.typescript
+    nodePackages.eslint
+    nodePackages.eslint_d
+    nodePackages.vscode-langservers-extracted
 
     (python3.withPackages (ps: with ps; [ pip pyautogui tkinter graphviz ]))
+    (btop.override { cudaSupport = true; })
   ];
 
   nixpkgs.config.packageOverrides = pkgs: {

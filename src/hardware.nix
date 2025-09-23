@@ -1,16 +1,8 @@
-# hardware.nix
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
-  # Use a static configuration file to determine hardware profile
-  isPrimeSystem = builtins.pathExists ../hardware-configs/is-prime-system;
+  isPrimeSystem = builtins.pathExists ./is-prime-system;
 in
 {
-  imports = [
-    (if isPrimeSystem
-    then ../hardware-configs/nvidia-prime.nix
-    else ../hardware-configs/nvidia-base.nix)
-  ];
-
   hardware = {
     enableAllFirmware = true;
 
@@ -22,6 +14,19 @@ in
         vaapiVdpau
         libvdpau-va-gl
       ];
+    };
+
+    nvidia = {
+      open = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      modesetting.enable = true;
+    } // lib.optionalAttrs isPrimeSystem {
+      prime = {
+        offload.enable = true;
+        offload.enableOffloadCmd = true;
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
     };
 
     bluetooth = {
@@ -38,7 +43,8 @@ in
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  
-  # Prevent module loading conflicts during boot
+  boot.blacklistedKernelModules = [ "nouveau" ];
+
+  # Prevent module loading conflicts during boot (needed for Hyprland)
   boot.kernelParams = [ "nvidia-drm.modeset=1" ];
 }

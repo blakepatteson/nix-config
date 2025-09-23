@@ -1,11 +1,11 @@
 { ... }:
 {
   programs.bash = {
-    interactiveShellInit = ''
+    completion.enable = true;
+    interactiveShellInit = /* bash */ ''
       PS1='[\D{%Y-%m-%d}] [\t]:\w\$ '
       eval "$(direnv hook bash)"
     '';
-    completion.enable = true;
   };
 
   programs.chromium = {
@@ -23,6 +23,7 @@
         editor = "nvim";
         whitespace = "trailing-space,space-before-tab";
         autocrlf = "input";
+        pager = "less -FRX";
       };
       merge = { conflictstyle = "diff3"; tool = "nvim"; };
       diff = {
@@ -30,6 +31,7 @@
         algorithm = "histogram";
         compactionHeuristic = true;
         mnemonicPrefix = true;
+        wsErrorHighlight = "all";
       };
       alias = { b = "branch -vva"; };
       fetch = { prune = true; prunetags = true; };
