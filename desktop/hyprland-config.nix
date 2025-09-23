@@ -15,7 +15,7 @@ let
 in
 {
   # Copy config during system activation
-  system.activationScripts.hyprland-config = ''
+  system.activationScripts.hyprland-config = /* bash */ ''
         mkdir -p /home/blake/.config/hypr
         cat > /home/blake/.config/hypr/hyprland.conf << 'HYPR_EOF'
     ${monitorConfig}
@@ -24,7 +24,7 @@ in
     HYPR_EOF
         chown blake:users /home/blake/.config/hypr/hyprland.conf
         chmod 644 /home/blake/.config/hypr/hyprland.conf
-    
+
         # Create hyprpaper config
         mkdir -p /home/blake/.config/hypr
         cat > /home/blake/.config/hypr/hyprpaper.conf << 'EOF'
@@ -32,7 +32,7 @@ in
     EOF
         chown blake:users /home/blake/.config/hypr/hyprpaper.conf
         chmod 644 /home/blake/.config/hypr/hyprpaper.conf
-    
+
         # Create wofi config
         mkdir -p /home/blake/.config/wofi
         cat > /home/blake/.config/wofi/config << 'EOF'
@@ -40,7 +40,7 @@ in
     EOF
         chown blake:users /home/blake/.config/wofi/config
         chmod 644 /home/blake/.config/wofi/config
-        
+
         # Create waybar config
         mkdir -p /home/blake/.config/waybar
         cat > /home/blake/.config/waybar/config << 'WAYBAR_EOF'
@@ -54,10 +54,10 @@ in
     WAYBAR_STYLE_EOF
         chown blake:users /home/blake/.config/waybar/style.css
         chmod 644 /home/blake/.config/waybar/style.css
-    
+
         # Create scripts directory and scripts
         mkdir -p /home/blake/.config/hypr/scripts
-    
+
         # Create window switcher script
         cat > /home/blake/.config/hypr/scripts/window-switcher.sh << 'EOF'
     #!/bin/bash
@@ -79,7 +79,7 @@ in
         # Extract the title from selection and find the corresponding window
         SELECTED_TITLE=$(echo "$SELECTION" | sed 's/.*: //')
         WINDOW_ADDRESS=$(hyprctl clients -j | jq -r ".[] | select(.title == \"$SELECTED_TITLE\") | .address")
-    
+
         if [ -n "$WINDOW_ADDRESS" ]; then
             hyprctl dispatch focuswindow address:$WINDOW_ADDRESS
         fi
@@ -87,7 +87,7 @@ in
     EOF
         chmod +x /home/blake/.config/hypr/scripts/window-switcher.sh
         chown blake:users /home/blake/.config/hypr/scripts/window-switcher.sh
-    
+
         # Create working window switch script
         cat > /home/blake/.config/hypr/scripts/window-switch.sh << 'EOF'
     #!/bin/bash

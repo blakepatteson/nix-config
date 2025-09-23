@@ -12,7 +12,6 @@ in
     ./nixvim/extras.nix
     ./nixvim/keybinds.nix
     ./nixvim/plugins.nix
-    ./nixvim/rewrap.nix
     ./nixvim/compile.nix
   ];
 
