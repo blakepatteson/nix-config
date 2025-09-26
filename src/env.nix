@@ -12,5 +12,8 @@
     GOTELEMETRY = "off";
     EDITOR = "nvim";
     SOUNDFONT = "${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2";
+
+    GTK_THEME = "Adwaita:dark";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
   };
 }
