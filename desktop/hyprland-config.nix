@@ -116,6 +116,56 @@ in
         chmod +x /home/blake/.config/hypr/scripts/kill-and-fullscreen.sh
         chown blake:users /home/blake/.config/hypr/scripts/kill-and-fullscreen.sh
 
+        # Create launch-and-focus script
+        cat > /home/blake/.config/hypr/scripts/launch-and-focus.sh << 'EOF'
+    #!/bin/bash
+    # Usage: launch-and-focus.sh <command> [fullscreen]
+    # Example: launch-and-focus.sh "kitty" fullscreen
+
+    COMMAND="$1"
+    FULLSCREEN="$2"
+
+    # Get count of windows before launching
+    BEFORE_COUNT=$(hyprctl clients -j | jq 'length')
+
+    # Launch the command in background and capture PID
+    $COMMAND &
+    PID=$!
+
+    # Wait for NEW window to appear (max 3 seconds)
+    for i in {1..30}; do
+        sleep 0.1
+
+        # Check if new window appeared
+        AFTER_COUNT=$(hyprctl clients -j | jq 'length')
+        if [ "$AFTER_COUNT" -gt "$BEFORE_COUNT" ]; then
+            # Find the newest window with this PID
+            WINDOW_ADDRESS=$(hyprctl clients -j | jq -r ".[] | select(.pid == $PID) | .address" | head -1)
+            if [ -n "$WINDOW_ADDRESS" ]; then
+                # Focus the specific new window
+                hyprctl dispatch focuswindow address:$WINDOW_ADDRESS
+                # Always set fullscreen for the NEW window
+                if [ "$FULLSCREEN" = "fullscreen" ]; then
+                    sleep 0.1  # Small delay to ensure focus
+                    hyprctl dispatch fullscreen 1
+                fi
+                exit 0
+            fi
+        fi
+    done
+
+    # Fallback: try to find by PID without count check
+    WINDOW_ADDRESS=$(hyprctl clients -j | jq -r ".[] | select(.pid == $PID) | .address" | head -1)
+    if [ -n "$WINDOW_ADDRESS" ]; then
+        hyprctl dispatch focuswindow address:$WINDOW_ADDRESS
+        if [ "$FULLSCREEN" = "fullscreen" ]; then
+            hyprctl dispatch fullscreen 1
+        fi
+    fi
+    EOF
+        chmod +x /home/blake/.config/hypr/scripts/launch-and-focus.sh
+        chown blake:users /home/blake/.config/hypr/scripts/launch-and-focus.sh
+
         # Create global window cycling script
         cat > /home/blake/.config/hypr/scripts/global-window-cycle.sh << 'EOF'
     #!/bin/bash

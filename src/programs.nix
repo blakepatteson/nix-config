@@ -101,6 +101,7 @@ in
     rofi
     slurp
     soundfont-fluid
+    swappy
     spice-gtk
     spice-vdagent
     sqlite
