@@ -396,10 +396,7 @@
         eslint = {
           enable = true;
           package = pkgs.nodePackages.vscode-langservers-extracted;
-          settings = {
-            format = { enable = true; };
-            packageManager = "npm";
-          };
+          settings = { format = { enable = true; }; packageManager = "npm"; };
         };
 
       };

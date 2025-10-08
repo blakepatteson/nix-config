@@ -47,7 +47,7 @@
 
     xrdp = {
       enable = true;
-      defaultWindowManager = "cinnamon-session-cinnamon";
+      defaultWindowManager = "Hyprland";
       openFirewall = true;
     };
   };

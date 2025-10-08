@@ -40,16 +40,8 @@
         "<cmd>lua require('telescope.builtin').lsp_references({jump_type='never'})<CR>";
     }
 
-    {
-      mode = "n";
-      key = "]h";
-      action = "<cmd>lua require('gitsigns').next_hunk()<CR>";
-    }
-    {
-      mode = "n";
-      key = "[h";
-      action = "<cmd>lua require('gitsigns').prev_hunk()<CR>";
-    }
+    { mode = "n"; key = "]h"; action = "<cmd>lua require('gitsigns').next_hunk()<CR>"; }
+    { mode = "n"; key = "[h"; action = "<cmd>lua require('gitsigns').prev_hunk()<CR>"; }
     { mode = "n"; key = "]H"; action = "<cmd>NextGitFile<CR>"; }
     { mode = "n"; key = "[H"; action = "<cmd>PrevGitFile<CR>"; }
 
@@ -89,81 +81,21 @@
       key = "<leader>gT";
       action = "<cmd>lua _G.run_git_command('git --no-pager diff', 'tab')<CR>";
     }
-    {
-      mode = "n";
-      key = "<leader>gc";
-      action = "<cmd>lua _G.smart_git_commit()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>ca";
-      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
-    }
-    {
-      mode = "v";
-      key = "<leader>ca";
-      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>gr";
-      action = "<cmd>lua vim.lsp.buf.references()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>df";
-      action = "<cmd>lua vim.diagnostic.open_float()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>li";
-      action = "<cmd>LspInfo<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>gh";
-      action = "<cmd>WorkspaceGitHunks<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>rn";
-      action = "<cmd>lua vim.lsp.buf.rename()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>gd";
-      action = "<cmd>lua vim.lsp.buf.definition()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>fm";
-      action = "<cmd>lua vim.lsp.buf.definition()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>bd";
-      action = "<cmd>bd<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>bk";
-      action = "<cmd>bd!<CR>";
-    }
-    {
-      mode = "n";
-      key = "<F2>";
-      action = "<cmd>lua vim.lsp.buf.rename()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<F12>";
-      action = "<cmd>lua vim.lsp.buf.definition()<CR>";
-    }
-    {
-      mode = "n";
-      key = "<C-n>";
-      action = "<cmd>enew<CR>";
-    }
+    { mode = "n"; key = "<leader>gc"; action = "<cmd>lua _G.smart_git_commit()<CR>"; }
+    { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
+    { mode = "v"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
+    { mode = "n"; key = "<leader>gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; }
+    { mode = "n"; key = "<leader>li"; action = "<cmd>LspInfo<CR>"; }
+    { mode = "n"; key = "<leader>gh"; action = "<cmd>WorkspaceGitHunks<CR>"; }
+    { mode = "n"; key = "<leader>rn"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
+    { mode = "n"; key = "<leader>gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
+    { mode = "n"; key = "<leader>fm"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
+    { mode = "n"; key = "<leader>bd"; action = "<cmd>bd<CR>"; }
+    { mode = "n"; key = "<leader>bk"; action = "<cmd>bd!<CR>"; }
+    { mode = "n"; key = "<F2>"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
+    { mode = "n"; key = "<F12>"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
+    { mode = "n"; key = "<C-n>"; action = "<cmd>enew<CR>"; }
+
     {
       mode = "n";
       key = "<C-w>";
@@ -210,12 +142,12 @@
 
     # Diagnostics
     { mode = "n"; key = "<leader>ld"; action = "<cmd>Telescope diagnostics<CR>"; }
+    { mode = "n"; key = "-"; action = "<CMD>Oil<CR>"; }
     {
       mode = "n";
       key = "<leader>dw";
       action = "<cmd>lua vim.diagnostic.setloclist()<CR>";
     }
-    { mode = "n"; key = "-"; action = "<CMD>Oil<CR>"; }
 
     # buffer movement
     { mode = "n"; key = "<Tab>"; action = "<cmd>bn<CR>"; }
@@ -263,11 +195,7 @@
     { mode = "n"; key = "<leader>fd"; action = "<cmd>Telescope lsp_definitions<CR>"; }
     { mode = "n"; key = "<leader>fi"; action = "<cmd>Telescope lsp_implementations<CR>"; }
 
-    {
-      mode = "n";
-      key = "<leader>cp";
-      action = "<cmd>lua _G.copy_oil_file_path()<CR>";
-    }
+    { mode = "n"; key = "<leader>cp"; action = "<cmd>lua _G.copy_oil_file_path()<CR>"; }
 
     # Black hole delete (delete without yanking)
     { mode = "n"; key = "d"; action = "\"_d"; }

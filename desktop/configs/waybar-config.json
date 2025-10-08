@@ -1,72 +1,71 @@
 {
-    "layer": "top",
-    "position": "top",
-    "height": 30,
-    "spacing": 4,
-    "modules-left": ["disk", "network"],
-    "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "backlight", "battery", "temperature", "memory", "cpu", "tray"],
-    
-    "disk": {
-        "interval": 30,
-        "format": "💾 {used}/{total} ({percentage_used}%)",
-        "path": "/",
-        "tooltip-format": "{used} used out of {total} ({free} free)"
-    },
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "spacing": 4,
+  "modules-left": ["disk", "network"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "pulseaudio",
+    "backlight",
+    "battery",
+    "temperature",
+    "memory",
+    "cpu",
+    "tray"
+  ],
 
-    "network": {
-        "format-wifi": "📶 {essid} {signalStrength}%",
-        "format-ethernet": "🌐 {ifname}",
-        "format-disconnected": "❌ Disconnected",
-        "tooltip-format": "{ifname}: {ipaddr}"
-    },
+  "disk": {
+    "interval": 30,
+    "format": "💾 {used}/{total} ({percentage_used}%)",
+    "path": "/",
+    "tooltip-format": "{used} used out of {total} ({free} free)"
+  },
 
-    "pulseaudio": {
-        "format": "🔊 {volume}%",
-        "format-muted": "🔇 Muted",
-        "on-click": "pavucontrol"
-    },
+  "network": {
+    "format-wifi": "📶 {essid} {signalStrength}%",
+    "format-ethernet": "🌐 {ifname}",
+    "format-disconnected": "❌ Disconnected",
+    "tooltip-format": "{ifname}: {ipaddr}"
+  },
 
-    "backlight": {
-        "format": "☀️ {percent}%"
-    },
+  "pulseaudio": {
+    "format": "🔊 {volume}%",
+    "format-muted": "🔇 Muted",
+    "on-click": "pavucontrol"
+  },
 
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "🔋 {capacity}%",
-        "format-charging": "⚡ {capacity}%",
-        "format-plugged": "🔌 {capacity}%"
-    },
-    
-    "clock": {
-        "interval": 1,
-        "format": "{:%A, %B %d, %Y at %I:%M:%S %p}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-    },
-    
-    "cpu": {
-        "interval": 1,
-        "format": "CPU {usage:2}%",
-        "tooltip": true,
-        "tooltip-format": "Load: {load}"
-    },
-    
-    "memory": {
-        "format": "RAM {}%"
-    },
-    
-    "temperature": {
-        "interval": 1,
-        "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
-        "critical-threshold": 80,
-        "format-critical": "{temperatureF}°F ",
-        "format": "{temperatureF}°F "
-    },
-    
-    "tray": {
-        "spacing": 10
-    }
+  "backlight": { "format": "☀️ {percent}%" },
+
+  "battery": {
+    "states": { "warning": 30, "critical": 15 },
+    "format": "🔋 {capacity}%",
+    "format-charging": "⚡ {capacity}%",
+    "format-plugged": "🔌 {capacity}%"
+  },
+
+  "clock": {
+    "interval": 1,
+    "format": "{:%A, %B %d, %Y at %I:%M:%S %p}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+
+  "cpu": {
+    "interval": 1,
+    "format": "CPU {usage:2}%",
+    "tooltip": true,
+    "tooltip-format": "Load: {load}"
+  },
+
+  "memory": { "format": "RAM {}%" },
+
+  "temperature": {
+    "interval": 1,
+    "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
+    "critical-threshold": 80,
+    "format-critical": "{temperatureF}°F ",
+    "format": "{temperatureF}°F "
+  },
+
+  "tray": { "spacing": 10 }
 }

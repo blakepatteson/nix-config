@@ -69,11 +69,17 @@ in
       # [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
       # set a fancy prompt with date and time
-      PS1='\[\033[01;31m\][\D{%Y-%m-%d}]\[\033[00m\] \[\033[01;32m\][\t]\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+      PS1='\[\033[01;31m\][\D{%Y-%m-%d}]\[\033[00m\] '
+      PS1=$PS1'\[\033[01;32m\][\t]\[\033[00m\]:'
+      PS1=$PS1'\[\033[01;34m\]\w\[\033[00m\]\$ '
 
       # enable color support of ls/eza and also add handy aliases
       if [ -x /usr/bin/dircolors ]; then
-          test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+          if test -r ~/.dircolors; then
+              eval "$(dircolors -b ~/.dircolors)"
+          else
+              eval "$(dircolors -b)"
+          fi
           alias ls='eza --color=auto'
           alias grep='grep --color=auto'
           alias fgrep='fgrep --color=auto'

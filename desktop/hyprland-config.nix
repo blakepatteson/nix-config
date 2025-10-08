@@ -1,7 +1,7 @@
 { ... }:
 let
   # Use same detection method as hardware.nix
-  isPrimeSystem = builtins.pathExists ../hardware-configs/is-prime-system;
+  isPrimeSystem = builtins.pathExists ../src/is-prime-system;
 
   # Read external config files
   monitorConfig = builtins.readFile (if isPrimeSystem
@@ -73,12 +73,15 @@ in
     done <<< "$WINDOWS"
 
     # Show wofi and get selection
-    SELECTION=$(echo -e "$WOFI_INPUT" | wofi --show dmenu --allow-images --width 800 --height 500 --prompt "Switch to window...")
+    SELECTION=$(echo -e "$WOFI_INPUT" | \
+        wofi --show dmenu --width 800 --height 500 \
+        --prompt "Switch to window...")
 
     if [ -n "$SELECTION" ]; then
         # Extract the title from selection and find the corresponding window
         SELECTED_TITLE=$(echo "$SELECTION" | sed 's/.*: //')
-        WINDOW_ADDRESS=$(hyprctl clients -j | jq -r ".[] | select(.title == \"$SELECTED_TITLE\") | .address")
+        WINDOW_ADDRESS=$(hyprctl clients -j | \
+            jq -r ".[] | select(.title == \"$SELECTED_TITLE\") | .address")
 
         if [ -n "$WINDOW_ADDRESS" ]; then
             hyprctl dispatch focuswindow address:$WINDOW_ADDRESS
@@ -90,9 +93,10 @@ in
 
         # Create working window switch script
         cat > /home/blake/.config/hypr/scripts/window-switch.sh << 'EOF'
-    #!/bin/bash
     # Get windows and format for wofi
-    SELECTION=$(hyprctl clients -j | jq -r '.[] | "\(.class): \(.title) |\(.address)"' | wofi --show dmenu --prompt "Switch to window...")
+    SELECTION=$(hyprctl clients -j | \
+        jq -r '.[] | "\(.class): \(.title) |\(.address)"' | \
+        wofi --show dmenu --prompt "Switch to window...")
 
     if [ -n "$SELECTION" ]; then
         # Extract address from selection
@@ -140,7 +144,8 @@ in
         AFTER_COUNT=$(hyprctl clients -j | jq 'length')
         if [ "$AFTER_COUNT" -gt "$BEFORE_COUNT" ]; then
             # Find the newest window with this PID
-            WINDOW_ADDRESS=$(hyprctl clients -j | jq -r ".[] | select(.pid == $PID) | .address" | head -1)
+            WINDOW_ADDRESS=$(hyprctl clients -j | \
+                jq -r ".[] | select(.pid == $PID) | .address" | head -1)
             if [ -n "$WINDOW_ADDRESS" ]; then
                 # Focus the specific new window
                 hyprctl dispatch focuswindow address:$WINDOW_ADDRESS
@@ -155,7 +160,8 @@ in
     done
 
     # Fallback: try to find by PID without count check
-    WINDOW_ADDRESS=$(hyprctl clients -j | jq -r ".[] | select(.pid == $PID) | .address" | head -1)
+    WINDOW_ADDRESS=$(hyprctl clients -j | \
+        jq -r ".[] | select(.pid == $PID) | .address" | head -1)
     if [ -n "$WINDOW_ADDRESS" ]; then
         hyprctl dispatch focuswindow address:$WINDOW_ADDRESS
         if [ "$FULLSCREEN" = "fullscreen" ]; then

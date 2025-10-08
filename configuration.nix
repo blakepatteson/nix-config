@@ -3,8 +3,9 @@
   imports = [
     ./hardware-configuration.nix
 
-    ./src/boot.nix
     ./desktop/desktop.nix
+
+    ./src/boot.nix
     ./src/etc.nix
     ./src/env.nix
     ./src/hardware.nix

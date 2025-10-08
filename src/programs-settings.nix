@@ -38,10 +38,9 @@
       push = { default = "current"; followTags = true; };
       help = { autocorrect = -1; };
       pull = { ff = "only"; rebase = false; };
-      advice.addIgnoredFile = false;
       url = { "ssh://git@github.com/".insteadOf = "https://github.com/"; };
+      advice.addIgnoredFile = false;
     };
   };
-  programs.dconf.enable = true;
 }
 
