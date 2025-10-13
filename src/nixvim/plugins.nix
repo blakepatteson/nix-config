@@ -143,6 +143,7 @@
           "xml"
           "markdown"
           "bash"
+          "odin"
         ];
 
         highlight = {
@@ -199,6 +200,7 @@
         javascript
         typescript
         zig
+        odin
       ];
     };
 
@@ -398,6 +400,8 @@
           package = pkgs.nodePackages.vscode-langservers-extracted;
           settings = { format = { enable = true; }; packageManager = "npm"; };
         };
+
+        ols = { enable = true; package = pkgs.ols; };
 
       };
 

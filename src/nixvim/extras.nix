@@ -448,6 +448,22 @@
         capabilities = { renameProvider = true }
       }
     });
+
+    -- Odinfmt custom formatter setup
+    local null_ls = require("null-ls")
+    local helpers = require("null-ls.helpers")
+
+    local odinfmt = {
+      method = null_ls.methods.FORMATTING,
+      filetypes = { "odin" },
+      generator = helpers.formatter_factory({
+        command = "odinfmt",
+        args = { "-stdin", "$FILENAME" },
+        to_stdin = true,
+      }),
+    }
+
+    null_ls.register(odinfmt);
   '';
 
   programs.nixvim.extraConfigVim = /* lua */ ''

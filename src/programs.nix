@@ -82,7 +82,14 @@ in
     nodePackages.prettier
     nodejs
     obs-studio
+    odin
+    ols
     onlyoffice-bin
+
+    # Cursor themes
+    bibata-cursors
+    capitaine-cursors
+
     pamixer
     pavucontrol # Audio control panel
     pinta

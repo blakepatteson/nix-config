@@ -12,8 +12,13 @@
     enable = true;
     settings.default_session = {
       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time \
-          --cmd ${pkgs.hyprland}/bin/Hyprland --remember";
+          --cmd ${pkgs.hyprland}/bin/Hyprland --remember --remember-user-session \
+          --user-menu --asterisks";
       user = "greeter";
+    };
+    settings.initial_session = {
+      command = "${pkgs.hyprland}/bin/Hyprland";
+      user = "blake";
     };
   };
 
