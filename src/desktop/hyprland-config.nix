@@ -1,7 +1,7 @@
 { ... }:
 let
   # Use same detection method as hardware.nix
-  isPrimeSystem = builtins.pathExists ../src/is-prime-system;
+  isPrimeSystem = builtins.pathExists ../is-prime-system;
 
   # Read external config files
   monitorConfig = builtins.readFile (if isPrimeSystem
