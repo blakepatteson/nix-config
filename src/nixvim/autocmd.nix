@@ -92,6 +92,16 @@
     }
 
     {
+      event = [ "BufWritePre" ];
+      pattern = [ "*.zig" "*.zig.zon" ];
+      callback.__raw = '' function()
+          if not vim.b.skip_next_format then
+            vim.lsp.buf.format({ async = false })
+          end
+        end '';
+    }
+
+    {
       event = [ "ColorScheme" "VimEnter" ];
       pattern = [ "*" ];
       callback.__raw = ''
