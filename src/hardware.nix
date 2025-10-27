@@ -36,8 +36,10 @@ in
         General = {
           Enable = "Source,Sink,Media,Socket";
           Experimental = true;
-          AutoConnect = true;
+          ControllerMode = "dual";
+          FastConnectable = true;
         };
+        Policy = { AutoEnable = true; };
       };
     };
   };
