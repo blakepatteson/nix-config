@@ -39,7 +39,10 @@
       help = { autocorrect = -1; };
       pull = { ff = "only"; rebase = false; };
       url = { "ssh://git@github.com/".insteadOf = "https://github.com/"; };
-      advice.addIgnoredFile = false;
+      advice = {
+        addIgnoredFile = false;
+        forceDeleteBranch = false;
+      };
     };
   };
 }
