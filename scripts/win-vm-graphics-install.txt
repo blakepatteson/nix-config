@@ -17,9 +17,14 @@ VirtIO Drivers:
         2.  Windows should now support dynamic resolution scaling
         3.  Open Spice viewer preferences to adjust display settings if needed
 
-files should be called : 
+files should be called :
     virt-viewer-x86-11.0-1.0.msi
     virtio-win-guest-tools.exe
 
-command to display it at `Z:\` : 
+command to display it at `Z:\` :
     net use Z: \\nixos\development /persistent:yes
+
+If copy/paste ever fails after a Windows update - run this in Windows (as admin) :
+  sc query vdservice
+  sc start vdservice
+  sc config vdservice start=auto
