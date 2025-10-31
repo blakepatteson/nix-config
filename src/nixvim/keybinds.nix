@@ -206,6 +206,15 @@
     { mode = "v"; key = "p"; action = "\"_dP"; }
     { mode = "x"; key = "p"; action = "\"_dP"; }
 
+    { mode = "n"; key = "c"; action = "\"_c"; }
+    { mode = "n"; key = "C"; action = "\"_C"; }
+    { mode = "v"; key = "c"; action = "\"_c"; }
+    { mode = "x"; key = "c"; action = "\"_c"; }
+
+    { mode = "n"; key = "s"; action = "\"_s"; }
+    { mode = "n"; key = "S"; action = "\"_S"; }
+    { mode = "v"; key = "s"; action = "\"_s"; }
+    { mode = "x"; key = "s"; action = "\"_s"; }
   ];
 }
 
