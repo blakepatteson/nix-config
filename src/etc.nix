@@ -45,7 +45,7 @@ in
 
   environment.etc.bashrc = {
     mode = "0644";
-    text = ''
+    text = /* bash */ ''
       # ~/.bashrc: executed by bash(1) for non-login shells.
 
       # If not running interactively, don't do anything
@@ -86,10 +86,14 @@ in
           alias egrep='egrep --color=auto'
       fi
 
+      alias g='git'
+      alias n='nvim'
       alias l='eza -al'
       alias la='eza -A'
+      alias c='cd'
+      alias t='eza --tree --level=2'
+      alias h='history | tail -20'
       alias list-issues='gh issue list --limit 1000'
-      alias n='nvim'
 
       alias dkill='sudo docker kill $(sudo docker ps -q)'
       alias dkillrm='sudo docker rm -f $(sudo docker ps -aq)'

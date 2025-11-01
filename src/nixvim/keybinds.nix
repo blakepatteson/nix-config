@@ -81,7 +81,6 @@
       key = "<leader>gT";
       action = "<cmd>lua _G.run_git_command('git --no-pager diff', 'tab')<CR>";
     }
-    { mode = "n"; key = "<leader>gc"; action = "<cmd>lua _G.smart_git_commit()<CR>"; }
     { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
     { mode = "v"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
     { mode = "n"; key = "<leader>gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; }

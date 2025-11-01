@@ -33,7 +33,19 @@
         mnemonicPrefix = true;
         wsErrorHighlight = "all";
       };
-      alias = { b = "branch -vva"; };
+      alias = {
+        a = "add";
+        b = "branch -vva";
+        c = "commit";
+        d = "diff";
+        D = "diff --cached";
+        l = "log --oneline --graph --decorate --all";
+        m = "merge";
+        p = "pull";
+        P = "push";
+        s = "status --short";
+        S = "status";
+      };
       fetch = { prune = true; prunetags = true; };
       push = { default = "current"; followTags = true; };
       help = { autocorrect = -1; };
