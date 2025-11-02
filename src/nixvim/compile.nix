@@ -367,8 +367,8 @@
 
             vim.api.nvim_buf_set_option(buf, "filetype", "output")
           end,
-          stdout_buffered = false,
-          stderr_buffered = false,
+          stdout_buffered = true,
+          stderr_buffered = true,
         })
 
         if cmd <= 0 then
