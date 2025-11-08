@@ -62,6 +62,7 @@ in
     hyprpaper
     imagemagick
     jq
+    mpv
     kitty
     lazygit
     lemminx

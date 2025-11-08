@@ -38,13 +38,13 @@
         b = "branch -vva";
         c = "commit";
         d = "diff";
-        D = "diff --cached";
+        dc = "diff --cached";  # staged diff (was D)
         l = "log --oneline --graph --decorate --all";
         m = "merge";
         p = "pull";
-        P = "push";
+        ps = "push";  # (was P)
         s = "status --short";
-        S = "status";
+        st = "status";  # full status (was S)
       };
       fetch = { prune = true; prunetags = true; };
       push = { default = "current"; followTags = true; };
