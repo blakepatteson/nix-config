@@ -3,15 +3,19 @@
   "position": "top",
   "height": 30,
   "spacing": 4,
-  "modules-left": ["disk", "network"],
-  "modules-center": ["clock"],
+  "modules-left": ["niri/workspaces", "disk", "network"],
+  "modules-center": ["clock", "niri/window"],
   "modules-right": [
+    "privacy",
+    "mpris",
+    "idle-inhibitor",
     "pulseaudio",
     "backlight",
     "battery",
     "temperature",
     "memory",
     "cpu",
+    "systemd-failed-units",
     "tray"
   ],
 
@@ -67,5 +71,76 @@
     "format": "{temperatureF}°F "
   },
 
-  "tray": { "spacing": 10 }
+  "tray": { "spacing": 10 },
+
+  "niri/workspaces": {
+    "format": "{index}",
+    "all-outputs": false
+  },
+
+  "niri/window": {
+    "format": "| {}",
+    "max-length": 80,
+    "rewrite": {
+      "(.*) — Mozilla Firefox": "🦊 $1",
+      "(.*) - Google Chrome": "🌐 $1",
+      "(.*) - Visual Studio Code": "💻 $1"
+    }
+  },
+
+  "privacy": {
+    "icon-spacing": 4,
+    "icon-size": 18,
+    "transition-duration": 250,
+    "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      },
+      {
+        "type": "audio-out",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      },
+      {
+        "type": "audio-in",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      }
+    ]
+  },
+
+  "mpris": {
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "🎵",
+      "mpv": "🎬",
+      "firefox": "🦊"
+    },
+    "status-icons": {
+      "paused": "⏸",
+      "playing": "▶"
+    },
+    "max-length": 40
+  },
+
+  "idle-inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "🔓",
+      "deactivated": "🔒"
+    },
+    "tooltip-format-activated": "Idle inhibitor active (screen won't sleep)",
+    "tooltip-format-deactivated": "Idle inhibitor inactive"
+  },
+
+  "systemd-failed-units": {
+    "hide-on-ok": true,
+    "format": "✗ {nr_failed}",
+    "format-ok": "✓",
+    "system": true,
+    "user": true
+  }
 }

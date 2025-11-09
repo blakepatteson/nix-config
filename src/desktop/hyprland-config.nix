@@ -1,9 +1,8 @@
 { ... }:
 let
-  # Use same detection method as hardware.nix
+  # Use same detection method as hardware.nix - is it for laptop or desktop?
   isPrimeSystem = builtins.pathExists ../is-prime-system;
 
-  # Read external config files
   monitorConfig = builtins.readFile (if isPrimeSystem
   then ./configs/monitors-laptop.conf
   else ./configs/monitors-desktop.conf);
@@ -54,7 +53,6 @@ in
     WAYBAR_STYLE_EOF
         chown blake:users /home/blake/.config/waybar/style.css
         chmod 644 /home/blake/.config/waybar/style.css
-
   '';
 }
 
