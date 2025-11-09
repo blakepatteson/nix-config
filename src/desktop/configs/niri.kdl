@@ -1,8 +1,14 @@
 prefer-no-csd
 
 input {
-    keyboard { repeat-delay 200 repeat-rate 35 xkb { } numlock }
-    touchpad { tap }
+    keyboard {
+        repeat-delay 200
+        repeat-rate 35
+        xkb { }
+    }
+    touchpad {
+        tap
+    }
     mouse { }
     trackpoint { }
     focus-follows-mouse max-scroll-amount="0%"
@@ -34,7 +40,11 @@ layout {
         proportion 0.66667
     }
     default-column-width { proportion 0.5; }
-    focus-ring { width 1.5 active-color "#7fc8ff" inactive-color "#505050" }
+    focus-ring {
+        width 1.5
+        active-color "#7fc8ff"
+        inactive-color "#505050"
+    }
     border {
         off
         width 1.5
@@ -42,7 +52,12 @@ layout {
         inactive-color "#505050"
         urgent-color "#9b0000"
     }
-    shadow { softness 30 spread 5 offset x=0 y=5 color "#0007" }
+    shadow {
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#0007"
+    }
     struts { }
 }
 spawn-at-startup "waybar"
@@ -50,7 +65,9 @@ spawn-at-startup "waybar"
 spawn-sh-at-startup "swaybg -c '#000000'"
 hotkey-overlay { }
 
-animations { off }
+animations {
+    off
+}
 
 // Open the Firefox picture-in-picture player as floating by default.
 // prob don't need this...?
@@ -59,7 +76,10 @@ window-rule {
     open-floating true
 }
 
-window-rule { geometry-corner-radius 4 clip-to-geometry true }
+window-rule {
+    geometry-corner-radius 4
+    clip-to-geometry true
+}
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
@@ -89,6 +109,12 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
 
     Mod+O repeat=false { toggle-overview; }
+
+    // SUPER + Y - Dev workspace setup (open two terminals in selected directory)
+    Mod+Y { spawn "bash" "/home/blake/dev/repos/nix-config/src/desktop/scripts/niri-dev-setup.sh"; }
+
+    // SUPER + SHIFT + C - Kill workspace (move all windows up and delete this workspace)
+    Mod+Shift+C { spawn "bash" "/home/blake/dev/repos/nix-config/src/desktop/scripts/niri-kill-workspace.sh"; }
 
     Mod+C repeat=false { close-window; }
     Mod+W      repeat=false { close-window; }
@@ -183,7 +209,7 @@ binds {
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
-    Mod+Tab { focus-workspace-previous; }
+    Mod+Tab { focus-window-previous; }
 
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
