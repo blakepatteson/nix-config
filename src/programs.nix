@@ -30,7 +30,7 @@ in
     fd
     ffmpeg-full
     file
-    flameshot
+    (flameshot.override { enableWlrSupport = true; })
     flatpak
     fluidsynth
     flyctl
@@ -59,7 +59,6 @@ in
     gst_all_1.gstreamer
     hplip
     htop
-    hyprpaper
     imagemagick
     jq
     mpv
@@ -124,6 +123,7 @@ in
     wine64
     wl-clipboard
     wofi
+    wtype
     x265
     xclip
     xdotool

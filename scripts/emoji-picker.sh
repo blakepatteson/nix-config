@@ -5,13 +5,14 @@ if [ ! -f "$EMOJI_FILE" ]; then
     exit 1
 fi
 
-# Use rofi to display emojis and get selection
-selected=$(cat "$EMOJI_FILE" | rofi -dmenu -i -p "Pick an emoji" \
-    -theme-str 'window {width: 60%;} listview {lines: 35;}')
+# Use wofi for Wayland to display emojis and get selection
+selected=$(cat "$EMOJI_FILE" | wofi --dmenu -i -p "Pick an emoji" --height 600 --width 800)
 
 if [ -n "$selected" ]; then
     emoji=$(echo "$selected" | awk '{print $1}')
-    echo -n "$emoji" | xclip -selection clipboard
+    # Use wl-copy for Wayland clipboard
+    echo -n "$emoji" | wl-copy
+    # Use wtype for Wayland keyboard input
     sleep 0.2
-    xdotool key --clearmodifiers ctrl+v
+    wtype -M ctrl v -m ctrl
 fi

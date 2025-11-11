@@ -47,7 +47,7 @@
 
     xrdp = {
       enable = true;
-      defaultWindowManager = "Hyprland";
+      defaultWindowManager = "niri-session";
       openFirewall = true;
     };
   };

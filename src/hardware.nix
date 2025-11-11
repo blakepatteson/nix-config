@@ -47,7 +47,7 @@ in
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" ];
 
-  # Prevent module loading conflicts during boot (needed for Hyprland)
+  # Prevent module loading conflicts during boot (needed for Wayland compositors)
   boot.kernelParams = [ "nvidia-drm.modeset=1" ];
 
   # Prevent Bluetooth from being suspended by USB autosuspend

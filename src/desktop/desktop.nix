@@ -1,14 +1,12 @@
 { pkgs, ... }:
 {
   imports = [
-    ./hyprland-config.nix
     ./niri-config.nix
   ];
 
-  programs.hyprland = { enable = true; xwayland.enable = true; };
   programs.niri = { enable = true; };
 
-  # Configure tuigreet for Hyprland/Niri login
+  # Configure tuigreet for Niri login
   services.greetd = {
     enable = true;
     settings.default_session = {
@@ -18,7 +16,7 @@
       user = "greeter";
     };
     settings.initial_session = {
-      command = "${pkgs.hyprland}/bin/Hyprland";
+      command = "${pkgs.niri}/bin/niri-session";
       user = "blake";
     };
   };
