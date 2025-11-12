@@ -113,9 +113,6 @@ binds {
     // SUPER + Y - Dev workspace setup (open two terminals in selected directory)
     Mod+Y { spawn "bash" "/home/blake/dev/repos/nix-config/src/desktop/scripts/niri-dev-setup.sh"; }
 
-    // SUPER + SHIFT + C - Kill workspace (move all windows up and delete this workspace)
-    Mod+Shift+C { spawn "bash" "/home/blake/dev/repos/nix-config/src/desktop/scripts/niri-kill-workspace.sh"; }
-
     Mod+C repeat=false { close-window; }
     Mod+W      repeat=false { close-window; }
     Mod+Escape repeat=false { close-window; }

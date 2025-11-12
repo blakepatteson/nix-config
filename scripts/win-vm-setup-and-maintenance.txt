@@ -1,5 +1,6 @@
 SPICE Guest Tools:
     1.  Download "spice-guest-tools" from: https://www.spice-space.org/download.html
+        https://releases.pagure.org/virt-viewer/virt-viewer-x86-11.0-1.0.msi
     2.  Look for "virt-viewer-x86.msi" - this is correct
     3.  Install it on your Windows VM
 
@@ -28,3 +29,5 @@ If copy/paste ever fails after a Windows update - run this in Windows (as admin)
   sc query vdservice
   sc start vdservice
   sc config vdservice start=auto
+
+For debloating default apps, etc - see : https://github.com/Raphire/Win11Debloat

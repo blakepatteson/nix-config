@@ -12,7 +12,7 @@
         history_index = 0,
         buffer_counter = 0, -- Counter to ensure unique buffer names
         current_command = nil,
-        buffered = true,    -- Toggle between buffered/unbuffered output
+        buffered = false,    -- Toggle between buffered/unbuffered output
       }
 
       -- Store command history in Neovim's data dir, e.g. ~/.local/share/nvim

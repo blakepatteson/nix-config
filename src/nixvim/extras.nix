@@ -145,22 +145,6 @@
     _G.resume_last_telescope = resume_last_picker
     _G.clear_telescope_search = clear_search_history
 
-    -- Git workflow functions
-    -- Workspace-wide git navigation functions
-    local function get_git_files_with_changes()
-      local handle = io.popen("git diff --name-only")
-      if not handle then return {} end
-
-      local result = handle:read("*a")
-      handle:close()
-
-      local files = {}
-      for file in result:gmatch("[^\n]+") do
-        table.insert(files, file)
-      end
-      return files
-    end
-
     -- Workspace-wide git hunks function
     local function workspace_git_hunks()
       require('telescope.builtin').git_status({

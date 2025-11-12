@@ -1,12 +1,9 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./niri-config.nix
-  ];
+  imports = [ ./niri-config.nix ];
 
   programs.niri = { enable = true; };
 
-  # Configure tuigreet for Niri login
   services.greetd = {
     enable = true;
     settings.default_session = {
@@ -21,14 +18,12 @@
     };
   };
 
-  # Essential services
-  services.dbus.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
-  services.gnome.gnome-keyring.enable = true;
-
-  # Bluetooth manager
-  services.blueman.enable = true;
-
+  services = {
+    dbus.enable = true;
+    gnome.gnome-keyring.enable = true;
+    blueman.enable = true;
+  };
   powerManagement = {
     enable = false;
     powertop.enable = false;
