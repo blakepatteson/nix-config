@@ -12,6 +12,7 @@
         history_index = 0,
         buffer_counter = 0, -- Counter to ensure unique buffer names
         current_command = nil,
+        buffered = true,    -- Toggle between buffered/unbuffered output
       }
 
       -- Store command history in Neovim's data dir, e.g. ~/.local/share/nvim
@@ -259,6 +260,12 @@
         vim.notify("Compile command cleared", vim.log.levels.INFO)
       end
 
+      _G.toggle_compile_buffering = function()
+        _G.compile_command.buffered = not _G.compile_command.buffered
+        local status = _G.compile_command.buffered and "buffered" or "unbuffered"
+        vim.notify("COMPILE_OUTPUT='" .. status .. "'", vim.log.levels.INFO)
+      end
+
       _G.run_compile_command = function()
         -- If no command set, prompt for one
         if _G.compile_command.command == "" then
@@ -282,18 +289,17 @@
         vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
         vim.api.nvim_buf_set_option(buf, "swapfile", true)
 
-        local header_lines = {
-          "Running: " .. _G.compile_command.command,
-          "Started at: " .. os.date("%Y-%m-%d %H:%M:%S"),
-          "Working directory: " .. vim.fn.getcwd(),
-          "Output saved to: " .. filepath,
-          "------------------------------------------------------------",
-          ""
+        -- Store metadata for footer
+        local metadata = {
+          command = _G.compile_command.command,
+          start_time_str = os.date("%Y-%m-%d %H:%M:%S"),
+          work_dir = vim.fn.getcwd(),
+          filepath = filepath,
         }
 
-        vim.api.nvim_buf_set_lines(buf, 0, 0, false, header_lines)
+        vim.api.nvim_buf_set_lines(buf, 0, 0, false, {})
 
-        local line_count = 6
+        local line_count = 0
         local start_time = vim.loop.hrtime()
         local cmd = vim.fn.jobstart(_G.compile_command.command, {
           on_stdout = function(_, data)
@@ -344,11 +350,13 @@
             end
 
             local footer_lines = {
-              "",
-              "------------------------------------------------------------",
-              "Command completed with exit code: " .. exit_code,
-              "Duration: " .. duration_text,
-              "Finished at: " .. os.date("%Y-%m-%d %H:%M:%S")
+              "-------------------------------------------------------------------------",
+              "COMMAND..='" .. metadata.command .. "'",
+              "EXIT_CODE='" .. exit_code .. "'",
+              "FINISH...='" .. os.date("%Y-%m-%d %H:%M:%S") .. "'",
+              "START....='" .. metadata.start_time_str .. "'",
+              "TIME.....='" .. duration_text .. "'",
+              "WORK_DIR.='" .. metadata.work_dir .. "'"
             }
 
             vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, footer_lines)
@@ -367,8 +375,8 @@
 
             vim.api.nvim_buf_set_option(buf, "filetype", "output")
           end,
-          stdout_buffered = true,
-          stderr_buffered = true,
+          stdout_buffered = _G.compile_command.buffered,
+          stderr_buffered = _G.compile_command.buffered,
         })
 
         if cmd <= 0 then
@@ -399,6 +407,10 @@
         else
           vim.notify("No active compile job to kill", vim.log.levels.WARN)
         end
+      end, {})
+
+      vim.api.nvim_create_user_command('CompileToggleBuffer', function()
+        _G.toggle_compile_buffering()
       end, {})
 
       vim.api.nvim_create_autocmd({"BufEnter", "BufNew"}, {
@@ -474,6 +486,13 @@
         key = "<leader>mh";
         action = ":lua _G.telescope_compile_history()<CR>";
         options = { silent = true; desc = "Search compile history"; };
+      }
+
+      {
+        mode = "n";
+        key = "<leader>mb";
+        action = ":CompileToggleBuffer<CR>";
+        options = { silent = true; desc = "Toggle buffered output"; };
       }
     ];
   };
