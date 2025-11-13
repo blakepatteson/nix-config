@@ -110,8 +110,11 @@ binds {
 
     Mod+O repeat=false { toggle-overview; }
 
-    // SUPER + Y - Dev workspace setup (open two terminals in selected directory)
-    Mod+Y { spawn "bash" "/home/blake/dev/repos/nix-config/src/desktop/scripts/niri-dev-setup.sh"; }
+    // SUPER + Y - Dev workspace setup (2 terminals in selected dir)
+    Mod+Y {
+      spawn "bash" \
+        "/home/blake/dev/repos/nix-config/src/desktop/scripts/niri-dev-setup.sh";
+    }
 
     Mod+C repeat=false { close-window; }
     Mod+W      repeat=false { close-window; }

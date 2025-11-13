@@ -6,7 +6,8 @@ if [ ! -f "$EMOJI_FILE" ]; then
 fi
 
 # Use wofi for Wayland to display emojis and get selection
-selected=$(cat "$EMOJI_FILE" | wofi --dmenu -i -p "Pick an emoji" --height 600 --width 800)
+selected=$(cat "$EMOJI_FILE" | wofi --dmenu -i -p "Pick an emoji" \
+  --height 600 --width 800)
 
 if [ -n "$selected" ]; then
     emoji=$(echo "$selected" | awk '{print $1}')

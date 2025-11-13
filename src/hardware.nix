@@ -53,7 +53,10 @@ in
   # Prevent Bluetooth from being suspended by USB autosuspend
   services.udev.extraRules = ''
     # Disable autosuspend for Bluetooth USB devices
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="8087", ATTR{idProduct}=="0026", ATTR{power/autosuspend}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", DRIVER=="btusb", ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", \
+      ATTR{idVendor}=="8087", ATTR{idProduct}=="0026", \
+      ATTR{power/autosuspend}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", DRIVER=="btusb", \
+      ATTR{power/autosuspend}="-1"
   '';
 }

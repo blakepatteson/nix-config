@@ -81,8 +81,16 @@
       key = "<leader>gT";
       action = "<cmd>lua _G.run_git_command('git --no-pager diff', 'tab')<CR>";
     }
-    { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
-    { mode = "v"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action()<CR>"; }
+    {
+      mode = "n";
+      key = "<leader>ca";
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+    }
+    {
+      mode = "v";
+      key = "<leader>ca";
+      action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+    }
     { mode = "n"; key = "<leader>gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; }
     { mode = "n"; key = "<leader>li"; action = "<cmd>LspInfo<CR>"; }
     { mode = "n"; key = "<leader>gh"; action = "<cmd>WorkspaceGitHunks<CR>"; }
@@ -105,18 +113,21 @@
     # Telescope (Fuzzy Finding)
     { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope find_files<CR>"; }
     { mode = "n"; key = "<leader>ff"; action = "<cmd>Telescope find_files<CR>"; }
+
     {
       mode = "n";
       key = "<C-f>";
       action = "<cmd>lua _G.live_grep_with_last_search()<CR>";
     }
+
+    { mode = "n"; key = "<C-g>"; action = "<cmd>lua _G.live_grep_regex()<CR>"; }
+    { mode = "n"; key = "<leader>sr"; action = "<cmd>lua _G.live_grep_regex()<CR>"; }
     {
       mode = "n";
-      key = "<C-g>";
-      action = "<cmd>lua _G.live_grep_regex()<CR>";
+      key = "<leader>sf";
+      action = "<cmd>lua _G.set_telescope_filter()<CR>";
     }
-    { mode = "n"; key = "<leader>fg"; action = "<cmd>Telescope live_grep<CR>"; }
-    { mode = "n"; key = "<leader>sr"; action = "<cmd>lua _G.live_grep_regex()<CR>"; }
+    { mode = "n"; key = "<leader>re"; action = "<cmd>Telescope oldfiles<CR>"; }
     {
       mode = "n";
       key = "<leader>fr";
@@ -127,17 +138,6 @@
       key = "<leader>fc";
       action = "<cmd>lua _G.clear_telescope_search()<CR>";
     }
-    {
-      mode = "n";
-      key = "<leader>ws";
-      action = "<cmd>Telescope lsp_workspace_symbols<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>ds";
-      action = "<cmd>Telescope lsp_document_symbols<CR>";
-    }
-    { mode = "n"; key = "<leader>re"; action = "<cmd>Telescope oldfiles<CR>"; }
 
     # Diagnostics
     { mode = "n"; key = "<leader>ld"; action = "<cmd>Telescope diagnostics<CR>"; }
@@ -192,7 +192,11 @@
 
     # LSP additional
     { mode = "n"; key = "<leader>fd"; action = "<cmd>Telescope lsp_definitions<CR>"; }
-    { mode = "n"; key = "<leader>fi"; action = "<cmd>Telescope lsp_implementations<CR>"; }
+    {
+      mode = "n";
+      key = "<leader>fi";
+      action = "<cmd>Telescope lsp_implementations<CR>";
+    }
 
     { mode = "n"; key = "<leader>cp"; action = "<cmd>lua _G.copy_oil_file_path()<CR>"; }
 

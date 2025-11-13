@@ -42,21 +42,29 @@
     -- Store last search term and mode globally
     _G.last_telescope_search = ""
     _G.last_telescope_mode = "literal" -- "literal" or "regex"
+    _G.telescope_file_filter = "" -- persistent file filter (e.g., "*.go", "*.ts")
 
     -- Custom live_grep functions with regex support
     local function live_grep_literal()
       _G.last_telescope_mode = "literal"
-      require('telescope.builtin').live_grep({
+      local opts = {
         additional_args = function()
-          return {"--fixed-strings"}
+          local args = {"--fixed-strings"}
+          if _G.telescope_file_filter ~= "" then
+            table.insert(args, "--glob")
+            table.insert(args, _G.telescope_file_filter)
+          end
+          return args
         end,
-        prompt_title = "Live Grep (LITERAL)"
-      })
+        prompt_title = "Live Grep (LITERAL)" .. (_G.telescope_file_filter ~= "" and
+            " [" .. _G.telescope_file_filter .. "]" or "")
+      }
+      require('telescope.builtin').live_grep(opts)
     end
 
     local function live_grep_regex()
       _G.last_telescope_mode = "regex"
-      require('telescope.builtin').live_grep({
+      local opts = {
         vimgrep_arguments = {
           "rg",
           "--color=never",
@@ -67,8 +75,16 @@
           "--smart-case",
           "--pcre2"
         },
-        prompt_title = "Live Grep (REGEX)"
-      })
+        additional_args = function()
+          if _G.telescope_file_filter ~= "" then
+            return {"--glob", _G.telescope_file_filter}
+          end
+          return {}
+        end,
+        prompt_title = "Live Grep (REGEX)" .. (_G.telescope_file_filter ~= "" and
+            " [" .. _G.telescope_file_filter .. "]" or "")
+      }
+      require('telescope.builtin').live_grep(opts)
     end
 
     -- Set up telescope mappings for search save/restore using autocmds
@@ -109,20 +125,37 @@
     local function live_grep_with_last_search()
       if _G.last_telescope_search ~= "" then
         if _G.last_telescope_mode == "regex" then
-          require('telescope.builtin').live_grep({
+          local opts = {
             default_text = _G.last_telescope_search,
             vimgrep_arguments = {
               "rg", "--color=never", "--no-heading", "--with-filename",
               "--line-number", "--column", "--smart-case", "--pcre2"
             },
-            prompt_title = "Live Grep (REGEX)"
-          })
+            additional_args = function()
+              if _G.telescope_file_filter ~= "" then
+                return {"--glob", _G.telescope_file_filter}
+              end
+              return {}
+            end,
+            prompt_title = "Live Grep (REGEX)" .. (_G.telescope_file_filter ~= "" and
+                " [" .. _G.telescope_file_filter .. "]" or "")
+          }
+          require('telescope.builtin').live_grep(opts)
         else
-          require('telescope.builtin').live_grep({
+          local opts = {
             default_text = _G.last_telescope_search,
-            additional_args = function() return {"--fixed-strings"} end,
-            prompt_title = "Live Grep (LITERAL)"
-          })
+            additional_args = function()
+              local args = {"--fixed-strings"}
+              if _G.telescope_file_filter ~= "" then
+                table.insert(args, "--glob")
+                table.insert(args, _G.telescope_file_filter)
+              end
+              return args
+            end,
+            prompt_title = "Live Grep (LITERAL)" .. (_G.telescope_file_filter ~= "" and
+                " [" .. _G.telescope_file_filter .. "]" or "")
+          }
+          require('telescope.builtin').live_grep(opts)
         end
       else
         live_grep_literal()
@@ -140,10 +173,23 @@
       vim.notify("Search history cleared")
     end
 
+    -- Function to set file filter
+    local function set_telescope_filter()
+      local input = vim.fn.input({
+        prompt = "File filter : ", default = _G.telescope_file_filter
+      })
+
+      _G.telescope_file_filter = input
+      if input == "" then vim.notify("File filter cleared")
+      else                vim.notify("File filter set: " .. input)
+      end
+    end
+
     -- Register global functions
     _G.live_grep_with_last_search = live_grep_with_last_search
     _G.resume_last_telescope = resume_last_picker
     _G.clear_telescope_search = clear_search_history
+    _G.set_telescope_filter = set_telescope_filter
 
     -- Workspace-wide git hunks function
     local function workspace_git_hunks()

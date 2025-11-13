@@ -461,10 +461,7 @@
       settings = {
         view_options = { show_hidden = true; };
         float = { padding = 2; max_width = 100; max_height = 20; };
-        keymaps = {
-          "<C-p>" = false; # Disable the default Ctrl+p binding
-          "<C-S-p>" = "actions.preview"; # Add new Ctrl+Shift+p binding
-        };
+        keymaps = { "<C-p>" = false; };
       };
     };
 

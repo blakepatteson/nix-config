@@ -165,8 +165,9 @@
 
       _G.prompt_compile_command = function()
         -- Save the current command if history index is at current command
-        if _G.compile_command.history_index == 0 and _G.compile_command.command ~= "" then
-          add_to_history(_G.compile_command.command)
+        if _G.compile_command.history_index == 0 and
+           _G.compile_command.command ~= "" then
+              add_to_history(_G.compile_command.command)
         end
 
         -- Prompt for command with existing as default
@@ -350,7 +351,7 @@
             end
 
             local footer_lines = {
-              "-------------------------------------------------------------------------",
+              "------------------------------------------------------------------------",
               "COMMAND..='" .. metadata.command .. "'",
               "EXIT_CODE='" .. exit_code .. "'",
               "FINISH...='" .. os.date("%Y-%m-%d %H:%M:%S") .. "'",
