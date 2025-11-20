@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   networking = {
-    hostName = "nixos";
+    hostName = "blake-nixos";
     networkmanager = {
       enable = true;
       wifi.powersave = false;

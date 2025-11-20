@@ -83,7 +83,6 @@
   # Fix systemd-modules-load timeout by masking it - modules load anyway
   systemd.services.systemd-modules-load.enable = false;
 
-
   # system.autoUpgrade.enable = true;
   system.stateVersion = "24.11";
 }
