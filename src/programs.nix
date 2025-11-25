@@ -9,6 +9,8 @@ in
   environment.systemPackages = with pkgs; [
     unstable.claude-code
 
+    (flameshot.override { enableWlrSupport = true; })
+
     OVMF
     acpi
     asciiquarium
@@ -19,6 +21,7 @@ in
     busybox
     cifs-utils
     clang-tools
+    cloc
     cmake
     cowsay
     cups
@@ -30,7 +33,6 @@ in
     fd
     ffmpeg-full
     file
-    (flameshot.override { enableWlrSupport = true; })
     flatpak
     fluidsynth
     flyctl

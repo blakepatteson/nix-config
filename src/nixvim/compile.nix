@@ -352,12 +352,12 @@
 
             local footer_lines = {
               "------------------------------------------------------------------------",
-              "COMMAND..='" .. metadata.command .. "'",
-              "EXIT_CODE='" .. exit_code .. "'",
-              "FINISH...='" .. os.date("%Y-%m-%d %H:%M:%S") .. "'",
-              "START....='" .. metadata.start_time_str .. "'",
-              "TIME.....='" .. duration_text .. "'",
-              "WORK_DIR.='" .. metadata.work_dir .. "'"
+              "COMMAND....='" .. metadata.command .. "'",
+              "EXIT_CODE..='" .. exit_code .. "'",
+              "TIME.......='" .. duration_text .. "'",
+              "START......='" .. metadata.start_time_str .. "'",
+              "FINISH.....='" .. os.date("%Y-%m-%d %H:%M:%S") .. "'",
+              "WORK_DIR...='" .. metadata.work_dir .. "'"
             }
 
             vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, footer_lines)

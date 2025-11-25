@@ -1,5 +1,9 @@
 prefer-no-csd
 
+environment {
+    QT_QPA_PLATFORM "wayland"
+}
+
 input {
     keyboard {
         repeat-delay 200
