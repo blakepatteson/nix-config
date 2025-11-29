@@ -6,10 +6,6 @@
       onBoot = "ignore";
       qemu.package = pkgs.qemu_kvm;
       qemu.swtpm.enable = true;
-      qemu.ovmf = {
-        enable = true;
-        packages = [ (pkgs.OVMF.override { secureBoot = true; tpmSupport = true; }).fd ];
-      };
     };
 
     docker = {

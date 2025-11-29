@@ -3,7 +3,7 @@
 let
   unstable = import
     (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
-    { config = pkgs.config; system = pkgs.system; };
+    { config = pkgs.config; system = pkgs.stdenv.hostPlatform.system; };
 in
 {
   environment.systemPackages = with pkgs; [
@@ -86,7 +86,7 @@ in
     obs-studio
     odin
     ols
-    onlyoffice-bin
+    onlyoffice-desktopeditors
 
     # Cursor themes
     bibata-cursors
@@ -117,7 +117,7 @@ in
     thunderbird
     tmux
     ungoogled-chromium
-    vaapiVdpau
+    libva-vdpau-driver
     virt-manager
     waybar
     wdisplays # GUI display configuration

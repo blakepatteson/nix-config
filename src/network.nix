@@ -14,10 +14,10 @@
   };
 
   systemd = {
-    extraConfig = ''
-      DefaultTimeoutStartSec=10s
-      DefaultTimeoutStopSec=10s
-    '';
+    settings.Manager = {
+      DefaultTimeoutStartSec = "10s";
+      DefaultTimeoutStopSec = "10s";
+    };
     services = {
       NetworkManager-wait-online.enable = false;
       systemd-udev-settle.enable = false;
