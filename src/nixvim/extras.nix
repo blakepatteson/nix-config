@@ -77,7 +77,12 @@
         },
         additional_args = function()
           if _G.telescope_file_filter ~= "" then
-            return {"--glob", _G.telescope_file_filter}
+            local args = {}
+            for pattern in string.gmatch(_G.telescope_file_filter, "[^,]+") do
+              table.insert(args, "--glob")
+              table.insert(args, pattern)
+            end
+            return args
           end
           return {}
         end,
@@ -133,7 +138,12 @@
             },
             additional_args = function()
               if _G.telescope_file_filter ~= "" then
-                return {"--glob", _G.telescope_file_filter}
+                local args = {}
+                for pattern in string.gmatch(_G.telescope_file_filter, "[^,]+") do
+                  table.insert(args, "--glob")
+                  table.insert(args, pattern)
+                end
+                return args
               end
               return {}
             end,
