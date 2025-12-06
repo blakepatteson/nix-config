@@ -41,6 +41,7 @@ in
 
     # unmappings
     map ctrl+shift+r no_op
+    map ctrl+shift+u no_op
   '';
 
   environment.etc.bashrc = {
@@ -94,12 +95,9 @@ in
       alias t='eza --tree --level=2'
       alias h='history | tail -20'
       alias list-issues='gh issue list --limit 1000'
-
       alias dkill='sudo docker kill $(sudo docker ps -q)'
       alias dkillrm='sudo docker rm -f $(sudo docker ps -aq)'
-
       alias cls='clear && printf "\033[3J"'
-
       alias battery='acpi'
     '';
   };

@@ -10,11 +10,7 @@
       openDefaultPorts = true;
     };
 
-    locate = {
-      enable = true;
-      package = pkgs.mlocate;
-      interval = "hourly";
-    };
+    locate = { enable = true; package = pkgs.mlocate; interval = "hourly"; };
 
     printing = {
       enable = true;
@@ -23,11 +19,7 @@
       startWhenNeeded = true;
     };
 
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
+    avahi = { enable = true; nssmdns4 = true; openFirewall = true; };
 
     flatpak.enable = lib.mkDefault false;
     openssh.enable = true;
@@ -45,10 +37,6 @@
 
     picom.enable = false;
 
-    xrdp = {
-      enable = true;
-      defaultWindowManager = "niri-session";
-      openFirewall = true;
-    };
+    xrdp = { enable = true; defaultWindowManager = "niri-session"; openFirewall = true; };
   };
 }

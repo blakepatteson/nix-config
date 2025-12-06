@@ -103,7 +103,7 @@
         vim.keymap.set('i', '<C-s>', function()
           local prompt_bufnr = vim.api.nvim_get_current_buf()
           _G.last_telescope_search = action_state.get_current_line()
-          vim.notify("Search saved: " .. _G.last_telescope_search)
+          vim.notify("Search saved: " .. "<" .. _G.last_telescope_search .. ">")
         end, { buffer = true, silent = true })
 
         vim.keymap.set('i', '<C-x>', function()
@@ -197,9 +197,9 @@
 
     -- Register global functions
     _G.live_grep_with_last_search = live_grep_with_last_search
-    _G.resume_last_telescope = resume_last_picker
-    _G.clear_telescope_search = clear_search_history
-    _G.set_telescope_filter = set_telescope_filter
+    _G.resume_last_telescope      = resume_last_picker
+    _G.clear_telescope_search     = clear_search_history
+    _G.set_telescope_filter       = set_telescope_filter
 
     -- Workspace-wide git hunks function
     local function workspace_git_hunks()
@@ -214,9 +214,7 @@
             actions.close(prompt_bufnr)
             if selection then
               vim.cmd('edit ' .. selection.value)
-              vim.schedule(function()
-                vim.cmd('normal! ]h')
-              end)
+              vim.schedule(function() vim.cmd('normal! ]h') end)
             end
           end)
 
@@ -372,11 +370,11 @@
     local helpers = require("null-ls.helpers")
 
     local odinfmt = {
-      method = null_ls.methods.FORMATTING,
+      method    = null_ls.methods.FORMATTING,
       filetypes = { "odin" },
       generator = helpers.formatter_factory({
-        command = "odinfmt",
-        args = { "-stdin", "$FILENAME" },
+        command  = "odinfmt",
+        args     = { "-stdin", "$FILENAME" },
         to_stdin = true,
       }),
     }

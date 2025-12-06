@@ -6,13 +6,13 @@
 
       -- Compile Command Functionality
       _G.compile_command = {
-        command = "",
-        history = {},
-        history_set = {},   -- Set-like table for fast dedupe
-        history_index = 0,
-        buffer_counter = 0, -- Counter to ensure unique buffer names
+        command         = "",
+        history         = {},
+        history_set     = {},   -- Set-like table for fast dedupe
+        history_index   = 0,
+        buffer_counter  = 0, -- Counter to ensure unique buffer names
         current_command = nil,
-        buffered = false,    -- Toggle between buffered/unbuffered output
+        buffered        = false,    -- Toggle between buffered/unbuffered output
       }
 
       -- Store command history in Neovim's data dir, e.g. ~/.local/share/nvim
@@ -94,13 +94,13 @@
         local line = vim.api.nvim_get_current_line()
 
         local patterns = {
-          go = "([^:]+%.go):(%d+):(%d+):",
+          go      = "([^:]+%.go):(%d+):(%d+):",
           generic = "([^:%s]+):(%d+):(%d+):",
-          simple = "([^:%s]+):(%d+):",
-          rust = "([^:]+%.rs):(%d+):(%d+):",
-          c = "([^:]+%.[ch]p?p?):(%d+):(%d+):",
-          python = 'File "([^"]+)", line (%d+)',
-          nix = "([^:]+%.nix):(%d+):(%d+):",
+          simple  = "([^:%s]+):(%d+):",
+          rust    = "([^:]+%.rs):(%d+):(%d+):",
+          c       = "([^:]+%.[ch]p?p?):(%d+):(%d+):",
+          python  = 'File "([^"]+)", line (%d+)',
+          nix     = "([^:]+%.nix):(%d+):(%d+):",
         }
 
         local file, line_num, col_num
@@ -193,10 +193,10 @@
           return
         end
 
-        local pickers = require('telescope.pickers')
-        local finders = require('telescope.finders')
-        local conf = require('telescope.config').values
-        local actions = require('telescope.actions')
+        local pickers      = require('telescope.pickers')
+        local finders      = require('telescope.finders')
+        local conf         = require('telescope.config').values
+        local actions      = require('telescope.actions')
         local action_state = require('telescope.actions.state')
 
         pickers.new({}, {
@@ -252,10 +252,10 @@
       end
 
       _G.clear_compile_command = function()
-        _G.compile_command.command = ""
-        _G.compile_command.history_index = 0
-        _G.compile_command.history = {}
-        _G.compile_command.history_set = {}
+        _G.compile_command.command         = ""
+        _G.compile_command.history_index   = 0
+        _G.compile_command.history         = {}
+        _G.compile_command.history_set     = {}
         _G.compile_command.current_command = nil
         pcall(vim.fn.delete, compile_history_file)
         vim.notify("Compile command cleared", vim.log.levels.INFO)
@@ -310,8 +310,20 @@
               end
 
               if #data > 0 then
-                vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, data)
-                line_count = line_count + #data
+                -- Split any items that contain newlines
+                local lines = {}
+                for _, item in ipairs(data) do
+                  for line in item:gmatch("([^\n]*)\n?") do
+                    if line ~= "" or item:match("\n") then
+                      table.insert(lines, line)
+                    end
+                  end
+                end
+
+                if #lines > 0 then
+                  vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, lines)
+                  line_count = line_count + #lines
+                end
               end
             end
           end,
@@ -322,23 +334,34 @@
               end
 
               if #data > 0 then
-                vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, data)
-                for i, line in ipairs(data) do
-                  if line ~= "" then
-                    local line_num = line_count - #data + i - 1
-                    if line_num >= 0 and line_num < vim.api.nvim_buf_line_count(buf) then
-                      vim.api.nvim_buf_add_highlight(buf, -1, "Error", line_num, 0, -1)
+                local lines = {}
+                for _, item in ipairs(data) do
+                  for line in item:gmatch("([^\n]*)\n?") do
+                    if line ~= "" or item:match("\n") then
+                      table.insert(lines, line)
                     end
                   end
                 end
 
-                line_count = line_count + #data
+                if #lines > 0 then
+                  vim.api.nvim_buf_set_lines(buf, line_count, line_count, false, lines)
+                  for i, line in ipairs(lines) do
+                    if line ~= "" then
+                      local line_num = line_count + i - 1
+                      if line_num >= 0 and line_num < vim.api.nvim_buf_line_count(buf) then
+                        vim.api.nvim_buf_add_highlight(buf, -1, "Error", line_num, 0, -1)
+                      end
+                    end
+                  end
+
+                  line_count = line_count + #lines
+                end
               end
             end
           end,
           on_exit = function(_, exit_code)
-            local end_time = vim.loop.hrtime()
-            local duration_ns = end_time - start_time
+            local end_time         = vim.loop.hrtime()
+            local duration_ns      = end_time - start_time
             local duration_seconds = duration_ns / 1e9
 
             local duration_text

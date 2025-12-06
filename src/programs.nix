@@ -4,9 +4,19 @@ let
   unstable = import
     (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
     { config = pkgs.config; system = pkgs.stdenv.hostPlatform.system; };
+
+  # User scripts - daily use
+  emoji-picker = pkgs.writeShellScriptBin "emoji-picker" (builtins.readFile ../scripts/user/emoji-picker.sh);
+  flameshot-script = pkgs.writeShellScriptBin "flameshot-screenshot" (builtins.readFile ../scripts/user/flameshot.sh);
+  mkbox = pkgs.writeShellScriptBin "mkbox" (builtins.readFile ../scripts/user/mkbox.sh);
+  mkwindows = pkgs.writeShellScriptBin "mkwindows" (builtins.readFile ../scripts/user/mkwindows.sh);
 in
 {
   environment.systemPackages = with pkgs; [
+    emoji-picker
+    flameshot-script
+    mkbox
+    mkwindows
     unstable.claude-code
 
     (flameshot.override { enableWlrSupport = true; })

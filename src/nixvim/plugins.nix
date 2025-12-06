@@ -108,9 +108,7 @@
           prettier = { enable = true; disableTsServerFormatter = true; };
           gofmt = { enable = true; };
         };
-        diagnostics = {
-          golangci_lint = { enable = true; };
-        };
+        diagnostics = { golangci_lint = { enable = true; }; };
       };
     };
 
@@ -125,25 +123,25 @@
 
       settings = {
         ensure_installed = [
-          "html"
-          "svelte"
-          "css"
-          "javascript"
-          "typescript"
-          "nix"
-          "lua"
-          "vim"
-          "python"
-          "c"
-          "zig"
-          "go"
-          "json"
-          "yaml"
-          "toml"
-          "xml"
-          "markdown"
           "bash"
+          "c"
+          "css"
+          "go"
+          "html"
+          "javascript"
+          "json"
+          "lua"
+          "markdown"
+          "nix"
           "odin"
+          "python"
+          "svelte"
+          "toml"
+          "typescript"
+          "vim"
+          "xml"
+          "yaml"
+          "zig"
         ];
 
         highlight = {
@@ -290,11 +288,7 @@
 
             diagnostics = {
               enable = true;
-              annotations = {
-                bounds = true;
-                escape = true;
-                inline = true;
-              };
+              annotations = { bounds = true; escape = true; inline = true; };
             };
 
             analyses = {
@@ -416,25 +410,22 @@
           -- Enable workspace diagnostics
           vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
             vim.lsp.diagnostic.on_publish_diagnostics, {
-              virtual_text = true,
-              signs = true,
-              underline = true,
+              severity_sort    = true,
+              signs            = true,
+              underline        = true,
               update_in_insert = false,
-              severity_sort = true,
-              workspace = true,
+              virtual_text     = true,
+              workspace        = true,
             })
 
           -- Configure diagnostic display
           vim.diagnostic.config({
-            virtual_text = true,
-            signs = true,
-            underline = true,
+            virtual_text     = true,
+            signs            = true,
+            underline        = true,
             update_in_insert = false,
-            severity_sort = true,
-            float = {
-            source = "always",  -- Show source in diagnostic popup window
-            border = "rounded"
-            }
+            severity_sort    = true,
+            float            = { source = "always",  border = "rounded" }
           })
 
           -- command to disable formatting
@@ -470,9 +461,7 @@
       settings = {
         snippet = {
           expand = /* lua */ ''
-            function(args)
-              require('luasnip').lsp_expand(args.body)
-            end
+            function(args) require('luasnip').lsp_expand(args.body) end
           '';
         };
         mapping = {
@@ -526,6 +515,8 @@
         disable_filename = 0;
       };
     };
+
+    mini = { enable = true; modules = { align = { }; }; };
 
   };
 }

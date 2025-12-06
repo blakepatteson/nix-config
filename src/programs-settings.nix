@@ -38,23 +38,20 @@
         b = "branch -vva";
         c = "commit";
         d = "diff";
-        dc = "diff --cached";  # staged diff (was D)
+        dc = "diff --cached"; # staged diff (was D)
         l = "log --oneline --graph --decorate --all";
         m = "merge";
         p = "pull";
-        ps = "push";  # (was P)
+        ps = "push"; # (was P)
         s = "status --short";
-        st = "status";  # full status (was S)
+        st = "status"; # full status (was S)
       };
       fetch = { prune = true; prunetags = true; };
       push = { default = "current"; followTags = true; };
       help = { autocorrect = -1; };
       pull = { ff = "only"; rebase = false; };
       url = { "ssh://git@github.com/".insteadOf = "https://github.com/"; };
-      advice = {
-        addIgnoredFile = false;
-        forceDeleteBranch = false;
-      };
+      advice = { addIgnoredFile = false; forceDeleteBranch = false; };
     };
   };
 }

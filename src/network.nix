@@ -24,10 +24,7 @@
       pmlogger.enable = false;
 
       systemd-modules-load = {
-        serviceConfig = {
-          TimeoutStartSec = "2s";
-          LogLevelMax = "warning";
-        };
+        serviceConfig = { TimeoutStartSec = "2s"; LogLevelMax = "warning"; };
       };
     };
 

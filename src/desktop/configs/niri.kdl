@@ -96,9 +96,9 @@ binds {
         spawn-sh "pkill wofi || wofi --show drun";
     }
 
-    Mod+E hotkey-overlay-title="Neovim" { spawn "kitty" "-e" "nvim"; }
+    Mod+E hotkey-overlay-title="Neovim"   { spawn "kitty" "-e" "nvim"; }
     Mod+T hotkey-overlay-title="Terminal" { spawn "kitty"; }
-    Mod+G hotkey-overlay-title="Chrome" { spawn "google-chrome-stable"; }
+    Mod+G hotkey-overlay-title="Chrome"   { spawn "google-chrome-stable"; }
 
     XF86AudioRaiseVolume allow-when-locked=true {
         spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
@@ -142,8 +142,8 @@ binds {
     Mod+Ctrl+K     { move-window-up-or-to-workspace-up; }
     Mod+Ctrl+L     { move-column-right; }
 
-    Mod+Home { focus-column-first; }
-    Mod+End  { focus-column-last; }
+    Mod+Home      { focus-column-first; }
+    Mod+End       { focus-column-last; }
     Mod+Ctrl+Home { move-column-to-first; }
     Mod+Ctrl+End  { move-column-to-last; }
 
@@ -226,10 +226,10 @@ binds {
     // Expel the bottom window from the focused column to the right.
     Mod+Period { expel-window-from-column; }
 
-    Mod+R { switch-preset-column-width; }
+    Mod+R       { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R { reset-window-height; }
-    Mod+F { maximize-column; }
+    Mod+Ctrl+R  { reset-window-height; }
+    Mod+F       { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
 
     Mod+Ctrl+F { expand-column-to-available-width; }
@@ -247,16 +247,16 @@ binds {
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
     // Screenshots using flameshot
-    Mod+S      { spawn "/home/blake/flameshot.sh"; }
-    Ctrl+Print { spawn "/home/blake/flameshot.sh"; }
-    Alt+Print  { spawn "/home/blake/flameshot.sh"; }
-    Print      { spawn "/home/blake/flameshot.sh"; }
-    Mod+M      { spawn "/home/blake/dev/repos/nix-config/scripts/emoji-picker.sh"; }
+    Mod+S      { spawn "flameshot-screenshot"; }
+    Ctrl+Print { spawn "flameshot-screenshot"; }
+    Alt+Print  { spawn "flameshot-screenshot"; }
+    Print      { spawn "flameshot-screenshot"; }
+    Mod+M      { spawn "emoji-picker"; }
 
-    Mod+Shift+E { quit; }
+    Mod+Shift+E     { quit; }
     Ctrl+Alt+Delete { quit; }
 
     Mod+Shift+P { power-off-monitors; }
-    Mod+B { spawn-sh "killall -q waybar || waybar"; }
+    Mod+B       { spawn-sh "killall -q waybar || waybar"; }
 }
 

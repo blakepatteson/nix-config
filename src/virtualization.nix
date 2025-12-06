@@ -14,10 +14,7 @@
       daemon.settings = {
         "storage-driver" = "overlay2";
         "log-driver" = "json-file";
-        "log-opts" = {
-          "max-size" = "10m";
-          "max-file" = "3";
-        };
+        "log-opts" = { "max-size" = "10m"; "max-file" = "3"; };
       };
     };
     spiceUSBRedirection.enable = true;

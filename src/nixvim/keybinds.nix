@@ -218,6 +218,25 @@
     { mode = "n"; key = "S"; action = "\"_S"; }
     { mode = "v"; key = "s"; action = "\"_s"; }
     { mode = "x"; key = "s"; action = "\"_s"; }
+
+    {
+      mode = "n";
+      key = "ga";
+      action = "<cmd>lua MiniAlign.setup()<CR>ga";
+      options = { desc = "Align with preview"; };
+    }
+    {
+      mode = "v";
+      key = "ga";
+      action = "<cmd>lua MiniAlign.setup()<CR>ga";
+      options = { desc = "Align selection"; };
+    }
+    {
+      mode = "x";
+      key = "ga";
+      action = "<cmd>lua MiniAlign.setup()<CR>ga";
+      options = { desc = "Align selection"; };
+    }
   ];
 }
 
