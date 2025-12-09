@@ -348,7 +348,8 @@
                   for i, line in ipairs(lines) do
                     if line ~= "" then
                       local line_num = line_count + i - 1
-                      if line_num >= 0 and line_num < vim.api.nvim_buf_line_count(buf) then
+                      local line_count = vim.api.nvim_buf_line_count(buf)
+                      if line_num >= 0 and line_num < line_count then
                         vim.api.nvim_buf_add_highlight(buf, -1, "Error", line_num, 0, -1)
                       end
                     end
