@@ -41,6 +41,7 @@ in
     # unmappings
     map ctrl+shift+r no_op
     map ctrl+shift+u no_op
+    map ctrl+shift+U no_op
   '';
 
   environment.etc.bashrc = {
