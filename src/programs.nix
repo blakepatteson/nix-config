@@ -13,6 +13,8 @@ let
     builtins.readFile ../scripts/user/mkbox.sh);
   mkwindows = pkgs.writeShellScriptBin "mkwindows" (
     builtins.readFile ../scripts/user/mkwindows.sh);
+  niri-dev-setup = pkgs.writeShellScriptBin "niri-dev-setup" (
+    builtins.readFile ../scripts/user/niri-dev-setup.sh);
 in
 {
   environment.systemPackages = with pkgs; [
@@ -20,6 +22,7 @@ in
     flameshot-script
     mkbox
     mkwindows
+    niri-dev-setup
     unstable.claude-code
 
     (flameshot.override { enableWlrSupport = true; })

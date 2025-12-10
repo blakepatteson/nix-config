@@ -67,7 +67,9 @@ layout {
 spawn-at-startup "waybar"
 
 spawn-sh-at-startup "swaybg -c '#000000'"
-hotkey-overlay { }
+hotkey-overlay {
+    skip-at-startup
+}
 
 animations {
     off
@@ -115,12 +117,9 @@ binds {
     Mod+O repeat=false { toggle-overview; }
 
     // SUPER + Y - Dev workspace setup (2 terminals in selected dir)
-    Mod+Y {
-      spawn "bash" \
-        "/home/blake/dev/repos/nix-config/src/desktop/scripts/niri-dev-setup.sh";
-    }
+    Mod+Y { spawn "niri-dev-setup"; }
 
-    Mod+C repeat=false { close-window; }
+    Mod+C      repeat=false { close-window; }
     Mod+W      repeat=false { close-window; }
     Mod+Escape repeat=false { close-window; }
 
