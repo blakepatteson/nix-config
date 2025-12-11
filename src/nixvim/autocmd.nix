@@ -91,23 +91,6 @@
         end '';
     }
 
-    # Zig auto-format disabled - zig fmt is too opinionated
-    # To manually format: run :!zig fmt % in the buffer
-    # {
-    #   event = [ "BufWritePre" ];
-    #   pattern = [ "*.zig" "*.zig.zon" ];
-    #   callback.__raw = '' function()
-    #       if not vim.b.skip_next_format then
-    #         local buf = vim.api.nvim_get_current_buf()
-    #         local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-    #         local formatted_lines = vim.fn.systemlist('zig fmt --stdin', lines)
-    #         if vim.v.shell_error == 0 then
-    #           vim.api.nvim_buf_set_lines(buf, 0, -1, false, formatted_lines)
-    #         end
-    #       end
-    #     end '';
-    # }
-
     {
       event = [ "BufWritePre" ];
       pattern = [ "*.zig" "*.zig.zon" ];
@@ -117,7 +100,6 @@
           end
         end '';
     }
-
     {
       event = [ "ColorScheme" "VimEnter" ];
       pattern = [ "*" ];
@@ -128,6 +110,16 @@
           vim.api.nvim_set_hl(0, 'Comment',    { fg = '#aaaaaa', nocombine = true })
           vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#ffffff', nocombine = true })
           vim.api.nvim_set_hl(0, 'Normal',     { fg = '#ffffff', nocombine = true })
+        end
+      '';
+    }
+    {
+      event = [ "FileType" ];
+      pattern = [ "text" ];
+      callback.__raw = ''
+        function() vim.opt_local.tabstop = 4
+          vim.opt_local.shiftwidth = 4
+          vim.opt_local.softtabstop = 4
         end
       '';
     }

@@ -339,7 +339,8 @@
           };
         };
 
-        lemminx = { enable = true; package = pkgs.lemminx; };
+        lemminx = { enable = true; package = pkgs.lemminx; }; # xml
+        bashls = { enable = true; filetypes = [ "sh" "bash" ]; };
 
         svelte = {
           enable = true;
