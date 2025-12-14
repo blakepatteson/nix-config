@@ -24,6 +24,7 @@ in
     mkwindows
     niri-dev-setup
     unstable.claude-code
+    xwayland-satellite
 
     (flameshot.override { enableWlrSupport = true; })
 

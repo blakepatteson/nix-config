@@ -3,6 +3,7 @@
   imports = [ ./niri-config.nix ];
 
   programs.niri = { enable = true; };
+  programs.xwayland.enable = true;
 
   services.greetd = {
     enable = true;
