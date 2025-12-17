@@ -60,12 +60,6 @@
       action = "<cmd>Gitsigns toggle_current_line_blame<CR>";
       options = { desc = "Toggle git blame virtual text"; };
     }
-
-    {
-      mode = "n";
-      key = "<leader>gs";
-      action = "<cmd>lua _G.run_git_command('git status')<CR>";
-    }
     {
       mode = "n";
       key = "<leader>gb";
@@ -94,6 +88,7 @@
     { mode = "n"; key = "<leader>gr"; action = "<cmd>lua vim.lsp.buf.references()<CR>"; }
     { mode = "n"; key = "<leader>li"; action = "<cmd>LspInfo<CR>"; }
     { mode = "n"; key = "<leader>gh"; action = "<cmd>WorkspaceGitHunks<CR>"; }
+    { mode = "n"; key = "<leader>gs"; action = "<cmd>WorkspaceGitStaged<CR>"; }
     { mode = "n"; key = "<leader>rn"; action = "<cmd>lua vim.lsp.buf.rename()<CR>"; }
     { mode = "n"; key = "<leader>gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }
     { mode = "n"; key = "<leader>fm"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; }

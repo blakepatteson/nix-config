@@ -241,6 +241,46 @@
     -- Register the command
     vim.api.nvim_create_user_command('WorkspaceGitHunks', workspace_git_hunks, {})
 
+    -- Workspace-wide git staged changes function
+    local function workspace_git_staged()
+      require('telescope.builtin').git_status({
+        git_command = { "git", "diff", "--cached", "--unified=1" },
+        attach_mappings = function(_, map)
+          local actions = require('telescope.actions')
+
+          -- Regular enter - opens current version
+          map('i', '<CR>', function(prompt_bufnr)
+            local selection = require('telescope.actions.state').get_selected_entry()
+            actions.close(prompt_bufnr)
+            if selection then
+              vim.cmd('edit ' .. selection.value)
+              vim.schedule(function() vim.cmd('normal! ]h') end)
+            end
+          end)
+
+          -- Shift+enter - opens the previous version
+          map('i', '<S-CR>', function(prompt_bufnr)
+            local selection = require('telescope.actions.state').get_selected_entry()
+            actions.close(prompt_bufnr)
+            if selection then
+              vim.cmd('enew')  -- Create new buffer
+              vim.cmd('read !git show HEAD:' .. selection.value)
+              vim.cmd('0delete')  -- Remove extra blank line
+              vim.bo.modified = false
+              vim.bo.readonly = true
+              -- Set buffer name to indicate it's the old version
+              vim.cmd('file OLD_' .. selection.value)
+            end
+          end)
+
+          return true
+        end
+      })
+    end
+
+    -- Register the command
+    vim.api.nvim_create_user_command('WorkspaceGitStaged', workspace_git_staged, {})
+
     -- Global state for tracking current position
     _G.git_nav_state = { files = {}, current_index = 0 }
 
