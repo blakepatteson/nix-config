@@ -8,6 +8,7 @@ in
 
     graphics = {
       enable = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
         intel-media-driver
         intel-vaapi-driver
@@ -29,13 +30,10 @@ in
         }
       );
       modesetting.enable = true;
-    } // lib.optionalAttrs isPrimeSystem {
-      prime = {
-        offload.enable = true;
-        offload.enableOffloadCmd = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
+      prime.offload.enable = lib.mkIf isPrimeSystem true;
+      prime.offload.enableOffloadCmd = lib.mkIf isPrimeSystem true;
+      prime.intelBusId = lib.mkIf isPrimeSystem "PCI:0:2:0";
+      prime.nvidiaBusId = lib.mkIf isPrimeSystem "PCI:1:0:0";
     };
 
     bluetooth = {
