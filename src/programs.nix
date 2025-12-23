@@ -8,18 +8,17 @@ in
 {
   environment.systemPackages = with pkgs; [
     unstable.claude-code
-    xwayland-satellite
-
-    (flameshot.override { enableWlrSupport = true; })
 
     OVMF
     acpi
     asciiquarium
     bat
+    bibata-cursors
     bottom
     brightnessctl
     btop
     busybox
+    capitaine-cursors
     cifs-utils
     clang-tools
     cloc
@@ -64,7 +63,6 @@ in
     htop
     imagemagick
     jq
-    mpv
     kitty
     lazygit
     lemminx
@@ -74,10 +72,12 @@ in
     libnotify
     libreoffice-qt
     libva
+    libva-vdpau-driver
     libvdpau
     lm_sensors
     minizip
     mlocate
+    mpv
     neofetch
     nil
     nixd
@@ -88,18 +88,13 @@ in
     odin
     ols
     onlyoffice-desktopeditors
-
-    # Cursor themes
-    bibata-cursors
-    capitaine-cursors
-
     pamixer
     pavucontrol # Audio control panel
     pinta
     pkg-config
     pulseaudio
     pwvucontrol # PipeWire volume control
-    python312Packages.pygments
+    python3
     qsynth
     raylib
     rclone
@@ -108,17 +103,16 @@ in
     rofi
     slurp
     soundfont-fluid
-    swappy
     spice-gtk
     spice-vdagent
     sqlite
     sqlitebrowser
+    swappy
     swaybg
     syncthing
     thunderbird
     tmux
     ungoogled-chromium
-    libva-vdpau-driver
     virt-manager
     waybar
     wdisplays # GUI display configuration
@@ -133,6 +127,7 @@ in
     xdotool
     xfce.catfish
     xsel
+    xwayland-satellite
     yazi
     zig
     zlib
@@ -145,17 +140,7 @@ in
     nodePackages.eslint_d
     nodePackages.vscode-langservers-extracted
 
-    (python3.withPackages (ps: with ps; [ pip pyautogui tkinter graphviz ]))
+    (flameshot.override { enableWlrSupport = true; })
     (btop.override { cudaSupport = true; })
   ];
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    python3 = pkgs.python3.override {
-      packageOverrides = python-self: python-super: {
-        tkinter = python-super.tkinter.overrideAttrs (oldAttrs: {
-          buildInputs = oldAttrs.buildInputs ++ [ pkgs.tk ];
-        });
-      };
-    };
-  };
 }
