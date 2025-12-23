@@ -1,7 +1,9 @@
 { ... }:
-let niriConfig = builtins.readFile ./configs/niri.kdl; in
+let
+  niriConfig = builtins.readFile ./configs/niri.kdl;
+  dunstConfig = builtins.readFile ./configs/dunstrc;
+in
 {
-  # Copy niri config during system activation
   system.activationScripts.niri-config = /* bash */ ''
         mkdir -p /home/blake/.config/niri
         cat > /home/blake/.config/niri/config.kdl << 'NIRI_EOF'
@@ -9,5 +11,14 @@ let niriConfig = builtins.readFile ./configs/niri.kdl; in
     NIRI_EOF
         chown blake:users /home/blake/.config/niri/config.kdl
         chmod 644 /home/blake/.config/niri/config.kdl
+  '';
+
+  system.activationScripts.dunst-config = /* bash */ ''
+        mkdir -p /home/blake/.config/dunst
+        cat > /home/blake/.config/dunst/dunstrc << 'DUNST_EOF'
+    ${dunstConfig}
+    DUNST_EOF
+        chown blake:users /home/blake/.config/dunst/dunstrc
+        chmod 644 /home/blake/.config/dunst/dunstrc
   '';
 }
