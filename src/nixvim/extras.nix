@@ -382,15 +382,13 @@
     _G.copy_oil_file_path = copy_oil_file_path
 
     -- TypeScript LSP setup (keeping this here since it's nix-specific)
-    local lspconfig = require('lspconfig')
-    lspconfig.ts_ls.setup({
+    vim.lsp.config.ts_ls = {
       cmd = {
         "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server",
         "--stdio"
       },
       filetypes = { "typescript", "javascript" },
-      root_dir = lspconfig.util.root_pattern(
-        "package.json", "tsconfig.json", "jsconfig.json", ".git"),
+      root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
       single_file_support = true,
       init_options = {
         hostInfo = "neovim",
@@ -403,7 +401,8 @@
         },
         capabilities = { renameProvider = true }
       }
-    });
+    }
+    vim.lsp.enable('ts_ls')
 
     -- Odinfmt custom formatter setup
     local null_ls = require("null-ls")
@@ -413,9 +412,7 @@
       method    = null_ls.methods.FORMATTING,
       filetypes = { "odin" },
       generator = helpers.formatter_factory({
-        command  = "odinfmt",
-        args     = { "-stdin", "$FILENAME" },
-        to_stdin = true,
+        command  = "odinfmt", args = { "-stdin", "$FILENAME" }, to_stdin = true,
       }),
     }
 

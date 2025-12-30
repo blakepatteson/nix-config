@@ -73,6 +73,12 @@
         "inherit permissions" = "yes";
         "inherit acls" = "yes";
         "store dos attributes" = "yes";
+        "oplocks" = "no";
+        "level2 oplocks" = "no";
+        "kernel oplocks" = "no";
+        "strict locking" = "yes";
+        "strict sync" = "yes";
+        "sync always" = "yes";
       };
     };
   };
