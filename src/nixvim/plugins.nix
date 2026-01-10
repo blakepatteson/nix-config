@@ -350,16 +350,12 @@
 
         pyright = {
           enable = true;
-          settings = {
-            python = {
-              analysis = {
-                typeCheckingMode = "basic";
-                autoSearchPaths = true;
-                useLibraryCodeForTypes = true;
-                autoImportCompletions = true;
-                diagnosticMode = "workspace";
-              };
-            };
+          settings.python.analysis = {
+            typeCheckingMode = "basic";
+            autoSearchPaths = true;
+            useLibraryCodeForTypes = true;
+            autoImportCompletions = true;
+            diagnosticMode = "workspace";
           };
         };
 

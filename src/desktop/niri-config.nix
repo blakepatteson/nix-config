@@ -2,6 +2,8 @@
 let
   niriConfig = builtins.readFile ./configs/niri.kdl;
   dunstConfig = builtins.readFile ./configs/dunstrc;
+  waybarConfig = builtins.readFile ./configs/waybar-config.json;
+  waybarStyle = builtins.readFile ./configs/waybar-style.css;
 in
 {
   system.activationScripts.niri-config = /* bash */ ''
@@ -20,5 +22,19 @@ in
     DUNST_EOF
         chown blake:users /home/blake/.config/dunst/dunstrc
         chmod 644 /home/blake/.config/dunst/dunstrc
+  '';
+
+  system.activationScripts.waybar-config = /* bash */ ''
+        mkdir -p /home/blake/.config/waybar
+        cat > /home/blake/.config/waybar/config.json << 'WAYBAR_CONFIG_EOF'
+    ${waybarConfig}
+    WAYBAR_CONFIG_EOF
+        cat > /home/blake/.config/waybar/style.css << 'WAYBAR_STYLE_EOF'
+    ${waybarStyle}
+    WAYBAR_STYLE_EOF
+        chown blake:users /home/blake/.config/waybar/config.json
+        chown blake:users /home/blake/.config/waybar/style.css
+        chmod 644 /home/blake/.config/waybar/config.json
+        chmod 644 /home/blake/.config/waybar/style.css
   '';
 }

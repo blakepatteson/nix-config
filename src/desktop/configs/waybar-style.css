@@ -19,27 +19,26 @@ window#waybar.hidden {
 }
 
 #workspaces {
-  margin: 0 4px;
+  opacity: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
 }
 
 #workspaces button {
-  padding: 0 5px;
-  background-color: transparent;
-  color: #ffffff;
-  border-bottom: 3px solid transparent;
+  opacity: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  border: none;
 }
 
-#workspaces button:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-#workspaces button.active {
-  background-color: #64727d;
-  border-bottom: 3px solid #ffffff;
-}
-
-#workspaces button.urgent {
-  background-color: #eb4d4b;
+#disk {
+  margin-left: -50px;
 }
 
 #clock,

@@ -3,7 +3,7 @@
   "position": "top",
   "height": 30,
   "spacing": 4,
-  "modules-left": ["niri/workspaces", "disk", "network"],
+  "modules-left": ["disk", "network"],
   "modules-center": ["clock", "niri/window"],
   "modules-right": [
     "privacy",
@@ -72,8 +72,6 @@
   },
 
   "tray": { "spacing": 10 },
-
-  "niri/workspaces": { "format": "{index}", "all-outputs": false },
 
   "niri/window": {
     "format": "| {}",
