@@ -195,6 +195,26 @@
 
     { mode = "n"; key = "<leader>cp"; action = "<cmd>lua _G.copy_oil_file_path()<CR>"; }
 
+    {
+      mode = "n";
+      key = "<leader>in";
+      action = "<cmd>lua _G.prompt_insert_numbers()<CR>";
+      options = { desc = "Insert number sequence (e.g. '2 7')"; };
+    }
+    {
+      mode = "n";
+      key = "<leader>al";
+      action = "<cmd>AddLineNumbers<CR>";
+      options = { desc = "Prepend line numbers to all lines"; };
+    }
+    {
+      mode = "n";
+      key = "<leader>qa";
+      action = "<cmd>lua _G.prompt_qa()<CR>";
+      options = { desc = "Insert Q&A template"; };
+    }
+
+
     # Black hole delete (delete without yanking)
     { mode = "n"; key = "d"; action = "\"_d"; }
     { mode = "n"; key = "D"; action = "\"_D"; }

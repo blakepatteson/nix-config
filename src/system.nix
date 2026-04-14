@@ -21,6 +21,7 @@
     settings = {
       max-jobs = 8;
       cores = 8;
+      download-buffer-size = 524288000;
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
       substituters = [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];

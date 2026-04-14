@@ -2,8 +2,14 @@
 {
   programs.nixvim.extraPlugins = with pkgs.vimPlugins; [ vim-visual-multi ];
 
-  # have to do this for treesitter TODO: open issue with treesitter nixvim?
   programs.nixvim.extraConfigLuaPre = ''
+    vim.g.VM_maps = {
+      ["Add Cursor Down"]    = '<M-Down>',
+      ["Add Cursor Up"]      = '<M-Up>',
+      ["Find Under"]         = '<M-d>',
+      ["Find Subword Under"] = '<M-d>',
+    }
+
     vim.fs = vim.fs or {}
     vim.fs.joinpath = vim.fs.joinpath or function(...)
       return table.concat({...}, '/')
@@ -11,6 +17,11 @@
   '';
 
   programs.nixvim.extraConfigLua = ''
+    local null_ls = require("null-ls")
+    null_ls.register(null_ls.builtins.formatting.prettier.with({
+      prefer_local = false,
+    }))
+
     -- UI Settings
     vim.opt.updatetime = 1000
     vim.opt.list = true
@@ -37,6 +48,47 @@
 
     -- Create :W alias for :write
     vim.api.nvim_create_user_command('W', 'write', {})
+
+    -- Insert a sequence of numbers below cursor (<leader>in)
+    vim.api.nvim_create_user_command("InsertNumbers", function(opts)
+      local args = vim.split(opts.args, " ")
+      local start = tonumber(args[1]) or 1
+      local finish = tonumber(args[2]) or 10
+      local row = vim.api.nvim_win_get_cursor(0)[1]
+      local lines = {}
+      for i = start, finish do table.insert(lines, tostring(i)) end
+      vim.api.nvim_buf_set_lines(0, row, row, false, lines)
+    end, { nargs = "*" })
+
+    vim.api.nvim_create_user_command("AddLineNumbers", function()
+      vim.cmd([[%s/^/\=line('.'). ' '/]])
+      vim.cmd("nohlsearch")
+    end, {})
+
+    _G.prompt_insert_numbers = function()
+      vim.ui.input({ prompt = "Start End: " }, function(s)
+        if s then vim.cmd("InsertNumbers " .. s) end
+      end)
+    end
+
+    _G.prompt_qa = function()
+      vim.ui.input({ prompt = "Number of Q&A pairs: " }, function(n)
+        vim.cmd("QA " .. (n or "3"))
+      end)
+    end
+
+    vim.api.nvim_create_user_command("QA", function(opts)
+      local n = tonumber(opts.args) or 3
+      local lines = {}
+      for i = 1, n do
+        table.insert(lines, string.format("Q%d)", i))
+        table.insert(lines, string.format("A%d)", i))
+        if i < n then table.insert(lines, "") end
+      end
+      local row = vim.api.nvim_win_get_cursor(0)[1]
+      vim.api.nvim_buf_set_lines(0, row, row, false, lines)
+    end, { nargs = "?" })
+
 
     -- Telescope configuration and search functionality
     -- Store last search term and mode globally

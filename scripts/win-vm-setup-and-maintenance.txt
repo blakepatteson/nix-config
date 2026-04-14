@@ -24,6 +24,8 @@ files should be called :
 
 command to display it at `Z:\` :
     net use Z: \\nixos\development /persistent:yes
+    OR
+    net use Z: \\192.168.4.XX\development /persistent:yes
 
 If copy/paste ever fails after a Windows update - run this in Windows (as admin) :
   sc query vdservice

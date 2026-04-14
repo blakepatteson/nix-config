@@ -20,14 +20,14 @@ input {
 
 // Monitor configuration for desktop setup
 // Left monitor: VIZIO (1920x1080)
-output "HDMI-A-1" {
+output "HDMI-A-2" {
     mode "1920x1080@60.000"
     position x=0 y=0
     scale 1
 }
 
 // Right monitor: LG ULTRAWIDE (2560x1080)
-output "DP-2" {
+output "DP-4" {
     mode "2560x1080@59.978"
     position x=1920 y=0
     scale 1
@@ -246,7 +246,6 @@ binds {
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
     // Screenshots using flameshot
-    Mod+S      { spawn "flameshot-screenshot"; }
     Ctrl+Print { spawn "flameshot-screenshot"; }
     Alt+Print  { spawn "flameshot-screenshot"; }
     Print      { spawn "flameshot-screenshot"; }
@@ -257,5 +256,6 @@ binds {
 
     Mod+Shift+P { power-off-monitors; }
     Mod+B       { spawn-sh "killall -q waybar || waybar"; }
+    Mod+S       { spawn-sh "killall dunst"; }
 }
 

@@ -9,6 +9,7 @@ let
     "-c \"let @+=@\\\"\"'";
 in
 {
+
   environment.etc."xdg/kitty/kitty.conf".text = ''
     font_family Victor Mono
     font_size 20.0
