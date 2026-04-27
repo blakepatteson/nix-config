@@ -25,6 +25,7 @@ in
     cmake
     cowsay
     cups
+    dig
     direnv
     docker
     dunst
@@ -111,7 +112,6 @@ in
     swaybg
     syncthing
     thunderbird
-    tmux
     ungoogled-chromium
     virt-manager
     waybar

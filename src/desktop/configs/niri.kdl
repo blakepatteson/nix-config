@@ -100,7 +100,7 @@ binds {
 
     Mod+E hotkey-overlay-title="Neovim"   { spawn "kitty" "-e" "nvim"; }
     Mod+T hotkey-overlay-title="Terminal" { spawn "kitty"; }
-    Mod+G hotkey-overlay-title="Chrome"   { spawn "google-chrome-stable"; }
+    Mod+G hotkey-overlay-title="Chrome"   { spawn "google-chrome-stable" "--enable-features=WebRTCPipeWireCapturer,PipeWireCapture" "--ozone-platform=wayland"; }
 
     XF86AudioRaiseVolume allow-when-locked=true {
         spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
@@ -124,9 +124,10 @@ binds {
     Mod+Escape repeat=false { close-window; }
 
     Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
+    Mod+Down  { focus-window-or-workspace-down; }
+    Mod+Up    { focus-window-or-workspace-up; }
     Mod+Right { focus-column-right; }
+
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-or-workspace-down; }
     Mod+K     { focus-window-or-workspace-up; }
@@ -225,11 +226,8 @@ binds {
     // Expel the bottom window from the focused column to the right.
     Mod+Period { expel-window-from-column; }
 
-    Mod+R       { switch-preset-column-width; }
-    Mod+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R  { reset-window-height; }
     Mod+F       { maximize-column; }
-    Mod+Shift+F { fullscreen-window; }
+    Mod+R       { fullscreen-window; }
 
     Mod+Ctrl+F { expand-column-to-available-width; }
     Mod+Ctrl+C { center-visible-columns; }
@@ -257,5 +255,8 @@ binds {
     Mod+Shift+P { power-off-monitors; }
     Mod+B       { spawn-sh "killall -q waybar || waybar"; }
     Mod+S       { spawn-sh "killall dunst"; }
+
+    Mod+F9      { spawn "switch-audio" "bluez_output.00_13_09_10_36_7E.1"; }
+    Mod+F10     { spawn "switch-audio" "alsa_output.pci-0000_01_00.1.hdmi-stereo"; }
 }
 

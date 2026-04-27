@@ -7,6 +7,8 @@
     (writeShellScriptBin "mkwindows" (builtins.readFile ../scripts/user/mkwindows.sh))
     (writeShellScriptBin "niri-dev-setup" (builtins.readFile ../scripts/user/niri-dev-setup.sh))
     (writeShellScriptBin "wl-mirror-launcher" (builtins.readFile ../scripts/user/wl-mirror-launcher.sh))
+    (writeShellScriptBin "switch-audio" (builtins.readFile ../scripts/user/switch-audio.sh))
+    (writeShellScriptBin "rebuild-diff" (builtins.readFile ../scripts/user/rebuild-diff.sh))
 
     (makeDesktopItem {
       name = "wl-mirror";
