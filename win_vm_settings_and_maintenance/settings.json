@@ -1,0 +1,119 @@
+{
+  "security.workspace.trust.untrustedFiles": "open",
+  "go.toolsManagement.autoUpdate": true,
+  "explorer.confirmDelete": false,
+  "git.openRepositoryInParentFolders": "never",
+  "editor.rulers": [80, 90],
+  "editor.renderWhitespace": "all",
+  "workbench.layoutControl.enabled": false,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "files.defaultLanguage": "xml",
+  "go.formatTool": "gofmt",
+  "go.useLanguageServer": true,
+  "go.formatFlags": ["-s"],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "git.autofetch": true,
+  "svelte.enable-ts-plugin": true,
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "git.enableSmartCommit": true,
+  "explorer.confirmDragAndDrop": false,
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "editor.codeLensFontFamily": "Victor Mono",
+  "editor.fontFamily": "Victor Mono",
+  "workbench.colorCustomizations": {
+    "editor.background": "#000000",
+    "sideBar.background": "#000000",
+    "activityBar.background": "#000000",
+    "titleBar.activeBackground": "#000000",
+    "statusBar.background": "#000000",
+    "activityBar.foreground": "#FFFFFF",
+    "activityBar.inactiveForeground": "#888888",
+    "editorLineNumber.activeForeground": "#FFFFFF",
+    "editorLineNumber.foreground": "#ffffff77",
+    "tab.activeBackground": "#000000",
+    "tab.inactiveBackground": "#111111",
+    "tab.border": "#FFFFFF",
+    "editorGroupHeader.tabsBackground": "#000000",
+    "gitDecoration.modifiedResourceForeground": "#E6CF17",
+    "gitDecoration.deletedResourceForeground": "#FF0000",
+    "gitDecoration.untrackedResourceForeground": "#00FF00",
+    "gitDecoration.ignoredResourceForeground": "#888888",
+    "gitDecoration.conflictingResourceForeground": "#FF4500",
+    "gitDecoration.submoduleResourceForeground": "#8A2BE2",
+    "gitDecoration.addedResourceForeground": "#32CD32",
+    "gitDecoration.stageModifiedResourceForeground": "#FFA500",
+    "gitDecoration.renamedResourceForeground": "#4B0082",
+    "editorGutter.modifiedBackground": "#E6C117",
+    "editorGutter.addedBackground": "#32CD32",
+    "editorGutter.deletedBackground": "#FF0000"
+  },
+  "redhat.telemetry.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "git.confirmSync": false,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "editor.multiCursorLimit": 99999,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.accessibilitySupport": "off",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.inlayHints.enabled": "off",
+  "update.mode": "none",
+  "update.showReleaseNotes": false,
+  "files.associations": {
+    "*.svelte": "svelte",
+    "*.txt": "plaintext"
+  },
+  "window.commandCenter": false,
+  "window.zoomLevel": 1,
+  "window.menuBarVisibility": "compact",
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": ["entity.name.function", "variable"],
+        "settings": {
+          "fontStyle": "" // Overrides to have no specific style
+        }
+      }
+    ]
+  },
+  "workbench.startupEditor": "none",
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "go.lintTool": "golangci-lint",
+  "gopls": {
+    "staticcheck": true
+  },
+  "diffEditor.ignoreTrimWhitespace": true,
+  "go.lintOnSave": "workspace",
+  "testing.showCoverageInExplorer": false,
+  "testing.followRunningTest": false,
+  "testing.openTesting": "neverOpen",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.formatOnSave": false
+  },
+  "workbench.colorTheme": "Monokai Dark Soda",
+  "explorer.confirmPasteNative": false
+}

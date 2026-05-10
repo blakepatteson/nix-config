@@ -25,11 +25,19 @@ files should be called :
 command to display it at `Z:\` :
     net use Z: \\nixos\development /persistent:yes
     OR
-    net use Z: \\192.168.4.XX\development /persistent:yes
+    net use Z: \\192.168.122.1\development /persistent:yes
 
 If copy/paste ever fails after a Windows update - run this in Windows (as admin) :
   sc query vdservice
   sc start vdservice
   sc config vdservice start=auto
 
-For debloating default apps, etc - see : https://github.com/Raphire/Win11Debloat
+For debloating default apps, etc - see :
+    https://github.com/Raphire/Win11Debloat
+
+Download and run the debloat script with :
+    & ([scriptblock]::Create((irm "https://debloat.raphi.re/")))
+
+To reset TPM state :
+    sudo rm -rf /var/lib/libvirt/swtpm/<vm_utid>
+

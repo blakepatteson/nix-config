@@ -2,7 +2,7 @@
 let
   nixvim = import (builtins.fetchTarball {
     url = "https://github.com/nix-community/nixvim/archive/nixos-25.11.tar.gz";
-    sha256 = "0vf1c4lvi1f3pgd22ydy46i4f3jazmq39xdxjwiba5k7j2qwfmsk";
+    sha256 = "1v4gghvjrzj7kwzvwgwjbhbiavwzbc5ncwjicc1jgjwdmbdaqhw7";
   });
 in
 {
