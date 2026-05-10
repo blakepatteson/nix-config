@@ -95,7 +95,7 @@ in
       alias c='cd'
       alias t='eza --tree --level=2'
       alias h='history | tail -20'
-      alias list-issues='gh issue list --limit 1000'
+      alias list-issues='gh issue list --limit 1000 --no-color'
       alias dkill='sudo docker kill $(sudo docker ps -q)'
       alias dkillrm='sudo docker rm -f $(sudo docker ps -aq)'
       alias cls='clear && printf "\033[3J"'

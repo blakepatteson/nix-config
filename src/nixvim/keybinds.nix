@@ -194,6 +194,12 @@
     }
 
     { mode = "n"; key = "<leader>cp"; action = "<cmd>lua _G.copy_oil_file_path()<CR>"; }
+    {
+      mode = "n";
+      key = "<leader>od";
+      action = "<cmd>lua _G.toggle_oil_detail()<CR>";
+      options = { desc = "Toggle oil size/mtime columns"; };
+    }
 
     {
       mode = "n";

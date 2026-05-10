@@ -449,7 +449,8 @@
       settings = {
         view_options = { show_hidden = true; };
         float = { padding = 2; max_width = 100; max_height = 20; };
-        keymaps = { "<C-p>" = false; };
+        keymaps = { "<C-p>" = false; "gs" = "actions.change_sort"; };
+        columns = [ "icon" ];
       };
     };
 

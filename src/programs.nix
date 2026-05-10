@@ -79,6 +79,7 @@ in
     minizip
     mlocate
     mpv
+    ncdu
     neofetch
     nil
     nixd

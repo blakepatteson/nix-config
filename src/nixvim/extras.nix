@@ -416,6 +416,18 @@
       })
     end
 
+    -- Oil column detail toggle
+    _G.oil_detail_on = false
+    _G.toggle_oil_detail = function()
+      if _G.oil_detail_on then
+        require("oil").set_columns({ "icon" })
+        _G.oil_detail_on = false
+      else
+        require("oil").set_columns({ "icon", "size", "mtime" })
+        _G.oil_detail_on = true
+      end
+    end
+
     -- Oil file manager function for copying file paths
     local function copy_oil_file_path()
       local oil = require('oil')

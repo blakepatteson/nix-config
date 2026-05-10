@@ -17,5 +17,6 @@
     ./src/system.nix
     ./src/services.nix
     ./src/virtualization.nix
+    ./src/vms.nix
   ];
 }

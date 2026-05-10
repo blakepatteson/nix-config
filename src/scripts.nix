@@ -9,6 +9,7 @@
     (writeShellScriptBin "wl-mirror-launcher" (builtins.readFile ../scripts/user/wl-mirror-launcher.sh))
     (writeShellScriptBin "switch-audio" (builtins.readFile ../scripts/user/switch-audio.sh))
     (writeShellScriptBin "rebuild-diff" (builtins.readFile ../scripts/user/rebuild-diff.sh))
+    (writeShellScriptBin "list-issues-csv" (builtins.readFile ../scripts/user/list-issues-csv.sh))
 
     (makeDesktopItem {
       name = "wl-mirror";
