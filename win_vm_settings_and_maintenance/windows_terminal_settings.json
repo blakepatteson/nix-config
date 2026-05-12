@@ -1,0 +1,145 @@
+{
+  "$help": "https://aka.ms/terminal-documentation",
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "actions": [
+    { "command": "paste", "id": "User.paste" },
+    { "command": { "action": "newTab" }, "id": "User.newTab.5DEADB41" },
+    { "command": "scrollUpPage", "id": "User.scrollUpPage" },
+    { "command": "scrollToTop", "id": "User.scrollToTop" },
+    { "command": {
+        "action": "splitPane",
+        "split": "auto",
+        "splitMode": "duplicate"
+      },
+      "id": "User.splitPane.A6751878"
+    },
+    { "command": "find", "id": "User.find" },
+    {
+      "command": { "action": "copy", "singleLine": false },
+      "id": "User.copy.644BA8F2"
+    },
+    { "command": { "action": "scrollDown" }, "id": "User.scrollDown" },
+    { "command": "scrollDownPage", "id": "User.scrollDownPage" },
+    { "command": { "action": "scrollUp" }, "id": "User.scrollUp" },
+    { "command": "duplicateTab", "id": "User.duplicateTab" },
+    { "command": "closePane", "id": "User.closePane" },
+    { "command": "scrollToBottom", "id": "User.scrollToBottom" }
+  ],
+  "alwaysShowNotificationIcon": false,
+  "centerOnLaunch": true,
+  "copyFormatting": "none",
+  "copyOnSelect": false,
+  "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+  "firstWindowPreference": "persistedWindowLayout",
+  "initialPosition": ",",
+  "keybindings": [
+    { "id": "User.scrollUp", "keys": "ctrl+k" },
+    { "id": "User.newTab.5DEADB41", "keys": "ctrl+shift+n" },
+    { "id": "User.splitPane.A6751878", "keys": "alt+shift+d" },
+    { "id": "User.scrollDownPage", "keys": "ctrl+shift+d" },
+    { "id": "User.copy.644BA8F2", "keys": "ctrl+c" },
+    { "id": "User.scrollDown", "keys": "ctrl+j" },
+    { "id": "User.scrollUpPage", "keys": "ctrl+shift+u" },
+    { "id": "User.paste", "keys": "ctrl+v" },
+    { "id": "User.find", "keys": "ctrl+shift+f" },
+    { "id": "User.closePane", "keys": "ctrl+shift+w" },
+    { "id": "User.scrollToTop", "keys": "ctrl+home" },
+    { "id": "User.scrollToBottom", "keys": "ctrl+end" }
+  ],
+  "launchMode": "fullscreen",
+  "minimizeToNotificationArea": false,
+  "newTabMenu": [{ "type": "remainingProfiles" }],
+  "profiles": {
+    "defaults": {
+      "colorScheme": "Campbell (modified)",
+      "font": { "face": "VictorMono Nerd Font Mono" },
+      "startingDirectory": "C:\\"
+    },
+    "list": [
+      {
+        "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+        "hidden": false,
+        "name": "Powershell"
+      },
+      {
+        "commandline": "%SystemRoot%\\System32\\cmd.exe",
+        "font": { "cellHeight": "1.2", "size": 14 },
+        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+        "hidden": false,
+        "historySize": 9999999,
+        "name": "cmd",
+        "padding": "0",
+        "startingDirectory": "C:"
+      },
+      {
+        "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+        "hidden": false,
+        "name": "Azure Cloud Shell",
+        "source": "Windows.Terminal.Azure"
+      },
+      {
+        "guid": "{2bcc27b8-2e7a-53b2-9fb4-1e473c106613}",
+        "hidden": false,
+        "name": "Developer Command Prompt for VS 2022",
+        "source": "Windows.Terminal.VisualStudio"
+      },
+      {
+        "guid": "{3c91e47b-3ad6-5f11-9f88-af5aa5c97a2d}",
+        "hidden": false,
+        "name": "Developer PowerShell for VS 2022",
+        "source": "Windows.Terminal.VisualStudio"
+      }
+    ]
+  },
+  "schemes": [
+    {
+      "background": "#000000",
+      "black": "#000000",
+      "blue": "#0037DA",
+      "brightBlack": "#767676",
+      "brightBlue": "#3B78FF",
+      "brightCyan": "#61D6D6",
+      "brightGreen": "#16C60C",
+      "brightPurple": "#B4009E",
+      "brightRed": "#E74856",
+      "brightWhite": "#F2F2F2",
+      "brightYellow": "#F9F1A5",
+      "cursorColor": "#FFFFFF",
+      "cyan": "#3A96DD",
+      "foreground": "#FFFFFF",
+      "green": "#13A10E",
+      "name": "Campbell (modified)",
+      "purple": "#881798",
+      "red": "#C50F1F",
+      "selectionBackground": "#FFFFFF",
+      "white": "#FFFFFF",
+      "yellow": "#C19C00"
+    },
+    {
+      "background": "#300A24",
+      "black": "#171421",
+      "blue": "#0037DA",
+      "brightBlack": "#767676",
+      "brightBlue": "#08458F",
+      "brightCyan": "#2C9FB3",
+      "brightGreen": "#26A269",
+      "brightPurple": "#A347BA",
+      "brightRed": "#C01C28",
+      "brightWhite": "#F2F2F2",
+      "brightYellow": "#A2734C",
+      "cursorColor": "#FFFFFF",
+      "cyan": "#3A96DD",
+      "foreground": "#FFFFFF",
+      "green": "#26A269",
+      "name": "Ubuntu-ColorScheme",
+      "purple": "#881798",
+      "red": "#C21A23",
+      "selectionBackground": "#FFFFFF",
+      "white": "#CCCCCC",
+      "yellow": "#A2734C"
+    }
+  ],
+  "showTerminalTitleInTitlebar": false,
+  "themes": [],
+  "warning.confirmCloseAllTabs": false
