@@ -19,7 +19,7 @@ input {
 }
 
 // Monitor configuration for desktop setup
-// Left monitor: VIZIO (1920x1080)
+// Left monitor: ViewSonic VX2757 (1920x1080)
 output "HDMI-A-2" {
     mode "1920x1080@60.000"
     position x=0 y=0
@@ -256,7 +256,7 @@ binds {
     Mod+B       { spawn-sh "killall -q waybar || waybar"; }
     Mod+S       { spawn-sh "killall dunst"; }
 
-    Mod+F9      { spawn "switch-audio" "bluez_output.00_13_09_10_36_7E.1"; }
-    Mod+F10     { spawn "switch-audio" "alsa_output.pci-0000_01_00.1.hdmi-stereo"; }
+    Mod+F9  { spawn "switch-audio-by" "USB_Audio"; }
+    Mod+F10 { spawn "switch-audio-by" "hdmi"; }
 }
 

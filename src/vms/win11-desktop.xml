@@ -18,8 +18,10 @@
       <feature enabled='no' name='enrolled-keys' />
       <feature enabled='yes' name='secure-boot' />
     </firmware>
-    <loader readonly='yes' secure='yes' type='pflash' format='raw'>/run/libvirt/nix-ovmf/edk2-x86_64-secure-code.fd</loader>
-    <nvram template='/run/libvirt/nix-ovmf/edk2-i386-vars.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/win11-new_VARS.fd</nvram>
+    <loader readonly='yes' secure='yes' type='pflash' format='raw'>
+      /run/libvirt/nix-ovmf/edk2-x86_64-secure-code.fd</loader>
+    <nvram template='/run/libvirt/nix-ovmf/edk2-i386-vars.fd' templateFormat='raw' format='raw'>
+      /var/lib/libvirt/qemu/nvram/win11-new_VARS.fd</nvram>
     <boot dev='cdrom' />
     <boot dev='hd' />
   </os>
@@ -64,18 +66,18 @@
       <source file='/var/lib/libvirt/images/win11-new.qcow2' />
       <target dev='vda' bus='virtio' />
     </disk>
-    <disk type='file' device='cdrom'>
-      <driver name='qemu' type='raw' />
-      <source file='/var/lib/libvirt/isos/Win11_25H2_English_x64_v2.iso' />
-      <target dev='sda' bus='sata' />
-      <readonly />
-    </disk>
-    <disk type='file' device='cdrom'>
-      <driver name='qemu' type='raw' />
-      <source file='/var/lib/libvirt/isos/virtio-win.iso' />
-      <target dev='sdb' bus='sata' />
-      <readonly />
-    </disk>
+    <!-- <disk type='file' device='cdrom'> -->
+    <!--   <driver name='qemu' type='raw' /> -->
+    <!--   <source file='/var/lib/libvirt/isos/Win11_25H2_English_x64_v2.iso' /> -->
+    <!--   <target dev='sda' bus='sata' /> -->
+    <!--   <readonly /> -->
+    <!-- </disk> -->
+    <!-- <disk type='file' device='cdrom'> -->
+    <!--   <driver name='qemu' type='raw' /> -->
+    <!--   <source file='/var/lib/libvirt/isos/virtio-win.iso' /> -->
+    <!--   <target dev='sdb' bus='sata' /> -->
+    <!--   <readonly /> -->
+    <!-- </disk> -->
     <controller type='usb' index='0' model='qemu-xhci' ports='15' />
     <controller type='pci' index='0' model='pcie-root' />
     <controller type='pci' index='1' model='pcie-root-port'>

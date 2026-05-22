@@ -17,8 +17,7 @@ lib.mkIf (vmXml != null) {
     serviceConfig.Type = "oneshot";
     serviceConfig.RemainAfterExit = true;
     script = ''
-      ${pkgs.libvirt}/bin/virsh define ${vmXml} --validate 2>/dev/null || \
-      ${pkgs.libvirt}/bin/virsh define ${vmXml}
+      ${pkgs.libvirt}/bin/virsh define ${vmXml} || true
     '';
   };
 }
