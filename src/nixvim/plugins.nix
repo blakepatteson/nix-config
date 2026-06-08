@@ -449,7 +449,36 @@
       settings = {
         view_options = { show_hidden = true; };
         float = { padding = 2; max_width = 100; max_height = 20; };
-        keymaps = { "<C-p>" = false; "gs" = "actions.change_sort"; };
+        delete_to_trash = true;
+        cleanup_delay_ms = 200;
+        keymaps = {
+          "<C-p>" = false;
+          "<leader>oh" = "actions.toggle_hidden";
+          "<leader>os" = {
+            desc = "Oil: sort by name";
+            callback.__raw = ''
+              function()
+                require("oil").set_sort({ { "type", "asc" }, { "name", "asc" } })
+              end
+            '';
+          };
+          "<leader>om" = {
+            desc = "Oil: sort by mtime (newest first)";
+            callback.__raw = ''
+              function()
+                require("oil").set_sort({ { "type", "asc" }, { "mtime", "desc" } })
+              end
+            '';
+          };
+          "<leader>op" = {
+            desc = "Oil: preview (right split)";
+            callback.__raw = ''
+              function()
+                require("oil.actions").preview.callback({ vertical = true, split = "belowright" })
+              end
+            '';
+          };
+        };
         columns = [ "icon" ];
       };
     };

@@ -116,18 +116,13 @@
     }
 
     { mode = "n"; key = "<C-g>"; action = "<cmd>lua _G.live_grep_regex()<CR>"; }
-    { mode = "n"; key = "<leader>sr"; action = "<cmd>lua _G.live_grep_regex()<CR>"; }
+    { mode = "n"; key = "<leader>fr"; action = "<cmd>lua _G.live_grep_regex()<CR>"; }
     {
       mode = "n";
       key = "<leader>sf";
       action = "<cmd>lua _G.set_telescope_filter()<CR>";
     }
     { mode = "n"; key = "<leader>re"; action = "<cmd>Telescope oldfiles<CR>"; }
-    {
-      mode = "n";
-      key = "<leader>fr";
-      action = "<cmd>lua _G.resume_last_telescope()<CR>";
-    }
     {
       mode = "n";
       key = "<leader>fc";
