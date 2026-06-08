@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 let
   isDesktop = builtins.pathExists /var/lib/libvirt/images/win11-new.qcow2;
-  isLaptop = builtins.pathExists /var/lib/libvirt/images/win11-work.qcow2;
+  isLaptop = builtins.pathExists /home/blake/windows.qcow2;
 
   vmXml =
     if isDesktop then ./vms/win11-desktop.xml
@@ -17,8 +17,10 @@ lib.mkIf (vmXml != null) {
     serviceConfig.Type = "oneshot";
     serviceConfig.RemainAfterExit = true;
     script = ''
-      ${pkgs.libvirt}/bin/virsh define ${vmXml} --validate 2>/dev/null || \
-      ${pkgs.libvirt}/bin/virsh define ${vmXml}
+      domain=$(grep -oP '(?<=<name>)[^<]+' ${vmXml} | head -1)
+      if ! ${pkgs.libvirt}/bin/virsh dominfo "$domain" >/dev/null 2>&1; then
+        ${pkgs.libvirt}/bin/virsh define ${vmXml}
+      fi
     '';
   };
 }

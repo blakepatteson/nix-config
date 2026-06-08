@@ -24,10 +24,7 @@ in
     cloc
     cmake
     cowsay
-    cups
     dig
-    direnv
-    docker
     dunst
     expat
     eza
@@ -77,7 +74,6 @@ in
     libvdpau
     lm_sensors
     minizip
-    mlocate
     mpv
     ncdu
     neofetch
@@ -106,12 +102,10 @@ in
     slurp
     soundfont-fluid
     spice-gtk
-    spice-vdagent
     sqlite
     sqlitebrowser
     swappy
     swaybg
-    syncthing
     thunderbird
     ungoogled-chromium
     virt-manager

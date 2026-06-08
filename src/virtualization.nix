@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   virtualisation = {
     libvirtd = {
@@ -9,6 +9,7 @@
     docker = {
       enable = true;
       enableOnBoot = false;
+      package = pkgs.docker_29;
       daemon.settings = {
         "storage-driver" = "overlay2";
         "log-driver" = "json-file";

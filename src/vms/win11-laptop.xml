@@ -1,5 +1,6 @@
 <domain type='kvm'>
-  <name>win11-work</name>
+  <name>win11-work-3</name>
+  <uuid>30f64959-8fb7-4c04-92a2-479b4ceded96</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://microsoft.com/win/11" />
@@ -31,15 +32,12 @@
     <vcpupin vcpu='15' cpuset='15' />
     <emulatorpin cpuset='16-23' />
   </cputune>
-  <os firmware='efi'>
+  <iothreads>2</iothreads>
+  <os>
     <type arch='x86_64' machine='pc-q35-9.1'>hvm</type>
-    <firmware>
-      <feature enabled='no' name='enrolled-keys' />
-      <feature enabled='yes' name='secure-boot' />
-    </firmware>
     <loader readonly='yes' secure='yes' type='pflash' format='raw'>/run/libvirt/nix-ovmf/edk2-x86_64-secure-code.fd</loader>
-    <nvram template='/run/libvirt/nix-ovmf/edk2-i386-vars.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/win11-work_VARS.fd</nvram>
-    <boot dev='cdrom' />
+    <nvram template='/run/libvirt/nix-ovmf/edk2-i386-vars.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/win11-work-3_VARS.fd</nvram>
+    <bootmenu enable='yes' timeout='1000' />
     <boot dev='hd' />
   </os>
   <features>
@@ -79,15 +77,9 @@
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
-      <driver name='qemu' type='qcow2' discard='unmap' />
-      <source file='/var/lib/libvirt/images/win11-work.qcow2' />
+      <driver name='qemu' type='qcow2' discard='unmap' cache='none' io='native' iothread='1' queues='4' />
+      <source file='/home/blake/windows.qcow2' />
       <target dev='vda' bus='virtio' />
-    </disk>
-    <disk type='file' device='cdrom'>
-      <driver name='qemu' type='raw' />
-      <source file='/var/lib/libvirt/isos/virtio-win.iso' />
-      <target dev='sda' bus='sata' />
-      <readonly />
     </disk>
     <controller type='usb' index='0' model='qemu-xhci' ports='15' />
     <controller type='pci' index='0' model='pcie-root' />
@@ -171,6 +163,7 @@
       <mac address='52:54:00:72:55:46' />
       <source network='default' />
       <model type='virtio' />
+      <driver name='vhost' queues='4' />
     </interface>
     <serial type='pty'>
       <target type='isa-serial' port='0'>
