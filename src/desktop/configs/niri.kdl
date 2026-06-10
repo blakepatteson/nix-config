@@ -65,6 +65,7 @@ layout {
     struts { }
 }
 spawn-at-startup "waybar"
+spawn-at-startup "spice-vdagent"
 
 spawn-sh-at-startup "swaybg -c '#000000'"
 hotkey-overlay {
