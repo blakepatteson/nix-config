@@ -74,6 +74,7 @@ in
     libvdpau
     lm_sensors
     minizip
+    p7zip
     mpv
     ncdu
     fastfetch
