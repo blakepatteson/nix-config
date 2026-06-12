@@ -344,7 +344,7 @@
 
         svelte = {
           enable = true;
-          package = pkgs.nodePackages.svelte-language-server;
+          package = pkgs.svelte-language-server;
           settings = { svelte = { plugin = { typescript = { enable = true; }; }; }; };
         };
 
@@ -388,7 +388,7 @@
 
         eslint = {
           enable = true;
-          package = pkgs.nodePackages.vscode-langservers-extracted;
+          package = pkgs.vscode-langservers-extracted;
           settings = { format = { enable = true; }; packageManager = "npm"; };
         };
 

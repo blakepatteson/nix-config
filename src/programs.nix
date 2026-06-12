@@ -76,11 +76,11 @@ in
     minizip
     mpv
     ncdu
-    neofetch
+    fastfetch
     nil
     nixd
     nixpkgs-fmt
-    nodePackages.prettier
+    pkgs.prettier
     nodejs
     obs-studio
     odin
@@ -128,12 +128,12 @@ in
     zlib
     zoom-us
 
-    nodePackages.svelte-language-server
-    nodePackages.typescript-language-server
-    nodePackages.typescript
-    nodePackages.eslint
-    nodePackages.eslint_d
-    nodePackages.vscode-langservers-extracted
+    pkgs.svelte-language-server
+    pkgs.typescript-language-server
+    pkgs.typescript
+    pkgs.eslint
+    pkgs.eslint_d
+    pkgs.vscode-langservers-extracted
 
     (flameshot.override { enableWlrSupport = true; })
     (btop.override { cudaSupport = true; })

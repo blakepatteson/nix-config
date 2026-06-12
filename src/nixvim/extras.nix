@@ -448,7 +448,7 @@
     -- TypeScript LSP setup (keeping this here since it's nix-specific)
     vim.lsp.config.ts_ls = {
       cmd = {
-        "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server",
+        "${pkgs.typescript-language-server}/bin/typescript-language-server",
         "--stdio"
       },
       filetypes = { "typescript", "javascript" },
