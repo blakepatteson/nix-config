@@ -416,6 +416,103 @@
       })
     end
 
+    -- Hook VM start/exit to swap p/P for distributed paste while VM is active
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "visual_multi_start",
+      callback = function()
+        vim.keymap.set("n", "p", function() _G.vm_distributed_paste(true) end,
+          { buffer = true, desc = "VM distributed paste (after)" })
+        vim.keymap.set("n", "P", function() _G.vm_distributed_paste(false) end,
+          { buffer = true, desc = "VM distributed paste (before)" })
+      end,
+    })
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "visual_multi_exit",
+      callback = function()
+        pcall(vim.keymap.del, "n", "p", { buffer = true })
+        pcall(vim.keymap.del, "n", "P", { buffer = true })
+      end,
+    })
+
+    -- Distributed paste: when VM is active and clipboard has N lines matching N
+    -- cursors, paste line[i] at cursor[i]. Otherwise fall back to standard paste.
+    -- Mimics VS Code's multi-cursor copy/paste behavior.
+    _G.vm_distributed_paste = function(after)
+      local reg = vim.fn.getreg('"')
+      local regtype = vim.fn.getregtype('"')
+
+      local lines
+      if regtype == "V" or regtype:sub(1, 1) == "\22" then
+        lines = vim.split(reg:gsub("\n$", ""), "\n", { plain = true })
+      else
+        lines = vim.split(reg, "\n", { plain = true })
+      end
+
+      local vm = vim.b.VM_Selection
+      local regions = vm and vm.Regions or nil
+
+      if not regions or #regions == 0 or #regions ~= #lines then
+        local key = after and "p" or "P"
+        vim.cmd("normal! " .. key)
+        return
+      end
+
+      local sorted = {}
+      for i, r in ipairs(regions) do sorted[i] = { idx = i, l = r.l, a = r.a, region = r } end
+      table.sort(sorted, function(x, y)
+        if x.l ~= y.l then return x.l < y.l end
+        return x.a < y.a
+      end)
+
+      for i = #sorted, 1, -1 do
+        local r = sorted[i].region
+        local line_idx = r.l - 1
+        local buf_line = vim.api.nvim_buf_get_lines(
+          0, line_idx, line_idx + 1, false)[1] or ""
+        local is_point = (r.a == r.b)
+        local col
+        if is_point then
+          col = r.a - 1
+          if after then col = math.min(col + 1, #buf_line) end
+        else
+          col = after and math.min(r.b, #buf_line) or (r.a - 1)
+        end
+        if col < 0 then col = 0 end
+        local before_txt = buf_line:sub(1, col)
+        local after_txt = buf_line:sub(col + 1)
+        vim.api.nvim_buf_set_lines(0, line_idx, line_idx + 1,
+          false, { before_txt .. lines[i] .. after_txt })
+      end
+
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes(
+        "<Esc><Esc>", true, false, true), "n")
+    end
+
+    -- VLINE -> VM cursors at first non-blank of each selected line
+    _G.vm_cursors_at_line_starts = function()
+      local s = vim.fn.getpos("v")[2]
+      local e = vim.fn.getpos(".")[2]
+      if s == 0 or e == 0 then
+        s = vim.fn.getpos("'<")[2]
+        e = vim.fn.getpos("'>")[2]
+      end
+      if s == 0 or e == 0 then
+        vim.notify("vm_cursors: no selection found", vim.log.levels.WARN)
+        return
+      end
+      if s > e then s, e = e, s end
+
+      vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
+      vim.api.nvim_win_set_cursor(0, { s, 0 })
+      vim.cmd("normal! ^")
+      local add_down = vim.api.nvim_replace_termcodes(
+        "<Plug>(VM-Add-Cursor-Down)", true, false, true)
+      for _ = s + 1, e do
+        vim.api.nvim_feedkeys(add_down, "x", false)
+      end
+    end
+
     -- Oil column detail toggle
     _G.oil_detail_on = false
     _G.toggle_oil_detail = function()

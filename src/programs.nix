@@ -9,6 +9,8 @@ in
   environment.systemPackages = with pkgs; [
     unstable.claude-code
 
+    (btop.override { cudaSupport = true; })
+    (flameshot.override { enableWlrSupport = true; })
     OVMF
     acpi
     asciiquarium
@@ -19,6 +21,7 @@ in
     btop
     busybox
     capitaine-cursors
+    catfish
     cifs-utils
     clang-tools
     cloc
@@ -26,8 +29,11 @@ in
     cowsay
     dig
     dunst
+    eslint
+    eslint_d
     expat
     eza
+    fastfetch
     fd
     ffmpeg-full
     file
@@ -74,23 +80,22 @@ in
     libvdpau
     lm_sensors
     minizip
-    p7zip
     mpv
     ncdu
-    fastfetch
     nil
     nixd
     nixpkgs-fmt
-    pkgs.prettier
     nodejs
     obs-studio
     odin
     ols
     onlyoffice-desktopeditors
+    p7zip
     pamixer
     pavucontrol # Audio control panel
     pinta
     pkg-config
+    prettier
     pulseaudio
     pwvucontrol # PipeWire volume control
     python3
@@ -105,11 +110,15 @@ in
     spice-gtk
     sqlite
     sqlitebrowser
+    svelte-language-server
     swappy
     swaybg
     thunderbird
+    typescript
+    typescript-language-server
     ungoogled-chromium
     virt-manager
+    vscode-langservers-extracted
     waybar
     wdisplays # GUI display configuration
     wget
@@ -121,22 +130,11 @@ in
     x265
     xclip
     xdotool
-    xfce.catfish
     xsel
     xwayland-satellite
     yazi
     zig
     zlib
     zoom-us
-
-    pkgs.svelte-language-server
-    pkgs.typescript-language-server
-    pkgs.typescript
-    pkgs.eslint
-    pkgs.eslint_d
-    pkgs.vscode-langservers-extracted
-
-    (flameshot.override { enableWlrSupport = true; })
-    (btop.override { cudaSupport = true; })
   ];
 }

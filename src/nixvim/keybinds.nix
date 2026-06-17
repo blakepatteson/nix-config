@@ -28,6 +28,13 @@
     }
 
     {
+      mode = "x";
+      key = "<leader>mc";
+      action = "<cmd>lua _G.vm_cursors_at_line_starts()<CR>";
+      options = { desc = "VM cursors at start of each selected line"; };
+    }
+
+    {
       mode = "n";
       key = "]r";
       action =
