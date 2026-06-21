@@ -10,7 +10,7 @@ in
     unstable.claude-code
 
     (btop.override { cudaSupport = true; })
-    (flameshot.override { enableWlrSupport = true; })
+    satty
     OVMF
     acpi
     asciiquarium

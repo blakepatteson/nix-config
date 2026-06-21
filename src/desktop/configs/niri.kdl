@@ -257,10 +257,10 @@ binds {
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
-    // Screenshots using flameshot
-    Ctrl+Print { spawn "flameshot-screenshot"; }
-    Alt+Print  { spawn "flameshot-screenshot"; }
-    Print      { spawn "flameshot-screenshot"; }
+    // Screenshots using satty
+    Ctrl+Print { spawn "satty-screenshot"; }
+    Alt+Print  { spawn "satty-screenshot"; }
+    Print      { spawn "satty-screenshot"; }
     Mod+M      { spawn "emoji-picker"; }
 
     Mod+Shift+E     { quit; }

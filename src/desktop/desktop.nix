@@ -5,6 +5,25 @@
   programs.niri = { enable = true; };
   programs.xwayland.enable = true;
 
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-volman
+      thunar-archive-plugin
+    ];
+  };
+  services.tumbler.enable = true;
+  services.gvfs.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+    config.common = {
+      default = [ "kde" "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+    };
+  };
+
   services.greetd = {
     enable = true;
     settings.default_session = {

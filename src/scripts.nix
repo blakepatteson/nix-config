@@ -2,7 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     (writeShellScriptBin "emoji-picker" (builtins.readFile ../scripts/user/emoji-picker.sh))
-    (writeShellScriptBin "flameshot-screenshot" (builtins.readFile ../scripts/user/flameshot.sh))
+    (writeShellScriptBin "satty-screenshot" (builtins.readFile ../scripts/user/satty.sh))
     (writeShellScriptBin "mkbox" (builtins.readFile ../scripts/user/mkbox.sh))
     (writeShellScriptBin "mkwindows" (builtins.readFile ../scripts/user/mkwindows.sh))
     (writeShellScriptBin "niri-dev-setup" (builtins.readFile ../scripts/user/niri-dev-setup.sh))
