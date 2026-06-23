@@ -8,6 +8,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     unstable.claude-code
+    unstable.bolt-launcher
 
     (btop.override { cudaSupport = true; })
     satty
