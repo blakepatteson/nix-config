@@ -1,7 +1,4 @@
-{ config, pkgs, lib, ... }:
-let
-  isPrimeSystem = builtins.pathExists ./is-prime-system;
-in
+{ config, pkgs, lib, isPrimeSystem, ... }:
 {
   hardware = {
     enableAllFirmware = true;
