@@ -4,11 +4,23 @@ let
   unstable = import
     (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
     { config = pkgs.config; system = pkgs.stdenv.hostPlatform.system; };
+  isPrimeSystem = builtins.pathExists ./is-prime-system;
+  boltLauncher = if isPrimeSystem then pkgs.symlinkJoin {
+    name = "bolt-launcher";
+    paths = [ unstable.bolt-launcher ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/bolt-launcher \
+        --set __NV_PRIME_RENDER_OFFLOAD 1 \
+        --set __NV_PRIME_RENDER_OFFLOAD_PROVIDER NVIDIA-G0 \
+        --prefix LD_LIBRARY_PATH : /run/opengl-driver/lib
+    '';
+  } else unstable.bolt-launcher;
 in
 {
   environment.systemPackages = with pkgs; [
     unstable.claude-code
-    unstable.bolt-launcher
+    boltLauncher
 
     (btop.override { cudaSupport = true; })
     satty
