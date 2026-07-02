@@ -33,7 +33,7 @@ in
     btop
     busybox
     capitaine-cursors
-    xfce.catfish
+    catfish
     cifs-utils
     clang-tools
     cloc

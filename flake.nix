@@ -2,10 +2,10 @@
   description = "main nixos config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.11";
+      url = "github:nix-community/nixvim/nixos-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -22,6 +22,7 @@
         specialArgs = { inherit pkgs-unstable isPrimeSystem; };
         modules = [
           nixvim.nixosModules.nixvim
+          { programs.nixvim.nixpkgs.source = nixpkgs; }
           hostModule
           ./configuration.nix
         ];
