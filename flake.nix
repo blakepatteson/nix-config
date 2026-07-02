@@ -1,5 +1,5 @@
 {
-  description = "blake's nixos config";
+  description = "main nixos config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
@@ -10,23 +10,31 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixvim, ... }:
-  let
-    system = "x86_64-linux";
-    pkgs-unstable = import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
+  outputs = { nixpkgs, nixpkgs-unstable, nixvim, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      mkHost = { hostModule, isPrimeSystem }: nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit pkgs-unstable isPrimeSystem; };
+        modules = [
+          nixvim.nixosModules.nixvim
+          hostModule
+          ./configuration.nix
+        ];
+      };
+    in
+    {
+      nixosConfigurations.blake-nixos = mkHost {
+        hostModule = ./hosts/desktop.nix;
+        isPrimeSystem = false;
+      };
+      nixosConfigurations.blake-laptop = mkHost {
+        hostModule = ./hosts/laptop.nix;
+        isPrimeSystem = true;
+      };
     };
-    isPrimeSystem = builtins.pathExists ./src/is-prime-system;
-  in
-  {
-    nixosConfigurations.blake-nixos = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = { inherit pkgs-unstable isPrimeSystem; };
-      modules = [
-        nixvim.nixosModules.nixvim
-        ./configuration.nix
-      ];
-    };
-  };
 }

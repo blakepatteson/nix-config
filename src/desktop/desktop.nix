@@ -7,7 +7,7 @@
 
   programs.thunar = {
     enable = true;
-    plugins = [ pkgs.thunar-volman pkgs.thunar-archive-plugin ];
+    plugins = [ pkgs.xfce.thunar-volman pkgs.xfce.thunar-archive-plugin ];
   };
 
   services.tumbler.enable = true;

@@ -1,17 +1,20 @@
 { pkgs, pkgs-unstable, isPrimeSystem, ... }:
 
 let
-  boltLauncher = if isPrimeSystem then pkgs.symlinkJoin {
-    name = "bolt-launcher";
-    paths = [ pkgs-unstable.bolt-launcher ];
-    buildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      wrapProgram $out/bin/bolt-launcher \
-        --set __NV_PRIME_RENDER_OFFLOAD 1 \
-        --set __NV_PRIME_RENDER_OFFLOAD_PROVIDER NVIDIA-G0 \
-        --prefix LD_LIBRARY_PATH : /run/opengl-driver/lib
-    '';
-  } else pkgs-unstable.bolt-launcher;
+  boltLauncher =
+    if isPrimeSystem then
+      pkgs.symlinkJoin
+        {
+          name = "bolt-launcher";
+          paths = [ pkgs-unstable.bolt-launcher ];
+          buildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/bolt-launcher \
+              --set __NV_PRIME_RENDER_OFFLOAD 1 \
+              --set __NV_PRIME_RENDER_OFFLOAD_PROVIDER NVIDIA-G0 \
+              --prefix LD_LIBRARY_PATH : /run/opengl-driver/lib
+          '';
+        } else pkgs-unstable.bolt-launcher;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -30,7 +33,7 @@ in
     btop
     busybox
     capitaine-cursors
-    catfish
+    xfce.catfish
     cifs-utils
     clang-tools
     cloc

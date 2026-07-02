@@ -1,8 +1,6 @@
 { ... }:
 {
   imports = [
-    ./hardware-configuration.nix
-
     ./src/desktop/desktop.nix
 
     ./src/boot.nix
