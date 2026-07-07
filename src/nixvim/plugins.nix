@@ -396,33 +396,14 @@
 
       };
 
-      onAttach = /* lua */'' vim.diagnostic.config(
-         {
-          virtual_text = true,
-          signs = true,
-          underline = true,
-          update_in_insert = false,
-          severity_sort = true,
-         })
-          -- Enable workspace diagnostics
-          vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-            vim.lsp.diagnostic.on_publish_diagnostics, {
-              severity_sort    = true,
-              signs            = true,
-              underline        = true,
-              update_in_insert = false,
-              virtual_text     = true,
-              workspace        = true,
-            })
-
-          -- Configure diagnostic display
+      onAttach = /* lua */''
           vim.diagnostic.config({
             virtual_text     = true,
             signs            = true,
             underline        = true,
             update_in_insert = false,
             severity_sort    = true,
-            float            = { source = "always",  border = "rounded" }
+            float            = { source = true, border = "rounded" },
           })
 
           -- command to disable formatting
