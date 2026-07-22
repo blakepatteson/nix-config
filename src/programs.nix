@@ -54,7 +54,7 @@ in
     flyctl
     fzf
     gcc
-    gemini-cli
+    gdu
     gh
     gimp
     git
@@ -93,7 +93,6 @@ in
     lm_sensors
     minizip
     mpv
-    ncdu
     nil
     nixd
     nixpkgs-fmt
@@ -101,7 +100,6 @@ in
     obs-studio
     odin
     ols
-    onlyoffice-desktopeditors
     p7zip
     pamixer
     pavucontrol # Audio control panel
