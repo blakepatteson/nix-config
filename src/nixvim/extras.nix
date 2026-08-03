@@ -530,8 +530,10 @@
       local oil = require('oil')
       local entry = oil.get_cursor_entry()
       if entry and entry.name then
+        local sep = vim.fn.has('win32') == 1 and '\\' or '/'
         local dir = oil.get_current_dir()
-        local path = (dir:sub(-1) == '/' and dir:sub(1, -2) or dir) .. '/' .. entry.name
+        local trimmed = dir:gsub("[/\\]$", "")
+        local path = trimmed .. sep .. entry.name
         vim.fn.setreg('+', path)
         vim.notify('Copied: ' .. path)
       else
