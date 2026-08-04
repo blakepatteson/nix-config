@@ -397,22 +397,22 @@
       };
 
       onAttach = /* lua */''
-          vim.diagnostic.config({
-            virtual_text     = true,
-            signs            = true,
-            underline        = true,
-            update_in_insert = false,
-            severity_sort    = true,
-            float            = { source = true, border = "rounded" },
-          })
+        vim.diagnostic.config({
+          virtual_text     = true,
+          signs            = true,
+          underline        = true,
+          update_in_insert = false,
+          severity_sort    = true,
+          float            = { source = true, border = "rounded" },
+        })
 
-          -- command to disable formatting
-          vim.api.nvim_create_user_command('SaveWithoutFormat', function()
-            vim.b.skip_next_format = true
-            vim.cmd('write')
-            vim.b.skip_next_format = nil
-            vim.notify('Saved without formatting')
-          end, {})
+        -- command to disable formatting
+        vim.api.nvim_create_user_command('SaveWithoutFormat', function()
+          vim.b.skip_next_format = true
+          vim.cmd('write')
+          vim.b.skip_next_format = nil
+          vim.notify('Saved without formatting')
+        end, {})
       '';
     };
 
@@ -430,7 +430,7 @@
       settings = {
         view_options = { show_hidden = true; };
         float = { padding = 2; max_width = 100; max_height = 20; };
-        delete_to_trash = true;
+        # delete_to_trash = true;
         cleanup_delay_ms = 200;
         keymaps = {
           "<C-p>" = false;
