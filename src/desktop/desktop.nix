@@ -36,8 +36,10 @@
     };
   };
 
+  security.pam.services.greetd.enableGnomeKeyring = false;
   services = {
     dbus.enable = true;
+    gnome.gnome-keyring.enable = false;
     blueman.enable = true;
   };
   powerManagement = {

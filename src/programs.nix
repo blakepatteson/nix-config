@@ -80,7 +80,6 @@ in
     imagemagick
     jq
     kitty
-    lazygit
     lemminx
     libde265
     libdrm
@@ -98,7 +97,6 @@ in
     nixpkgs-fmt
     nodejs
     obs-studio
-    odin
     ols
     p7zip
     pamixer
@@ -110,7 +108,6 @@ in
     pwvucontrol # PipeWire volume control
     python3
     qsynth
-    raylib
     rclone
     redshift
     ripgrep

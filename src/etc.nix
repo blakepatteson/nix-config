@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ ... }:
 let
   nvimPager = "bash -c 'TMPFILE=\"/tmp/kitty_scrollback_$(date +%s%N)\"; " +
     "nvim -c \"set nonumber nolist showtabline=0 foldcolumn=0\" " +
