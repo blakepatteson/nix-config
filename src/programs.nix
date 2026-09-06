@@ -19,6 +19,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     pkgs-unstable.claude-code
+    pkgs-unstable.go_1_27
     boltLauncher
 
     (btop.override { cudaSupport = true; })
@@ -62,7 +63,7 @@ in
     gnumake
     gnumeric
     gnused
-    go
+    # go
     golangci-lint
     google-chrome
     gotools
