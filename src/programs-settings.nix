@@ -1,5 +1,7 @@
 { ... }:
 {
+  programs.ssh.startAgent = true;
+
   programs.bash = {
     completion.enable = true;
     interactiveShellInit = /* bash */ ''

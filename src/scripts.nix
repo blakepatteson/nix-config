@@ -7,7 +7,6 @@
     (writeShellScriptBin "mkwindows" (builtins.readFile ../scripts/user/mkwindows.sh))
     (writeShellScriptBin "niri-dev-setup" (builtins.readFile ../scripts/user/niri-dev-setup.sh))
     (writeShellScriptBin "wl-mirror-launcher" (builtins.readFile ../scripts/user/wl-mirror-launcher.sh))
-    (writeShellScriptBin "switch-audio" (builtins.readFile ../scripts/user/switch-audio.sh))
     (writeShellScriptBin "switch-audio-by" (builtins.readFile ../scripts/user/switch-audio-by.sh))
     (writeShellScriptBin "rebuild-diff" (builtins.readFile ../scripts/user/rebuild-diff.sh))
     (writeShellScriptBin "list-issues-csv" (builtins.readFile ../scripts/user/list-issues-csv.sh))
