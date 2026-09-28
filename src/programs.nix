@@ -41,6 +41,7 @@ in
     cmake
     cowsay
     dig
+    discord-ptb
     dunst
     eslint
     eslint_d
