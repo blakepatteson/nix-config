@@ -1,6 +1,11 @@
 { ... }:
 {
-  programs.ssh.startAgent = true;
+  programs.ssh = {
+    startAgent = true;
+    extraConfig = ''
+      AddKeysToAgent yes
+    '';
+  };
 
   programs.bash = {
     completion.enable = true;
