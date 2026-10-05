@@ -45,6 +45,7 @@
       "midi"
       "realtime"
       "pipewire"
+      "input"
     ];
   };
 

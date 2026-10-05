@@ -11,6 +11,7 @@
     ./src/nixvim.nix
     ./src/programs.nix
     ./src/programs-settings.nix
+    ./src/push-to-talk.nix
     ./src/scripts.nix
     ./src/system.nix
     ./src/services.nix
