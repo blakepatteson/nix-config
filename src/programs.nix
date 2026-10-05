@@ -92,6 +92,7 @@ in
     libva-vdpau-driver
     libvdpau
     lm_sensors
+    lutris
     minizip
     mpv
     nil
