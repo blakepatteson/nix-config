@@ -77,6 +77,23 @@
       end)
     end
 
+    -- Dump diagnostics from all buffers to a timestamped file in the cwd
+    _G.diagnostics_to_file = function()
+      local diags = vim.diagnostic.get()
+      if #diags == 0 then
+        vim.notify("No diagnostics, nothing to write")
+        return
+      end
+      local path = os.date("diagnostics_%Y-%m-%d %H-%M-%S.txt")
+      local f = assert(io.open(path, "w"))
+      for _, d in ipairs(diags) do
+        f:write(("%s:%d:%d: %s\n"):format(vim.fn.bufname(d.bufnr), d.lnum + 1, d.col + 1, d.message))
+      end
+      f:close()
+      vim.notify(("Wrote %d diagnostics to %s"):format(#diags, vim.fn.fnamemodify(path, ":p")))
+    end
+    vim.api.nvim_create_user_command("DiagnosticsToFile", _G.diagnostics_to_file, {})
+
     vim.api.nvim_create_user_command("QA", function(opts)
       local n = tonumber(opts.args) or 3
       local lines = {}

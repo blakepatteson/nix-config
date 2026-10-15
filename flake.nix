@@ -8,9 +8,17 @@
       url = "github:nix-community/nixvim/nixos-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wow-api = {
+      url = "github:Ketho/vscode-wow-api";
+      flake = false;
+    };
+    wow-framexml = {
+      url = "github:NumyAddon/FramexmlAnnotations/forever-mix-into-source";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, nixvim, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, nixvim, wow-api, wow-framexml, ... }:
     let
       system = "x86_64-linux";
       pkgs-unstable = import nixpkgs-unstable {
@@ -19,7 +27,7 @@
       };
       mkHost = { hostModule, isPrimeSystem }: nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit pkgs-unstable isPrimeSystem; };
+        specialArgs = { inherit pkgs-unstable isPrimeSystem wow-api wow-framexml; };
         modules = [
           nixvim.nixosModules.nixvim
           { programs.nixvim.nixpkgs.source = nixpkgs; }

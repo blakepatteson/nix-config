@@ -144,6 +144,7 @@
       key = "<leader>dw";
       action = "<cmd>lua vim.diagnostic.setloclist()<CR>";
     }
+    { mode = "n"; key = "<leader>df"; action = "<cmd>lua _G.diagnostics_to_file()<CR>"; }
 
     # buffer movement
     { mode = "n"; key = "<Tab>"; action = "<cmd>bn<CR>"; }

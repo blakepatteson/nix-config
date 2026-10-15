@@ -74,7 +74,7 @@
 
     {
       event = [ "BufWritePre" ];
-      pattern = [ "*.ts" "*.js" "*.svelte" "*.json" "*.css" "*.html" ];
+      pattern = [ "*.ts" "*.js" "*.svelte" "*.json" "*.css" "*.html" "*.lua" ];
       callback.__raw = '' function()
         if not vim.b.skip_next_format
           then vim.lsp.buf.format({ async = false })

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, wow-api, wow-framexml, ... }:
 {
   programs.nixvim.plugins = {
     lualine.enable = true;
@@ -107,6 +107,7 @@
         formatting = {
           prettier = { enable = true; disableTsServerFormatter = true; };
           gofmt = { enable = true; };
+          stylua = { enable = true; };
         };
         diagnostics = { golangci_lint = { enable = true; }; };
       };
@@ -393,6 +394,74 @@
         };
 
         ols = { enable = true; package = pkgs.ols; };
+
+        lua_ls = {
+          enable = true;
+          settings = {
+            format.enable = false; # stylua formats instead
+            telemetry.enable = false;
+          };
+          extraOptions.root_dir.__raw = /* lua */ ''
+            function(bufnr, on_dir)
+              local toc = vim.fs.find(
+                  function(name) return name:match('%.toc$') end,
+                {
+                  path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)),
+                  upward = true, limit = 1
+                }
+              )[1]
+              on_dir(toc and vim.fs.dirname(toc) or vim.fs.root(bufnr,
+                {
+                  '.luarc.json',
+                  '.luarc.jsonc',
+                  '.stylua.toml',
+                  'stylua.toml',
+                  '.git'
+                }))
+            end
+          '';
+          extraOptions.on_init.__raw = /* lua */ ''
+            function(client)
+              local root = client.root_dir
+              if not root then return end
+              local tocs = vim.iter(vim.fs.dir(root))
+                :filter(function(name, kind) return kind == 'file' and name:match('%.toc$') end)
+                :totable()
+              if #tocs == 0 then return end
+              local globals = {}
+              for _, toc in ipairs(tocs) do
+                for line in io.lines(root .. '/' .. toc[1]) do
+                  local vars = line:match('^##%s*SavedVariables%w*:%s*(.+)')
+                  for var in (vars or ""):gmatch('[%w_]+') do table.insert(globals, var) end
+                end
+              end
+              client.config.settings.Lua = vim.tbl_deep_extend('force',
+                client.config.settings.Lua or {}, {
+                runtime = {
+                  version = 'Lua 5.1',
+                  builtin = {
+                    basic = 'disable',
+                    debug = 'disable',
+                    io = 'disable',
+                    math = 'disable',
+                    os = 'disable',
+                    package = 'disable',
+                    string = 'disable',
+                    table = 'disable',
+                    utf8 = 'disable',
+                  },
+                },
+                workspace = {
+                  library = {
+                    '${wow-api}/Annotations/Core',
+                    '${wow-framexml}' },
+                    checkThirdParty = false
+                  },
+                diagnostics = { globals = globals },
+              })
+            end
+          '';
+        };
 
       };
 
